@@ -23,7 +23,7 @@ describe Square do
   describe '#add_occupant' do
     context 'when the square is empty' do
       subject(:empty_square) { described_class.new(name: 'name') }
-      xit 'adds the piece to the square' do
+      it 'adds the piece to the square' do
         expect { empty_square.add_occupant(piece) }.to change { empty_square.occupant }.to(piece)
       end
     end
@@ -31,7 +31,7 @@ describe Square do
     context 'when the square is already occupied' do
       subject(:occupied_square) { described_class.new(name: 'name', occupant: piece) }
       let(:piece_two) { double('piece two') }
-      xit 'add the piece to the square' do
+      it 'add the piece to the square' do
         expect { occupied_square.add_occupant(piece_two) }.to change { occupied_square.occupant }.to(piece_two)
       end
     end
