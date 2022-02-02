@@ -6,4 +6,8 @@ class Square
     @name = name
     @occupant = occupant
   end
+
+  def empty?
+    @occupant.nil?
+  end
 end
