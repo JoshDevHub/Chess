@@ -2,22 +2,22 @@
 
 # class for individual squares on a chess board
 class Square
-  attr_reader :name, :occupant
+  attr_reader :name, :piece
 
-  def initialize(name:, occupant: nil)
+  def initialize(name:, piece: nil)
     @name = name
-    @occupant = occupant
+    @piece = piece
   end
 
   def empty?
-    occupant.nil?
+    piece.nil?
   end
 
-  def add_occupant(occupant)
-    @occupant = occupant
+  def add_piece(piece)
+    @piece = piece
   end
 
-  def remove_occupant
-    @occupant = nil
+  def remove_piece
+    @piece = nil
   end
 end
