@@ -40,14 +40,14 @@ describe Square do
   describe '#remove_occupant' do
     context 'when the square is empty' do
       subject(:empty_square) { described_class.new(name: 'name') }
-      xit 'has no effect' do
+      it 'has no effect' do
         expect { empty_square.remove_occupant }.not_to change { empty_square.occupant }
       end
     end
 
     context 'when the square is occupied' do
       subject(:occupied_square) { described_class.new(name: 'name', occupant: piece) }
-      xit 'removes the occupant from the square' do
+      it 'removes the occupant from the square' do
         expect { occupied_square.remove_occupant }.to change { occupied_square.occupant }.to(nil)
       end
     end

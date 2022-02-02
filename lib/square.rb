@@ -16,4 +16,8 @@ class Square
   def add_occupant(occupant)
     @occupant = occupant
   end
+
+  def remove_occupant
+    @occupant = nil
+  end
 end
