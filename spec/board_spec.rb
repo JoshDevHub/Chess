@@ -26,43 +26,43 @@ describe ChessBoard do
     end
   end
 
-  describe '#in_range?' do
+  describe '#valid_square?' do
     let(:square) { double('square') }
     subject(:board_to_check) { described_class.new(square) }
-    context 'when the given coordinate exists on the board' do
+    context 'when the given square_name exists on the board' do
       before do
         allow(square).to receive(:new)
       end
 
       it 'returns true' do
-        coordinate = 'A5'
-        expect(board_to_check.in_range?(coordinate)).to be(true)
+        square_name = 'A5'
+        expect(board_to_check.valid_square?(square_name)).to be(true)
       end
 
       it 'returns true' do
-        coordinate = 'F8'
-        expect(board_to_check.in_range?(coordinate)).to be(true)
+        square_name = 'F8'
+        expect(board_to_check.valid_square?(square_name)).to be(true)
       end
 
       it 'returns true' do
-        coordinate = 'C2'
-        expect(board_to_check.in_range?(coordinate)).to be(true)
+        square_name = 'C2'
+        expect(board_to_check.valid_square?(square_name)).to be(true)
       end
     end
 
-    context 'when the given coordinate does not exist on the board' do
+    context 'when the given square_name does not exist on the board' do
       before do
         allow(square).to receive(:new)
       end
 
       it 'returns false' do
-        coordinate = 'Z7'
-        expect(board_to_check.in_range?(coordinate)).to be(false)
+        square_name = 'Z7'
+        expect(board_to_check.valid_square?(square_name)).to be(false)
       end
 
       it 'returns false' do
-        coordinate = 'A23'
-        expect(board_to_check.in_range?(coordinate)).to be(false)
+        square_name = 'A23'
+        expect(board_to_check.valid_square?(square_name)).to be(false)
       end
     end
   end
