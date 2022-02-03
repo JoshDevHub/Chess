@@ -2,7 +2,7 @@
 
 require_relative '../lib/board'
 
-describe Board do
+describe ChessBoard do
   describe '#game_board' do
     let(:square) { double('square') }
     subject(:board) { described_class.new(square) }

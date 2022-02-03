@@ -3,7 +3,7 @@
 require_relative 'square'
 
 # class to hold logic for the chess board
-class Board
+class ChessBoard
   attr_reader :game_board
 
   def initialize(square)
