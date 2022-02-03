@@ -16,6 +16,12 @@ class ChessBoard
   FILE_NAMES = %w[A B C D E F G H].freeze
   RANK_NAMES = %w[1 2 3 4 5 6 7 8].freeze
 
+  def in_range?(coordinate)
+    return false unless coordinate.size == 2
+
+    FILE_NAMES.include?(coordinate[0]) && RANK_NAMES.include?(coordinate[1])
+  end
+
   private
 
   def create_board(square)
