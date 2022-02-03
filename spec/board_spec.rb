@@ -30,29 +30,37 @@ describe ChessBoard do
     let(:square) { double('square') }
     subject(:board_to_check) { described_class.new(square) }
     context 'when the given coordinate exists on the board' do
-      xit 'returns true' do
+      before do
+        allow(square).to receive(:new)
+      end
+
+      it 'returns true' do
         coordinate = 'A5'
         expect(board_to_check.in_range?(coordinate)).to be(true)
       end
 
-      xit 'returns true' do
+      it 'returns true' do
         coordinate = 'F8'
         expect(board_to_check.in_range?(coordinate)).to be(true)
       end
 
-      xit 'returns true' do
+      it 'returns true' do
         coordinate = 'C2'
         expect(board_to_check.in_range?(coordinate)).to be(true)
       end
     end
 
     context 'when the given coordinate does not exist on the board' do
-      xit 'returns false' do
+      before do
+        allow(square).to receive(:new)
+      end
+
+      it 'returns false' do
         coordinate = 'Z7'
         expect(board_to_check.in_range?(coordinate)).to be(false)
       end
 
-      xit 'returns false' do
+      it 'returns false' do
         coordinate = 'A23'
         expect(board_to_check.in_range?(coordinate)).to be(false)
       end
