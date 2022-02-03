@@ -64,6 +64,11 @@ describe ChessBoard do
         square_name = 'A23'
         expect(board_to_check.valid_square?(square_name)).to be(false)
       end
+
+      it 'returns false' do
+        square_name = '3C'
+        expect(board_to_check.valid_square?(square_name)).to be(false)
+      end
     end
   end
 end
