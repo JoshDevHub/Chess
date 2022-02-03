@@ -3,24 +3,26 @@
 require_relative '../lib/board'
 
 describe ChessBoard do
-  describe '#game_board' do
+  describe '#initialize' do
     let(:square) { double('square') }
-    subject(:board) { described_class.new(square) }
     before do
       allow(square).to receive(:new)
     end
 
-    it 'returns a 2d array with an outer size of 8' do
-      expect(board.game_board.size).to eq(8)
+    it 'creates a 2d array board with an outer size of 8' do
+      board_instance = described_class.new(square)
+      outer_size = board_instance.game_board.size
+      expect(outer_size).to eq(8)
     end
 
-    it 'returns a 2d array with an inner size of 8' do
-      expect(board.game_board.all? { |inner| inner.size == 8 }).to be(true)
+    it 'creates a 2d array board with an inner size of 8' do
+      board_instance = described_class.new(square)
+      expect(board_instance.game_board.all? { |inner| inner.size == 8 }).to be(true)
     end
 
-    it 'returns a structure with 64 objects' do
-      square_count = board.game_board.flatten.size
-      expect(square_count).to eq(64)
+    it 'creates 64 new squares' do
+      expect(square).to receive(:new).exactly(64).times
+      described_class.new(square)
     end
   end
 end
