@@ -5,8 +5,12 @@ class Piece
   attr_reader :color
 
   def initialize(color:)
+    raise NotImplementedError unless COLORS.include?(color)
+
     @color = color
   end
+
+  COLORS = %w[white black]
 
   private_class_method def self.pieces
     {
@@ -20,8 +24,6 @@ class Piece
   end
 
   def self.new_piece(piece:, color:)
-    raise NotImplementedError unless %w[white black].include?(color)
-
     pieces[piece].new(color: color)
   rescue NoMethodError
     raise NotImplementedError
