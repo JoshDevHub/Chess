@@ -7,6 +7,8 @@ class Piece
   end
 
   def self.create(piece:, color:)
+    raise NotImplementedError unless %w[white black].include?(color)
+
     {
       king: King,
       queen: Queen,
