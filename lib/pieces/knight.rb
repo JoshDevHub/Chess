@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Knight subclass to model behavior of the Knight chess piece
 class Knight < Piece
   def initialize(color:)
     super
