@@ -27,7 +27,7 @@ describe Piece do
       it 'raises a NotImplemented Error' do
         invalid_piece = :duke
         color = 'white'
-        expect(described_class.create(piece: invalid_piece, color: color))
+        expect { described_class.create(piece: invalid_piece, color: color) }.to raise_error(NotImplementedError)
       end
     end
   end
