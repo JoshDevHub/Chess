@@ -6,7 +6,7 @@ class Piece
     @color = color
   end
 
-  def self.pieces
+  private_class_method def self.pieces
     {
       king: King,
       queen: Queen,
@@ -20,7 +20,7 @@ class Piece
   def self.create(piece:, color:)
     raise NotImplementedError unless %w[white black].include?(color)
 
-    self.pieces[piece].new(color: color)
+    pieces[piece].new(color: color)
   rescue NoMethodError
     raise NotImplementedError
   end
