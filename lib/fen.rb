@@ -8,7 +8,7 @@ class FEN
     @fen_string = fen_string
   end
 
-  def piece_info
+  def piece_info(square)
     # placeholder
   end
 
