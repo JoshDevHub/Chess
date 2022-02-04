@@ -15,5 +15,7 @@ class Piece
       knight: Knight,
       pawn: Pawn
     }[piece].new(color: color)
+  rescue NoMethodError
+    raise NotImplementedError
   end
 end
