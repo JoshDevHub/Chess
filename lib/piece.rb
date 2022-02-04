@@ -19,7 +19,7 @@ class Piece
     }
   end
 
-  def self.create(piece:, color:)
+  def self.new_piece(piece:, color:)
     raise NotImplementedError unless %w[white black].include?(color)
 
     pieces[piece].new(color: color)
