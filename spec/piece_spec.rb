@@ -22,5 +22,13 @@ describe Piece do
         expect(subclass).to be_a(Rook)
       end
     end
+
+    context 'when the piece is not implemented' do
+      it 'raises a NotImplemented Error' do
+        invalid_piece = :duke
+        color = 'white'
+        expect(described_class.create(piece: invalid_piece, color: color))
+      end
+    end
   end
 end
