@@ -30,5 +30,13 @@ describe Piece do
         expect { described_class.create(piece: invalid_piece, color: color) }.to raise_error(NotImplementedError)
       end
     end
+
+    context 'when the given color is not implemented' do
+      it 'raises a NotImplemented Error' do
+        piece_name = :pawn
+        invalid_color = 'yellow'
+        expect { described_class.create(piece: piece_name, color: invalid_color) }.to raise_error(NotImplementedError)
+      end
+    end
   end
 end
