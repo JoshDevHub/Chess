@@ -7,19 +7,13 @@ class Piece
   end
 
   def self.create(piece:, color:)
-    case piece
-    when :king
-      King.new(color: color)
-    when :queen
-      Queen.new(color: color)
-    when :bishop
-      Bishop.new(color: color)
-    when :rook
-      Rook.new(color: color)
-    when :knight
-      Knight.new(color: color)
-    when :pawn
-      Pawn.new(color: color)
-    end
+    {
+      king: King,
+      queen: Queen,
+      rook: Rook,
+      bishop: Bishop,
+      knight: Knight,
+      pawn: Pawn
+    }[piece].new(color: color)
   end
 end
