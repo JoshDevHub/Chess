@@ -2,6 +2,8 @@
 
 # Parent Piece class for game pieces to inherit from
 class Piece
+  attr_reader :color
+
   def initialize(color:)
     @color = color
   end
