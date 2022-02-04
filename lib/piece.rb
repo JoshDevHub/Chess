@@ -10,7 +10,7 @@ class Piece
     @color = color
   end
 
-  COLORS = %w[white black]
+  COLORS = %w[white black].freeze
 
   private_class_method def self.pieces
     {
