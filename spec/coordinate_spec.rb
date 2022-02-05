@@ -27,4 +27,21 @@ describe Coordinate do
       end
     end
   end
+
+  describe '#to_coordinate' do
+    context 'when the square is A0' do
+      it 'returns [0, 7]' do
+        square = 'A1'
+        coordinate = [0, 7]
+        expect(coordinate_includer.to_coordinate(square)).to eq(coordinate)
+      end
+    end
+    context 'when the square is E4' do
+      it 'returns [4, 5]' do
+        square = 'E4'
+        coordinate = [4, 4]
+        expect(coordinate_includer.to_coordinate(square)).to eq(coordinate)
+      end
+    end
+  end
 end
