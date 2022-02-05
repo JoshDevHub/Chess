@@ -5,4 +5,8 @@ class Rook < Piece
   def initialize(color:)
     super
   end
+
+  def self.handles_notation?(char)
+    %w[R r].include?(char)
+  end
 end

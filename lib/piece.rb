@@ -12,20 +12,9 @@ class Piece
 
   COLORS = %w[white black].freeze
 
-  private_class_method def self.pieces
-    {
-      king: King,
-      queen: Queen,
-      rook: Rook,
-      bishop: Bishop,
-      knight: Knight,
-      pawn: Pawn
-    }
-  end
-
-  def self.new_piece(piece:, color:)
-    pieces[piece].new(color: color)
-  rescue NoMethodError
-    raise NotImplementedError
+  def self.from_fen(char)
+    color = char == char.upcase ? 'white' : 'black'
+    [King, Queen, Rook, Bishop, Knight, Pawn]
+      .find { |piece_type| piece_type.handles_notation?(char) }.new(color: color)
   end
 end

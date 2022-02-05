@@ -5,4 +5,8 @@ class Queen < Piece
   def initialize(color:)
     super
   end
+
+  def self.handles_notation?(char)
+    %w[Q q].include?(char)
+  end
 end

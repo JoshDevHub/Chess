@@ -5,4 +5,8 @@ class Pawn < Piece
   def initialize(color:)
     super
   end
+
+  def self.handles_notation?(char)
+    %w[P p].include?(char)
+  end
 end
