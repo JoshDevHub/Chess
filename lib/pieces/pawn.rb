@@ -9,4 +9,8 @@ class Pawn < Piece
   def moves_up?
     color == 'white' ? true : super
   end
+
+  def moves_down?
+    color == 'white' ? super : true
+  end
 end
