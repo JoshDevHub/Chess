@@ -22,7 +22,7 @@ describe Piece do
     end
   end
 
-  subject(:generic_piece) { described_class.new(color: 'white')}
+  subject(:generic_piece) { described_class.new(color: 'white') }
   describe '#moves_diagonally?' do
     it 'returns false' do
       expect(generic_piece.moves_diagonally?).to be(false)
