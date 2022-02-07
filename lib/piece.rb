@@ -17,4 +17,28 @@ class Piece
     [King, Queen, Rook, Bishop, Knight, Pawn]
       .find { |piece_type| piece_type.handles_notation?(char) }.new(color: color)
   end
+
+  def moves_diagonally?
+    false
+  end
+
+  def moves_horizontally?
+    false
+  end
+
+  def knight_moves?
+    false
+  end
+
+  def moves_up?
+    false
+  end
+
+  def moves_down?
+    false
+  end
+
+  def line_moves?
+    false
+  end
 end
