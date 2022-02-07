@@ -13,7 +13,7 @@ describe Bishop do
 
   describe '#line_moves?' do
     it 'returns true' do
-      expect(bishop.line_moves?).to be(false)
+      expect(bishop.line_moves?).to be(true)
     end
   end
 end

@@ -13,4 +13,8 @@ class Bishop < Piece
   def moves_diagonally?
     true
   end
+
+  def line_moves?
+    true
+  end
 end
