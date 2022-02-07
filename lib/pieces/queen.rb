@@ -5,4 +5,24 @@ class Queen < Piece
   def self.handles_notation?(char)
     %w[Q q].include?(char)
   end
+
+  def moves_diagonally?
+    true
+  end
+
+  def moves_horizontally?
+    true
+  end
+
+  def moves_up?
+    true
+  end
+
+  def moves_down?
+    true
+  end
+
+  def line_moves?
+    true
+  end
 end
