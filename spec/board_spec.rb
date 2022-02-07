@@ -5,38 +5,38 @@ require_relative '../lib/board'
 
 describe ChessBoard do
   describe '#initialize' do
-    let(:square) { double('square') }
     let(:fen_data) { double('fen_data') }
+    let(:piece) { double('piece') }
     before do
-      allow(square).to receive(:new)
       allow(fen_data).to receive(:square_info)
+      allow(piece).to receive(:from_fen)
     end
 
     it 'creates a 2d array board with an outer size of 8' do
-      board_instance = described_class.new(square: square, fen_data: fen_data)
+      board_instance = described_class.new(fen_data: fen_data, piece: piece)
       outer_size = board_instance.game_board.size
       expect(outer_size).to eq(8)
     end
 
     it 'creates a 2d array board with an inner size of 8' do
-      board_instance = described_class.new(square: square, fen_data: fen_data)
+      board_instance = described_class.new(fen_data: fen_data, piece: piece)
       expect(board_instance.game_board.all? { |inner| inner.size == 8 }).to be(true)
     end
 
-    it 'creates 64 new squares' do
-      expect(square).to receive(:new).exactly(64).times
-      described_class.new(square: square, fen_data: fen_data)
+    it 'creates structure with 64 positions' do
+      board_instance = described_class.new(fen_data: fen_data, piece: piece)
+      expect(board_instance.game_board.flatten.size).to eq(64)
     end
   end
 
   describe '#valid_square?' do
-    let(:square) { double('square') }
+    let(:piece) { double('piece') }
     let(:fen_data) { double('fen_data') }
-    subject(:board_to_check) { described_class.new(square: square, fen_data: fen_data) }
+    subject(:board_to_check) { described_class.new(fen_data: fen_data, piece: piece) }
     context 'when the given square_name exists on the board' do
       before do
-        allow(square).to receive(:new)
         allow(fen_data).to receive(:square_info)
+        allow(piece).to receive(:from_fen)
       end
 
       it 'returns true' do
@@ -57,7 +57,7 @@ describe ChessBoard do
 
     context 'when the given square_name does not exist on the board' do
       before do
-        allow(square).to receive(:new)
+        allow(piece).to receive(:from_fen)
         allow(fen_data).to receive(:square_info)
       end
 
