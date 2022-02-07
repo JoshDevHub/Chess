@@ -10,7 +10,7 @@ module Coordinate
     FILE_NAMES[file_index] + RANK_NAMES[rank_index]
   end
 
-  def to_coordinate(square_notation)
+  def to_xy_coordinate(square_notation)
     x, y = square_notation.chars
     [FILE_NAMES.index(x), RANK_NAMES.index(y)]
   end
