@@ -5,4 +5,8 @@ class Knight < Piece
   def self.handles_notation?(char)
     %w[N n].include?(char)
   end
+
+  def knight_moves?
+    true
+  end
 end
