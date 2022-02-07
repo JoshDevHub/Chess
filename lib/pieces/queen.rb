@@ -2,6 +2,11 @@
 
 # Queen subclass to model behavior of the Queen chess piece
 class Queen < Piece
+  def initialize(color:)
+    super
+    @name = 'queen'
+  end
+
   def self.handles_notation?(char)
     %w[Q q].include?(char)
   end
