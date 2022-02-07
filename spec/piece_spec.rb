@@ -21,4 +21,41 @@ describe Piece do
       end
     end
   end
+
+  subject(:generic_piece) { described_class.new(color: 'white')}
+  describe '#moves_diagonally?' do
+    it 'returns false' do
+      expect(generic_piece.moves_diagonally?).to be(false)
+    end
+  end
+
+  describe '#moves_horizontally?' do
+    it 'returns false' do
+      expect(generic_piece.moves_horizontally?).to be(false)
+    end
+  end
+
+  describe '#knight_moves?' do
+    it 'returns false' do
+      expect(generic_piece.knight_moves?).to be(false)
+    end
+  end
+
+  describe '#moves_up?' do
+    it 'returns false' do
+      expect(generic_piece.moves_up?).to be(false)
+    end
+  end
+
+  describe '#moves_down' do
+    it 'returns false' do
+      expect(generic_piece.moves_down?).to be(false)
+    end
+  end
+
+  describe '#line_moves' do
+    it 'returns false' do
+      expect(generic_piece.line_moves?).to be(false)
+    end
+  end
 end
