@@ -6,8 +6,8 @@ class ChessBoard
 
   attr_reader :game_board
 
-  def initialize(square)
-    @game_board = create_board(square)
+  def initialize(square:, fen_data:)
+    @game_board = create_board(square, fen_data)
   end
 
   HEIGHT = 8
@@ -21,11 +21,12 @@ class ChessBoard
 
   private
 
-  def create_board(square)
+  def create_board(square, fen_data)
     Array.new(HEIGHT) do |rank|
       Array.new(WIDTH) do |file|
         square_name = to_square_notation([file, rank])
-        square.new(name: square_name)
+        piece = fen_data.square_info(square_name)
+        square.new(name: square_name, piece: piece)
       end
     end
   end
