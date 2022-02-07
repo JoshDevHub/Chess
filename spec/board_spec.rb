@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative '../lib/coordinate'
 require_relative '../lib/board'
 
 describe ChessBoard do

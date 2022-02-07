@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative 'square'
-
 # class to hold logic for the chess board
 class ChessBoard
+  include Coordinate
+
   attr_reader :game_board
 
   def initialize(square)
@@ -12,9 +12,6 @@ class ChessBoard
 
   HEIGHT = 8
   WIDTH = 8
-
-  FILE_NAMES = %w[A B C D E F G H].freeze
-  RANK_NAMES = %w[1 2 3 4 5 6 7 8].freeze
 
   def valid_square?(square_name)
     return false unless square_name.size == 2
@@ -27,7 +24,7 @@ class ChessBoard
   def create_board(square)
     Array.new(HEIGHT) do |rank|
       Array.new(WIDTH) do |file|
-        square_name = FILE_NAMES[file] + RANK_NAMES[rank]
+        square_name = to_square_notation([file, rank])
         square.new(name: square_name)
       end
     end
