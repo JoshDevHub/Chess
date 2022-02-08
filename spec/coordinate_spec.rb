@@ -114,4 +114,21 @@ describe Coordinate do
       end
     end
   end
+
+  describe '#right' do
+    context 'when the target square is valid' do
+      it 'returns the target square' do
+        square = 'D4'
+        target_square = 'E4'
+        expect(coordinate_includer.right(square)).to eq(target_square)
+      end
+    end
+
+    context 'when the target square is invalid' do
+      it 'returns nil' do
+        square = 'H3'
+        expect(coordinate_includer.right(square)).to be(nil)
+      end
+    end
+  end
 end
