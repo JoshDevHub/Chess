@@ -34,4 +34,9 @@ module Coordinate
     target_square = square[0].succ + square[1]
     valid_square?(target_square) ? target_square : nil
   end
+
+  def left(square)
+    target_square = (square[0].ord - 1).chr + square[1]
+    valid_square?(target_square) ? target_square : nil
+  end
 end
