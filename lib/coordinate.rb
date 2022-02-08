@@ -21,22 +21,18 @@ module Coordinate
   end
 
   def up(square)
-    target_square = square[0] + square[1].succ
-    valid_square?(target_square) ? target_square : nil
+    square[0] + square[1].succ
   end
 
   def down(square)
-    target_square = square[0] + (square[1].ord - 1).chr
-    valid_square?(target_square) ? target_square : nil
+    square[0] + (square[1].ord - 1).chr
   end
 
   def right(square)
-    target_square = square[0].succ + square[1]
-    valid_square?(target_square) ? target_square : nil
+    square[0].succ + square[1]
   end
 
   def left(square)
-    target_square = (square[0].ord - 1).chr + square[1]
-    valid_square?(target_square) ? target_square : nil
+    (square[0].ord - 1).chr + square[1]
   end
 end

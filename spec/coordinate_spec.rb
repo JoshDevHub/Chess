@@ -82,70 +82,34 @@ describe Coordinate do
   end
 
   describe '#up' do
-    context 'when the target square is valid' do
-      it 'returns the target square' do
-        square = 'E2'
-        target_square = 'E3'
-        expect(coordinate_includer.up(square)).to eq(target_square)
-      end
-    end
-
-    context 'when the target square is invalid' do
-      it 'returns nil' do
-        square = 'A8'
-        expect(coordinate_includer.up(square)).to be(nil)
-      end
+    it 'returns the target square' do
+      square = 'E2'
+      target_square = 'E3'
+      expect(coordinate_includer.up(square)).to eq(target_square)
     end
   end
 
   describe '#down' do
-    context 'when the target square is valid' do
-      it 'returns the target square' do
-        square = 'A8'
-        target_square = 'A7'
-        expect(coordinate_includer.down(square)).to eq(target_square)
-      end
-    end
-
-    context 'when the target square is invalid' do
-      it 'returns nil' do
-        square = 'C1'
-        expect(coordinate_includer.down(square)).to be(nil)
-      end
+    it 'returns the target square' do
+      square = 'A8'
+      target_square = 'A7'
+      expect(coordinate_includer.down(square)).to eq(target_square)
     end
   end
 
   describe '#right' do
-    context 'when the target square is valid' do
-      it 'returns the target square' do
-        square = 'D4'
-        target_square = 'E4'
-        expect(coordinate_includer.right(square)).to eq(target_square)
-      end
-    end
-
-    context 'when the target square is invalid' do
-      it 'returns nil' do
-        square = 'H3'
-        expect(coordinate_includer.right(square)).to be(nil)
-      end
+    it 'returns the target square' do
+      square = 'D4'
+      target_square = 'E4'
+      expect(coordinate_includer.right(square)).to eq(target_square)
     end
   end
 
   describe '#left' do
-    context 'when the target square is valid' do
-      it 'returns the target square' do
-        square = 'H6'
-        target_square = 'G6'
-        expect(coordinate_includer.left(square)).to eq(target_square)
-      end
-    end
-
-    context 'when the target square is invalid' do
-      it 'returns nil' do
-        square = 'A2'
-        expect(coordinate_includer.left(square)).to be(nil)
-      end
+    it 'returns the target square' do
+      square = 'H6'
+      target_square = 'G6'
+      expect(coordinate_includer.left(square)).to eq(target_square)
     end
   end
 end
