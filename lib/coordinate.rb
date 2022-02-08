@@ -19,4 +19,9 @@ module Coordinate
     square.size == 2 && square.start_with?(*FILE_NAMES) &&
       square.end_with?(*RANK_NAMES)
   end
+
+  def up(square)
+    target_square = square[0] + square[1].succ
+    valid_square?(target_square) ? target_square : nil
+  end
 end

@@ -80,4 +80,21 @@ describe Coordinate do
       end
     end
   end
+
+  describe '#up' do
+    context 'when the target square is valid' do
+      it 'returns the target square' do
+        square = 'E2'
+        target_square = 'E3'
+        expect(coordinate_includer.up(square)).to eq(target_square)
+      end
+    end
+
+    context 'when the target square is invalid' do
+      it 'returns nil' do
+        square = 'A8'
+        expect(coordinate_includer.up(square)).to be(nil)
+      end
+    end
+  end
 end
