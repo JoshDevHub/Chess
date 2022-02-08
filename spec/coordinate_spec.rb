@@ -97,4 +97,21 @@ describe Coordinate do
       end
     end
   end
+
+  describe '#down' do
+    context 'when the target square is valid' do
+      it 'returns the target square' do
+        square = 'A8'
+        target_square = 'A7'
+        expect(coordinate_includer.down(square)).to eq(target_square)
+      end
+    end
+
+    context 'when the target square is invalid' do
+      it 'returns nil' do
+        square = 'C1'
+        expect(coordinate_includer.down(square)).to be(nil)
+      end
+    end
+  end
 end

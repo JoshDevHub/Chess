@@ -24,4 +24,9 @@ module Coordinate
     target_square = square[0] + square[1].succ
     valid_square?(target_square) ? target_square : nil
   end
+
+  def down(square)
+    target_square = square[0] + (square[1].ord - 1).chr
+    valid_square?(target_square) ? target_square : nil
+  end
 end
