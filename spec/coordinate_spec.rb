@@ -44,4 +44,40 @@ describe Coordinate do
       end
     end
   end
+
+  describe '#valid_square?' do
+    context 'when the square is valid' do
+      it 'returns true for square A1' do
+        square = 'A1'
+        expect(coordinate_includer.valid_square?(square)).to be(true)
+      end
+
+      it 'returns true for F8' do
+        square = 'F8'
+        expect(coordinate_includer.valid_square?(square)).to be(true)
+      end
+
+      it 'returns true for C2' do
+        square = 'C2'
+        expect(coordinate_includer.valid_square?(square)).to be(true)
+      end
+    end
+
+    context 'when the square is invalid' do
+      it 'returns false for B9' do
+        square = 'B9'
+        expect(coordinate_includer.valid_square?(square)).to be(false)
+      end
+
+      it 'returns false for I3' do
+        square = 'I3'
+        expect(coordinate_includer.valid_square?(square)).to be(false)
+      end
+
+      it 'returns false for D42' do
+        square = 'D42'
+        expect(coordinate_includer.valid_square?(square)).to be(false)
+      end
+    end
+  end
 end

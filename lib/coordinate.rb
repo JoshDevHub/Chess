@@ -14,4 +14,9 @@ module Coordinate
     x, y = square_notation.chars
     [FILE_NAMES.index(x), RANK_NAMES.index(y)]
   end
+
+  def valid_square?(square)
+    square.size == 2 && square.start_with?(*FILE_NAMES) &&
+      square.end_with?(*RANK_NAMES)
+  end
 end
