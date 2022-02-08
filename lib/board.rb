@@ -19,6 +19,11 @@ class ChessBoard
     FILE_NAMES.include?(square_name[0]) && RANK_NAMES.include?(square_name[1])
   end
 
+  def piece_at(square_name)
+    x, y = to_xy_coordinate(square_name)
+    game_board[y][x]
+  end
+
   private
 
   def create_board(fen_data, piece)

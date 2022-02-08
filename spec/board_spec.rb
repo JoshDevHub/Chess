@@ -77,4 +77,33 @@ describe ChessBoard do
       end
     end
   end
+
+  describe '#piece_at' do
+    context 'when there is a piece at the board position' do
+      let(:piece) { double('piece') }
+      let(:fen_data) { double('fen_data') }
+      subject(:searchable_board) { described_class.new(fen_data: fen_data, piece: piece) }
+      before do
+        square_to_check = 'A8'
+        allow(piece).to receive(:from_fen).and_return(piece)
+        allow(fen_data).to receive(:square_info).and_return(square_to_check)
+      end
+      it 'returns the object at that position' do
+        expect(searchable_board.piece_at('A8')).to be(piece)
+      end
+    end
+    context 'when there is no piece at the board position' do
+      let(:piece) { double('piece') }
+      let(:fen_data) { double('fen_data') }
+      subject(:searchable_board) { described_class.new(fen_data: fen_data, piece: piece) }
+      before do
+        square_to_check = 'C6'
+        allow(piece).to receive(:from_fen).and_return(nil)
+        allow(fen_data).to receive(:square_info).and_return(square_to_check)
+      end
+      it 'returns nil for that position' do
+        expect(searchable_board.piece_at('C6')).to be(nil)
+      end
+    end
+  end
 end
