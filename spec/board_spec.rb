@@ -106,4 +106,33 @@ describe ChessBoard do
       end
     end
   end
+
+  describe '#square_empty?' do
+    context 'when there is a piece at the board positions' do
+      let(:piece) { double('piece') }
+      let(:fen_data) { double('fen_data') }
+      subject(:game_board) { described_class.new(fen_data: fen_data, piece: piece) }
+      before do
+        square_to_check = 'E4'
+        allow(piece).to receive(:from_fen).and_return(piece)
+        allow(fen_data).to receive(:square_info).and_return(square_to_check)
+      end
+      it 'returns false' do
+        expect(game_board.square_empty?('E4')).to be(false)
+      end
+    end
+
+    context 'when there is no piece at the board position' do
+      let(:piece) { double('piece') }
+      let(:fen_data) { double('fen_data') }
+      subject(:game_board) { described_class.new(fen_data: fen_data, piece: piece) }
+      before do
+        allow(piece).to receive(:from_fen)
+        allow(fen_data).to receive(:square_info)
+      end
+      it 'returns true' do
+        expect(game_board.square_empty?('B3')).to be(true)
+      end
+    end
+  end
 end

@@ -24,6 +24,11 @@ class ChessBoard
     game_board[y][x]
   end
 
+  def square_empty?(square_name)
+    x, y = to_xy_coordinate(square_name)
+    game_board[y][x].nil?
+  end
+
   private
 
   def create_board(fen_data, piece)
