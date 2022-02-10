@@ -19,6 +19,6 @@ class KnightMoves < Move
       final_position = move.reduce(square) { |current, step| send(step, current) }
       move_list << final_position
     end
-    move_list.select { |move| valid_square?(move) }
+    move_list.select { |move| legal_move?(move) }
   end
 end
