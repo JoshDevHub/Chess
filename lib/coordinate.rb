@@ -21,18 +21,18 @@ module Coordinate
   end
 
   def up(square)
-    square[0] + square[1].succ
+    square[0] + square[1..-1].succ
   end
 
   def down(square)
-    square[0] + (square[1].ord - 1).chr
+    square[0] + (square[1..-1].ord - 1).chr
   end
 
   def right(square)
-    square[0].succ + square[1]
+    square[0].succ + square[1..-1]
   end
 
   def left(square)
-    (square[0].ord - 1).chr + square[1]
+    (square[0].ord - 1).chr + square[1..-1]
   end
 end
