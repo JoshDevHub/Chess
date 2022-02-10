@@ -9,14 +9,7 @@ class Move
     @board = board
   end
 
-  MOVESET = %i[moves_up? moves_down? moves_horizontally?
-               line_moves? moves_diagonally? knight_moves?].freeze
-
   def move_list(position)
-    piece = board.piece_at(position)
-    return [] if piece.nil?
-
-    MOVESET.select { |move| piece.send(move) }
     # placeholder logic
   end
 end
