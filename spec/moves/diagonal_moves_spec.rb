@@ -33,6 +33,21 @@ describe DiagonalMoves do
           expect(one_diagonal.generate_moves(square)).to contain_exactly(*moves)
         end
       end
+
+      context 'when the origin square is B5 and C6 is blocked' do
+        let(:piece) { double(line_moves?: false, color: 'white') }
+        let(:blocking_piece) { double(color: 'white') }
+        let(:square) { 'B5' }
+        before do
+          allow(board).to receive(:square_empty?).with('C6').and_return(false)
+          allow(board).to receive(:piece_at).with('C6').and_return(blocking_piece)
+        end
+
+        it 'returns a list containing A6, A4, and C4' do
+          moves = %w[A6 A4 C4]
+          expect(one_diagonal.generate_moves(square)).to contain_exactly(*moves)
+        end
+      end
     end
   end
 end
