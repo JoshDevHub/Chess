@@ -2,13 +2,14 @@
 
 # Parent Piece class for game pieces to inherit from
 class Piece
-  attr_reader :color, :name
+  attr_reader :color, :name, :moved
 
   def initialize(color:)
     raise NotImplementedError unless COLORS.include?(color)
 
     @color = color
     @name = 'piece'
+    @moved = false
   end
 
   COLORS = %w[white black].freeze
@@ -21,6 +22,10 @@ class Piece
     color = char == char.upcase ? 'white' : 'black'
     [King, Queen, Rook, Bishop, Knight, Pawn]
       .find { |piece_type| piece_type.handles_notation?(char) }.new(color: color)
+  end
+
+  def piece_moved
+    @moved = true
   end
 
   def moves_diagonally?

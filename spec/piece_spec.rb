@@ -29,6 +29,12 @@ describe Piece do
     end
   end
 
+  describe '#piece_moved' do
+    it 'changes @moved to true' do
+      expect { generic_piece.piece_moved }.to change { generic_piece.moved }.to(true)
+    end
+  end
+
   describe '#moves_horizontally?' do
     it 'returns false' do
       expect(generic_piece.moves_horizontally?).to be(false)
