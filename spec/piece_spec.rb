@@ -22,6 +22,24 @@ describe Piece do
     end
   end
 
+  describe '#opponent_color' do
+    context 'when the piece is white' do
+      subject(:white_piece) { described_class.new(color: 'white') }
+      it "returns 'black'" do
+        opponent = 'black'
+        expect(white_piece.opponent_color).to eq(opponent)
+      end
+    end
+
+    context 'when the piece is black' do
+      subject(:black_piece) { described_class.new(color: 'black') }
+      it "returns 'white'" do
+        opponent = 'white'
+        expect(black_piece.opponent_color).to eq(opponent)
+      end
+    end
+  end
+
   subject(:generic_piece) { described_class.new(color: 'white') }
   describe '#moves_diagonally?' do
     it 'returns false' do

@@ -18,6 +18,10 @@ class Piece
     "#{color} #{name}"
   end
 
+  def opponent_color
+    color == 'white' ? 'black' : 'white'
+  end
+
   def self.from_fen(char)
     color = char == char.upcase ? 'white' : 'black'
     [King, Queen, Rook, Bishop, Knight, Pawn]
