@@ -17,6 +17,22 @@ describe DiagonalMoves do
           expect(one_diagonal.generate_moves(square)).to contain_exactly(*moves)
         end
       end
+
+      context 'when the origin square is H8 and no target is blocked' do
+        let(:square) { 'H8' }
+        it 'returns a list containing G7' do
+          moves = %w[G7]
+          expect(one_diagonal.generate_moves(square)).to contain_exactly(*moves)
+        end
+      end
+
+      context 'when the origin square is F1 and no target is blocked' do
+        let(:square) { 'F1' }
+        it 'returns a list containing E2 and G2' do
+          moves = %w[E2 G2]
+          expect(one_diagonal.generate_moves(square)).to contain_exactly(*moves)
+        end
+      end
     end
   end
 end
