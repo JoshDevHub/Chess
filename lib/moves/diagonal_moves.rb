@@ -12,9 +12,9 @@ class DiagonalMoves < Move
   def generate_moves(square)
     move_list = []
     MOVESET.each do |move|
-      move_list << path_from(move, square)
+      move_list += path_from(move, square)
     end
-    move_list.flatten
+    move_list
   end
 
   private
