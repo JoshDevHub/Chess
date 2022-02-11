@@ -56,16 +56,16 @@ describe DiagonalMoves do
       subject(:line_mover) { described_class.new(board: board, piece: piece) }
       context 'when the origin square is D4 and no target is blocked' do
         let(:square) { 'D4' }
-        xit 'returns a list containing C3, B2, A1, C5, C6, C7, E5, F6, G7, H8, E3, F2, and G1' do
-          moves = %w[C3 B2 A1 C5 C6 C7 E5 F6 G7 H8 E3 F2 G1]
+        it 'returns a list containing C3, B2, A1, C5, B6, A7, E5, F6, G7, H8, E3, F2, and G1' do
+          moves = %w[C3 B2 A1 C5 B6 A7 E5 F6 G7 H8 E3 F2 G1]
           expect(line_mover.generate_moves(square)).to contain_exactly(*moves)
         end
       end
       context 'when the origin square is H1 and no target is blocked' do
         let(:square) { 'H1' }
-        xit 'returns a list containing G2, F3, E4, D5, C6, B7, and A8' do
+        it 'returns a list containing G2, F3, E4, D5, C6, B7, and A8' do
           moves = %w[G2 F3 E4 D5 C6 B7 A8]
-          expect(line_mover.generate_moves(sqaure)).to contain_exactly(*moves)
+          expect(line_mover.generate_moves(square)).to contain_exactly(*moves)
         end
       end
     end

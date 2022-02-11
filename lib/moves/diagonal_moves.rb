@@ -10,21 +10,27 @@ class DiagonalMoves < Move
   ].freeze
 
   def generate_moves(square)
-    @piece.line_moves? ? continous_move(square) : one_move(square)
+    move_list = []
+    MOVESET.each do |move|
+      move_list << path_from(move, square)
+    end
+    move_list.flatten
   end
 
   private
 
-  def one_move(square)
-    move_list = []
-    MOVESET.each do |move|
-      final_position = move.reduce(square) { |current, step| send(step, current) }
-      move_list << final_position
-    end
-    move_list.select { |move| legal_move?(move) }
-  end
+  def path_from(move, origin)
+    current_square = origin
+    path = []
+    loop do
+      new_move = move.reduce(current_square) { |current, step| send(step, current) }
+      break unless legal_move?(new_move)
 
-  def continuous_move(square)
-    # placeholder
+      path << new_move
+      break unless @piece.line_moves?
+
+      current_square = new_move
+    end
+    path
   end
 end
