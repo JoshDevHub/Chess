@@ -22,6 +22,22 @@ describe Piece do
     end
   end
 
+  describe '#initialize' do
+    context 'when the color is a valid color' do
+      it 'does not raise an error' do
+        color = 'white'
+        expect { described_class.new(color: color) }.to_not raise_error(NotImplementedError)
+      end
+    end
+
+    context 'when the color is an invalid color' do
+      it 'raises a NotImplementedError' do
+        color = 'yellow'
+        expect { described_class.new(color: color) }.to raise_error(NotImplementedError)
+      end
+    end
+  end
+
   describe '#opponent_color' do
     context 'when the piece is white' do
       subject(:white_piece) { described_class.new(color: 'white') }
