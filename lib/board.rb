@@ -13,12 +13,6 @@ class ChessBoard
   HEIGHT = 8
   WIDTH = 8
 
-  def valid_square?(square_name)
-    return false unless square_name.size == 2
-
-    FILE_NAMES.include?(square_name[0]) && RANK_NAMES.include?(square_name[1])
-  end
-
   def piece_at(square_name)
     x, y = to_xy_coordinate(square_name)
     game_board[y][x]
