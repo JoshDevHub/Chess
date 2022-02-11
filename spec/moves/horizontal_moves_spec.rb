@@ -28,5 +28,28 @@ describe HorizontalMoves do
         end
       end
     end
+
+    context 'when the piece can move in lines' do
+      let(:piece) { double(line_moves?: true) }
+      context 'when no square is blocked' do
+        let(:board) { double(square_empty?: true) }
+        subject(:line_mover) { described_class.new(board: board, piece: piece) }
+        context 'when the starting square is A1' do
+          let(:square) { 'A1' }
+          it 'returns a list containing B1, C1, D1, E1, F1, G1, and H1' do
+            moves = %w[B1 C1 D1 E1 F1 G1 H1]
+            expect(line_mover.generate_moves(square)).to contain_exactly(*moves)
+          end
+        end
+
+        context 'when the starting square is G6' do
+          let(:square) { 'G6' }
+          it 'returns a list containing H6, F6, E6, D6, C6, B6, and A6' do
+            moves = %w[H6 F6 E6 D6 C6 B6 A6]
+            expect(line_mover.generate_moves(square)).to contain_exactly(*moves)
+          end
+        end
+      end
+    end
   end
 end
