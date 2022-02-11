@@ -20,6 +20,13 @@ describe Piece do
         expect(subclass).to be_a(Rook)
       end
     end
+
+    context 'when the piece does not exist' do
+      it 'raises a NotImplementedError' do
+        piece_fen = 'Z'
+        expect { described_class.from_fen(piece_fen) }.to raise_error(NotImplementedError)
+      end
+    end
   end
 
   describe '#initialize' do

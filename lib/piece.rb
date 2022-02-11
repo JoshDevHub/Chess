@@ -26,6 +26,9 @@ class Piece
     color = char == char.upcase ? 'white' : 'black'
     [King, Queen, Rook, Bishop, Knight, Pawn]
       .find { |piece_type| piece_type.handles_notation?(char) }.new(color: color)
+  rescue NoMethodError
+    puts 'This piece is not supported'
+    raise NotImplementedError
   end
 
   def piece_moved
