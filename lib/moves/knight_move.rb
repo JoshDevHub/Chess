@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Move subclass that generates Knight Moves
-class KnightMoves < Move
+class KnightMove < Move
   MOVESET = [
     %i[up up right],
     %i[up up left],

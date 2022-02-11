@@ -2,9 +2,9 @@
 
 require_relative '../../lib/coordinate'
 require_relative '../../lib/move'
-require_relative '../../lib/moves/horizontal_moves'
+require_relative '../../lib/moves/horizontal_move'
 
-describe HorizontalMoves do
+describe HorizontalMove do
   describe '#generate_moves' do
     context 'when the piece can only move one square' do
       let(:piece) { double(line_moves?: false, color: 'black') }

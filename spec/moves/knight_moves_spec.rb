@@ -2,9 +2,9 @@
 
 require_relative '../../lib/coordinate'
 require_relative '../../lib/move'
-require_relative '../../lib/moves/knight_moves'
+require_relative '../../lib/moves/knight_move'
 
-describe KnightMoves do
+describe KnightMove do
   subject(:knight_list) { described_class.new(board: board, piece: piece) }
   context 'when the board is empty do' do
     let(:board) { double(square_empty?: true) }

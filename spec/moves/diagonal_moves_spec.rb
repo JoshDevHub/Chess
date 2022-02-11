@@ -2,9 +2,9 @@
 
 require_relative '../../lib/coordinate'
 require_relative '../../lib/move'
-require_relative '../../lib/moves/diagonal_moves'
+require_relative '../../lib/moves/diagonal_move'
 
-describe DiagonalMoves do
+describe DiagonalMove do
   describe '#generate_moves' do
     context 'when the piece can only move in one step' do
       let(:piece) { double(line_moves?: false, color: 'white') }

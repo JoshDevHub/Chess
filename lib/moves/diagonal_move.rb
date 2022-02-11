@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # subclass to generate diagonal moves
-class DiagonalMoves < Move
+class DiagonalMove < Move
   MOVESET = [
     %i[up right],
     %i[up left],
