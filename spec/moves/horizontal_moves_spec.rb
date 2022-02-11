@@ -7,7 +7,7 @@ require_relative '../../lib/moves/horizontal_moves'
 describe HorizontalMoves do
   describe '#generate_moves' do
     context 'when the piece can only move one square' do
-      let(:piece) { double(line_moves?: false) }
+      let(:piece) { double(line_moves?: false, color: 'black') }
       context 'when no square is blocked' do
         let(:board) { double(square_empty?: true) }
         subject(:one_mover) { described_class.new(board: board, piece: piece) }
@@ -24,6 +24,38 @@ describe HorizontalMoves do
           it 'returns a list containing G1' do
             moves = %w[G1]
             expect(one_mover.generate_moves(square)).to contain_exactly(*moves)
+          end
+        end
+      end
+
+      context 'when square(s) is blocked' do
+        let(:board) { double(square_empty?: true) }
+        let(:blocking_piece) { double(color: 'black') }
+        subject(:move_with_blocks) { described_class.new(board: board, piece: piece) }
+        context 'when the starting square is B6 with a blocking piece on C6' do
+          let(:square) { 'B6' }
+          before do
+            allow(board).to receive(:square_empty?).with('C6').and_return(false)
+            allow(board).to receive(:piece_at).with('C6').and_return(blocking_piece)
+          end
+
+          it 'returns a list with A6' do
+            moves = %w[A6]
+            expect(move_with_blocks.generate_moves(square)).to contain_exactly(*moves)
+          end
+        end
+
+        context 'when the starting square is F3 with blocking pieces on G3 and E3' do
+          let(:square) { 'F3' }
+          before do
+            allow(board).to receive(:square_empty?).with('G3').and_return(false)
+            allow(board).to receive(:square_empty?).with('E3').and_return(false)
+            allow(board).to receive(:piece_at).with('G3').and_return(blocking_piece)
+            allow(board).to receive(:piece_at).with('E3').and_return(blocking_piece)
+          end
+
+          it 'returns an empty array' do
+            expect(move_with_blocks.generate_moves(square)).to be_empty
           end
         end
       end
