@@ -3,12 +3,14 @@
 require_relative '../../lib/coordinate'
 require_relative '../../lib/move'
 require_relative '../../lib/moves/diagonal_move'
+require_relative '../../lib/piece'
+require_relative '../../lib/board'
 
 describe DiagonalMove do
   describe '#generate_moves' do
     context 'when the piece can only move in one step' do
-      let(:piece) { double(line_moves?: false, color: 'white') }
-      let(:board) { double(square_empty?: true) }
+      let(:piece) { instance_double(Piece, line_moves?: false, color: 'white') }
+      let(:board) { instance_double(Board, square_empty?: true) }
       subject(:one_diagonal) { described_class.new(board: board, piece: piece) }
       context 'when no square is blocked' do
         context 'when the origin square is C4 and no target is blocked' do
@@ -38,7 +40,7 @@ describe DiagonalMove do
 
       context 'when the one or more moves are blocked' do
         context 'when the origin square is B5 and C6 is blocked' do
-          let(:blocking_piece) { double(color: 'white') }
+          let(:blocking_piece) { instance_double(Piece, color: 'white') }
           let(:square) { 'B5' }
           before do
             allow(board).to receive(:square_empty?).with('C6').and_return(false)
@@ -54,8 +56,8 @@ describe DiagonalMove do
     end
 
     context 'when the piece is a line piece' do
-      let(:piece) { double(line_moves?: true, color: 'white') }
-      let(:board) { double(square_empty?: true) }
+      let(:piece) { instance_double(Piece, line_moves?: true, color: 'white') }
+      let(:board) { instance_double(Board, square_empty?: true) }
       subject(:line_mover) { described_class.new(board: board, piece: piece) }
       context 'when no piece is blocking' do
         context 'when the origin square is D4' do
@@ -76,7 +78,7 @@ describe DiagonalMove do
       end
 
       context 'when potential moves are blocked' do
-        let(:blocking_piece) { double(color: 'white') }
+        let(:blocking_piece) { instance_double(Piece, color: 'white') }
         context 'when the origin square is B4 with a blocking piece on C5' do
           let(:square) { 'B4' }
           before do

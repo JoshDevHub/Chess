@@ -2,11 +2,12 @@
 
 require_relative '../lib/coordinate'
 require_relative '../lib/board'
+require_relative '../lib/piece'
 
 describe Board do
   describe '#initialize' do
-    let(:fen_data) { double('fen_data') }
-    let(:piece) { double('piece') }
+    let(:fen_data) { instance_double(FEN, 'fen_data') }
+    let(:piece) { class_double(Piece, 'piece') }
     before do
       allow(fen_data).to receive(:square_info)
       allow(piece).to receive(:from_fen)
@@ -31,8 +32,8 @@ describe Board do
 
   describe '#piece_at' do
     context 'when there is a piece at the board position' do
-      let(:piece) { double('piece') }
-      let(:fen_data) { double('fen_data') }
+      let(:piece) { class_double(Piece, 'piece') }
+      let(:fen_data) { instance_double(FEN, 'fen_data') }
       subject(:searchable_board) { described_class.new(fen_data: fen_data, piece: piece) }
       before do
         square_to_check = 'A8'
@@ -44,8 +45,8 @@ describe Board do
       end
     end
     context 'when there is no piece at the board position' do
-      let(:piece) { double('piece') }
-      let(:fen_data) { double('fen_data') }
+      let(:piece) { class_double(Piece, 'piece') }
+      let(:fen_data) { instance_double(FEN, 'fen_data') }
       subject(:searchable_board) { described_class.new(fen_data: fen_data, piece: piece) }
       before do
         square_to_check = 'C6'
@@ -60,8 +61,8 @@ describe Board do
 
   describe '#square_empty?' do
     context 'when there is a piece at the board positions' do
-      let(:piece) { double('piece') }
-      let(:fen_data) { double('fen_data') }
+      let(:piece) { class_double(Piece, 'piece') }
+      let(:fen_data) { instance_double(FEN, 'fen_data') }
       subject(:game_board) { described_class.new(fen_data: fen_data, piece: piece) }
       before do
         square_to_check = 'E4'
@@ -74,8 +75,8 @@ describe Board do
     end
 
     context 'when there is no piece at the board position' do
-      let(:piece) { double('piece') }
-      let(:fen_data) { double('fen_data') }
+      let(:piece) { class_double(Piece, 'piece') }
+      let(:fen_data) { instance_double(FEN, 'fen_data') }
       subject(:game_board) { described_class.new(fen_data: fen_data, piece: piece) }
       before do
         allow(piece).to receive(:from_fen)

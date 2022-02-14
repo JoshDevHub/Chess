@@ -3,13 +3,15 @@
 require_relative '../../lib/coordinate'
 require_relative '../../lib/move'
 require_relative '../../lib/moves/horizontal_move'
+require_relative '../../lib/piece'
+require_relative '../../lib/board'
 
 describe HorizontalMove do
   describe '#generate_moves' do
     context 'when the piece can only move one square' do
-      let(:piece) { double(line_moves?: false, color: 'black') }
+      let(:piece) { instance_double(Piece, line_moves?: false, color: 'black') }
       context 'when no square is blocked' do
-        let(:board) { double(square_empty?: true) }
+        let(:board) { instance_double(Board, square_empty?: true) }
         subject(:one_mover) { described_class.new(board: board, piece: piece) }
         context 'when the starting square is C3' do
           let(:square) { 'C3' }
@@ -29,8 +31,8 @@ describe HorizontalMove do
       end
 
       context 'when square(s) is blocked' do
-        let(:board) { double(square_empty?: true) }
-        let(:blocking_piece) { double(color: 'black') }
+        let(:board) { instance_double(Board, square_empty?: true) }
+        let(:blocking_piece) { instance_double(Piece, color: 'black') }
         subject(:move_with_blocks) { described_class.new(board: board, piece: piece) }
         context 'when the starting square is B6 with a blocking piece on C6' do
           let(:square) { 'B6' }
@@ -62,9 +64,9 @@ describe HorizontalMove do
     end
 
     context 'when the piece can move in lines' do
-      let(:piece) { double(line_moves?: true) }
+      let(:piece) { instance_double(Piece, line_moves?: true) }
       context 'when no square is blocked' do
-        let(:board) { double(square_empty?: true) }
+        let(:board) { instance_double(Board, square_empty?: true) }
         subject(:line_mover) { described_class.new(board: board, piece: piece) }
         context 'when the starting square is A1' do
           let(:square) { 'A1' }
