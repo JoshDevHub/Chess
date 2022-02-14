@@ -8,9 +8,9 @@ require_relative '../../lib/piece'
 
 describe KnightMove do
   subject(:knight_list) { described_class.new(board: board, piece: piece) }
+  let(:board) { instance_double(Board, square_empty?: true) }
+  let(:piece) { instance_double(Piece, color: 'white', line_moves?: false) }
   context 'when the board is empty do' do
-    let(:board) { instance_double(Board, square_empty?: true) }
-    let(:piece) { instance_double(Piece, 'piece') }
     context 'when the starting square is E4' do
       let(:square) { 'E4' }
       it 'will return a list that contains D6, F6, D2, F2, C5, G5, C3, and G3' do
@@ -37,9 +37,7 @@ describe KnightMove do
   end
 
   context 'when a same-color piece blocks one of the moves squares' do
-    let(:board) { instance_double(Board, square_empty?: true) }
     let(:blocking_piece) { instance_double(Piece, color: 'white') }
-    let(:piece) { instance_double(Piece, 'piece', color: 'white') }
     context 'when the starting square is F5' do
       let(:square) { 'F5' }
       context 'when a piece blocks the move to G7' do
