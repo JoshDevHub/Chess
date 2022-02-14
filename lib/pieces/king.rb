@@ -11,6 +11,8 @@ class King < Piece
     %w[K k].include?(char)
   end
 
+  private
+
   def moves_diagonally?
     true
   end

@@ -11,6 +11,8 @@ class Pawn < Piece
     %w[P p].include?(char)
   end
 
+  private
+
   def moves_up?
     color == 'white' ? true : super
   end

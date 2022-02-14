@@ -11,11 +11,13 @@ class Bishop < Piece
     %w[B b].include?(char)
   end
 
-  def moves_diagonally?
+  def line_moves?
     true
   end
 
-  def line_moves?
+  private
+
+  def moves_diagonally?
     true
   end
 end

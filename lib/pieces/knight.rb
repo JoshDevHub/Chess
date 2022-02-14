@@ -11,6 +11,8 @@ class Knight < Piece
     %w[N n].include?(char)
   end
 
+  private
+
   def knight_moves?
     true
   end

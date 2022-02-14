@@ -31,9 +31,20 @@ class Piece
     raise NotImplementedError
   end
 
+  def implemented_moves
+    %i[moves_diagonally? moves_horizontally? knight_moves? moves_up? moves_down?]
+      .select { |move| send(move) }
+  end
+
   def piece_moved
     @moved = true
   end
+
+  def line_moves?
+    false
+  end
+
+  private
 
   def moves_diagonally?
     false
@@ -52,10 +63,6 @@ class Piece
   end
 
   def moves_down?
-    false
-  end
-
-  def line_moves?
     false
   end
 end

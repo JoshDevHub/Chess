@@ -5,9 +5,10 @@ require_relative '../../lib/pieces/bishop'
 
 describe Bishop do
   subject(:bishop) { described_class.new(color: 'white') }
-  describe '#moves_diagonally?' do
-    it 'returns true' do
-      expect(bishop.moves_diagonally?).to be(true)
+  describe '#implemented_moves' do
+    it 'returns an array with :moves_diagonally?' do
+      moveset = :moves_diagonally?
+      expect(bishop.implemented_moves).to contain_exactly(moveset)
     end
   end
 

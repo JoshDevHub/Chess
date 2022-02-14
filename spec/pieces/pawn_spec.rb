@@ -6,30 +6,19 @@ require_relative '../../lib/pieces/pawn'
 describe Pawn do
   subject(:white_pawn) { described_class.new(color: 'white') }
   subject(:black_pawn) { described_class.new(color: 'black') }
-  describe '#moves_up?' do
+
+  describe '#implemented_moves' do
     context 'when the pawn is a white colored pawn' do
-      it 'returns true' do
-        expect(white_pawn.moves_up?).to be(true)
+      it 'returns an array with :moves_up?' do
+        moveset = :moves_up?
+        expect(white_pawn.implemented_moves).to contain_exactly(moveset)
       end
     end
 
     context 'when the pawn is a black colored pawn' do
-      it 'returns false' do
-        expect(black_pawn.moves_up?).to be(false)
-      end
-    end
-  end
-
-  describe '#moves_down?' do
-    context 'when the pawn is a white colored pawn' do
-      it 'returns false' do
-        expect(white_pawn.moves_down?).to be(false)
-      end
-    end
-
-    context 'when the pawn is a black colored pawn' do
-      it 'returns true' do
-        expect(black_pawn.moves_down?).to be(true)
+      it 'returns an array with :moves_down?' do
+        moveset = :moves_down?
+        expect(black_pawn.implemented_moves).to contain_exactly(moveset)
       end
     end
   end

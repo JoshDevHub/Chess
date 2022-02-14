@@ -11,6 +11,12 @@ class Queen < Piece
     %w[Q q].include?(char)
   end
 
+  def line_moves?
+    true
+  end
+
+  private
+
   def moves_diagonally?
     true
   end
@@ -24,10 +30,6 @@ class Queen < Piece
   end
 
   def moves_down?
-    true
-  end
-
-  def line_moves?
     true
   end
 end

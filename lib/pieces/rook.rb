@@ -11,6 +11,12 @@ class Rook < Piece
     %w[R r].include?(char)
   end
 
+  def line_moves?
+    true
+  end
+
+  private
+
   def moves_horizontally?
     true
   end
@@ -20,10 +26,6 @@ class Rook < Piece
   end
 
   def moves_down?
-    true
-  end
-
-  def line_moves?
     true
   end
 end

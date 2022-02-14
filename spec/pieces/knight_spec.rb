@@ -5,9 +5,10 @@ require_relative '../../lib/pieces/knight'
 
 describe Knight do
   subject(:knight) { described_class.new(color: 'black') }
-  describe '#knight_moves?' do
-    it 'returns true' do
-      expect(knight.knight_moves?).to be(true)
+  describe '#implemented_moves' do
+    it 'returns an array with :knight_moves?' do
+      moveset = :knight_moves?
+      expect(knight.implemented_moves).to contain_exactly(moveset)
     end
   end
 end
