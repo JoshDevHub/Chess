@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # class to hold logic for the chess board
-class ChessBoard
+class Board
   include Coordinate
 
   attr_reader :game_board

@@ -3,7 +3,7 @@
 require_relative '../lib/coordinate'
 require_relative '../lib/board'
 
-describe ChessBoard do
+describe Board do
   describe '#initialize' do
     let(:fen_data) { double('fen_data') }
     let(:piece) { double('piece') }
