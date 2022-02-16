@@ -18,6 +18,13 @@ class Board
     game_board[y][x]
   end
 
+  def color_at(square_name)
+    return nil if square_empty?(square_name)
+
+    x, y = to_xy_coordinate(square_name)
+    game_board[y][x].color
+  end
+
   def square_empty?(square_name)
     x, y = to_xy_coordinate(square_name)
     game_board[y][x].nil?

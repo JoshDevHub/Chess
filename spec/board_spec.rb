@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../lib/coordinate'
+require_relative '../lib/fen'
 require_relative '../lib/board'
 require_relative '../lib/piece'
 
@@ -55,6 +56,34 @@ describe Board do
       end
       it 'returns nil for that position' do
         expect(searchable_board.piece_at('C6')).to be(nil)
+      end
+    end
+  end
+
+  describe '#color_at' do
+    let(:piece) { class_double(Piece, 'piece') }
+    let(:fen_data) { instance_double(FEN, 'fen_data') }
+    subject(:board) { described_class.new(fen_data: fen_data, piece: piece) }
+    context 'when the position on the board is empty' do
+      before do
+        square_to_check = 'B5'
+        allow(piece).to receive(:from_fen).and_return(nil)
+        allow(fen_data).to receive(:square_info).and_return(square_to_check)
+      end
+      it 'returns nil for the empty position' do
+        expect(board.color_at('B5')).to be(nil)
+      end
+    end
+
+    context 'when the position has a black piece' do
+      let(:black_piece) { instance_double(Piece, color: 'black') }
+      before do
+        square_to_check = 'C5'
+        allow(piece).to receive(:from_fen).and_return(black_piece)
+        allow(fen_data).to receive(:square_info).and_return(square_to_check)
+      end
+      it 'returns back for the position' do
+        expect(board.color_at('C5')).to be('black')
       end
     end
   end
