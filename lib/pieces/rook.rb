@@ -2,7 +2,7 @@
 
 # Rook subclass to model behavior of the Rook chess piece
 class Rook < Piece
-  def initialize(color:)
+  def initialize(color:, position:)
     super
     @name = 'rook'
   end
@@ -11,21 +11,18 @@ class Rook < Piece
     %w[R r].include?(char)
   end
 
-  def line_moves?
-    true
+  def moveset
+    [
+      %i[up],
+      %i[down],
+      %i[left],
+      %i[right]
+    ]
   end
 
   private
 
-  def moves_horizontally?
-    true
-  end
-
-  def moves_up?
-    true
-  end
-
-  def moves_down?
+  def line_moves?
     true
   end
 end
