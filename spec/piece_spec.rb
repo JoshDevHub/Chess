@@ -3,6 +3,8 @@
 require_relative '../lib/coordinate'
 require_relative '../lib/piece'
 Dir[File.join(__dir__, '../lib/pieces', '*.rb')].sort.each { |file| require file }
+require_relative '../lib/pieces/pawns/white_pawn'
+require_relative '../lib/pieces/pawns/black_pawn'
 
 describe Piece do
   describe '#self.from_fen' do

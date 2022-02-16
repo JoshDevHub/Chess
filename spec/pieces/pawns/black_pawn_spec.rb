@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative '../../lib/coordinate'
-require_relative '../../lib/board'
-require_relative '../../lib/piece'
-require_relative '../../lib/pieces/pawn'
-require_relative '../../lib/pieces/black_pawn'
+require_relative '../../../lib/coordinate'
+require_relative '../../../lib/board'
+require_relative '../../../lib/piece'
+require_relative '../../../lib/pieces/pawn'
+require_relative '../../../lib/pieces/pawns/black_pawn'
 
 describe BlackPawn do
   let(:board) { instance_double(Board, square_empty?: true, piece_at: nil, color_at: nil) }
