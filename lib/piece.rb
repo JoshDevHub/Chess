@@ -2,17 +2,30 @@
 
 # Parent Piece class for game pieces to inherit from
 class Piece
-  attr_reader :color, :name, :moved
+  attr_reader :color, :name, :moved, :implemented_moves
 
-  def initialize(color:)
+  include Coordinate
+
+  def initialize(color:, position:)
     raise NotImplementedError unless COLORS.include?(color)
 
     @color = color
+    @position = position
     @name = 'piece'
     @moved = false
   end
 
   COLORS = %w[white black].freeze
+
+  MOVESET = [].freeze
+
+  def generate_moves(board)
+    move_list = []
+    self.class::MOVESET.each do |move|
+      move_list += path_from(move, board)
+    end
+    move_list
+  end
 
   def to_s
     "#{color} #{name}"
@@ -31,38 +44,32 @@ class Piece
     raise NotImplementedError
   end
 
-  def implemented_moves
-    %i[moves_diagonally? moves_horizontally? knight_moves? moves_up? moves_down?]
-      .select { |move| send(move) }
-  end
-
   def piece_moved
     @moved = true
   end
 
-  def line_moves?
-    false
-  end
-
   private
 
-  def moves_diagonally?
-    false
+  def legal_move?(move, board)
+    valid_square?(move) && (board.square_empty?(move) || board.piece_at(move).color == opponent_color)
   end
 
-  def moves_horizontally?
-    false
+  def path_from(move, board)
+    path = []
+    current_square = @position
+    loop do
+      new_move = move.reduce(current_square) { |current, step| send(step, current) }
+      break unless legal_move?(new_move, board)
+
+      path << new_move
+      break unless line_moves?
+
+      current_square = new_move
+    end
+    path
   end
 
-  def knight_moves?
-    false
-  end
-
-  def moves_up?
-    false
-  end
-
-  def moves_down?
+  def line_moves?
     false
   end
 end
