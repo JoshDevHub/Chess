@@ -30,7 +30,7 @@ class Board
       Array.new(WIDTH) do |file|
         square_name = to_square_notation([file, rank])
         square_fen = fen_data.square_info(square_name)
-        square_fen.nil? ? square_fen : piece.from_fen(square_fen)
+        square_fen.nil? ? square_fen : piece.from_fen(square_fen, square_name)
       end
     end
   end
