@@ -2,7 +2,7 @@
 
 # Pawn subclass to model behavior of the Pawn chess piece
 class Pawn < Piece
-  def initialize(color:)
+  def initialize(color:, position:)
     super
     @name = 'pawn'
   end
@@ -11,13 +11,9 @@ class Pawn < Piece
     %w[P p].include?(char)
   end
 
-  private
-
-  def moves_up?
-    color == 'white' ? true : super
-  end
-
-  def moves_down?
-    color == 'white' ? super : true
+  def moveset
+    moves = []
+    color == 'white' ? moves.push(%i[up]) : moves.push(%i[down])
+    moves
   end
 end
