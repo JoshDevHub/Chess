@@ -17,11 +17,13 @@ class Piece
 
   COLORS = %w[white black].freeze
 
-  MOVESET = [].freeze
+  def moveset
+    []
+  end
 
   def generate_moves(board)
     move_list = []
-    self.class::MOVESET.each do |move|
+    moveset.each do |move|
       move_list += path_from(move, board)
     end
     move_list

@@ -7,16 +7,18 @@ class Knight < Piece
     @name = 'knight'
   end
 
-  MOVESET = [
-    %i[up up right],
-    %i[up up left],
-    %i[down down right],
-    %i[down down left],
-    %i[left left up],
-    %i[left left down],
-    %i[right right up],
-    %i[right right down]
-  ].freeze
+  def moveset
+    [
+      %i[up up right],
+      %i[up up left],
+      %i[down down right],
+      %i[down down left],
+      %i[left left up],
+      %i[left left down],
+      %i[right right up],
+      %i[right right down]
+    ]
+  end
 
   def self.handles_notation?(char)
     %w[N n].include?(char)

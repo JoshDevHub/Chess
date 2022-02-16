@@ -7,12 +7,14 @@ class Bishop < Piece
     @name = 'bishop'
   end
 
-  MOVESET = [
-    %i[up right],
-    %i[up left],
-    %i[down left],
-    %i[down right]
-  ].freeze
+  def moveset
+    [
+      %i[up right],
+      %i[up left],
+      %i[down left],
+      %i[down right]
+    ]
+  end
 
   def self.handles_notation?(char)
     %w[B b].include?(char)
