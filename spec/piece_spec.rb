@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative '../lib/coordinate'
 require_relative '../lib/piece'
 Dir[File.join(__dir__, '../lib/pieces', '*.rb')].sort.each { |file| require file }
 
@@ -23,6 +24,15 @@ describe Piece do
       end
     end
 
+    context 'when a piece is a black pawn' do
+      it 'creates a BlackPawn subclass' do
+        piece_fen = 'p'
+        square = 'G7'
+        subclass = described_class.from_fen(piece_fen, square)
+        expect(subclass).to be_a(BlackPawn)
+      end
+    end
+
     context 'when the piece does not exist' do
       it 'raises a NotImplementedError' do
         piece_fen = 'Z'
@@ -37,7 +47,7 @@ describe Piece do
       it 'does not raise an error' do
         color = 'white'
         square = 'B1'
-        expect { described_class.new(color: color, position: square) }.to_not raise_error(NotImplementedError)
+        expect { described_class.new(color: color, position: square) }.to_not raise_error
       end
     end
 
