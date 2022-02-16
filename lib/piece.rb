@@ -37,10 +37,10 @@ class Piece
     color == 'white' ? 'black' : 'white'
   end
 
-  def self.from_fen(char)
+  def self.from_fen(char, square)
     color = char == char.upcase ? 'white' : 'black'
-    [King, Queen, Rook, Bishop, Knight, Pawn]
-      .find { |piece_type| piece_type.handles_notation?(char) }.new(color: color)
+    [King, Queen, Rook, Bishop, Knight, WhitePawn, BlackPawn]
+      .find { |piece_type| piece_type.handles_notation?(char) }.new(color: color, position: square)
   rescue NoMethodError
     puts 'This piece is not supported'
     raise NotImplementedError
