@@ -2,34 +2,31 @@
 
 # Queen subclass to model behavior of the Queen chess piece
 class Queen < Piece
-  def initialize(color:)
+  def initialize(color:, position:)
     super
     @name = 'queen'
+  end
+
+  def moveset
+    [
+      %i[up],
+      %i[down],
+      %i[left],
+      %i[right],
+      %i[up left],
+      %i[up right],
+      %i[down left],
+      %i[down right]
+    ]
   end
 
   def self.handles_notation?(char)
     %w[Q q].include?(char)
   end
 
-  def line_moves?
-    true
-  end
-
   private
 
-  def moves_diagonally?
-    true
-  end
-
-  def moves_horizontally?
-    true
-  end
-
-  def moves_up?
-    true
-  end
-
-  def moves_down?
+  def line_moves?
     true
   end
 end
