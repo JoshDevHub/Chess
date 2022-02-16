@@ -3,10 +3,11 @@
 require_relative '../../lib/coordinate'
 require_relative '../../lib/board'
 require_relative '../../lib/piece'
+require_relative '../../lib/pieces/pawn'
 require_relative '../../lib/pieces/white_pawn'
 
 describe WhitePawn do
-  let(:board) { instance_double(Board, square_empty?: true) }
+  let(:board) { instance_double(Board, square_empty?: true, color_at: nil) }
   subject(:white_pawn) { described_class.new(color: 'white', position: square) }
   describe '#generate_moves' do
     context 'when the @moved instance var has been set true' do
@@ -78,6 +79,22 @@ describe WhitePawn do
           it 'returns an empty list' do
             expect(white_pawn.generate_moves(board)).to be_empty
           end
+        end
+      end
+    end
+
+    context 'when a piece is available for capture' do
+      let(:opponent_color) { 'black' }
+      context 'when the square is F3 and a black piece is on G4' do
+        let(:square) { 'F3' }
+        before do
+          allow(board).to receive(:square_empty?).with('G4').and_return(false)
+          allow(board).to receive(:color_at).with('G4').and_return(opponent_color)
+        end
+        it 'returns a list containing B4 and C4' do
+          moves = %w[F4 G4]
+          white_pawn.piece_moved
+          expect(white_pawn.generate_moves(board)).to contain_exactly(*moves)
         end
       end
     end
