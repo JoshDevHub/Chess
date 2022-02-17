@@ -6,14 +6,21 @@ class FEN
 
   attr_reader :fen_string
 
-  def initialize(fen_string)
+  def initialize(fen_string, piece)
     @fen_string = fen_string
+    @piece = piece
   end
 
-  def square_info(square)
-    board_rep = fen_string.split(' ')[0].chars.map(&empty_expand).join('').split('/')
-    x, y = to_xy_coordinate(square)
-    board_rep[y][x] == '.' ? nil : board_rep[y][x]
+  def piece_info
+    info = fen_string.split(' ')[0].chars.map(&empty_expand).join('').split('/')
+    pieces = []
+    info.each_with_index do |rank, y|
+      rank.each_char.with_index do |chr, x|
+        square_name = to_square_notation([x, y])
+        pieces << @piece.from_fen(chr, square_name) unless chr == '.'
+      end
+    end
+    pieces
   end
 
   def active_color

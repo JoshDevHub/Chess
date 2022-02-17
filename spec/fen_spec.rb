@@ -1,28 +1,38 @@
 # frozen_string_literal: true
 
 require_relative '../lib/coordinate'
+require_relative '../lib/piece'
 require_relative '../lib/fen'
 
 describe FEN do
-  describe '#square_info' do
+  describe '#piece_info' do
     context 'when the board is the starting board' do
-      let(:starting_fen) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1' }
-      subject(:starting_board) { described_class.new(starting_fen) }
-      it 'returns a lowercase r when the given square is A8' do
-        square = 'A8'
-        fen_char = 'r'
-        expect(starting_board.square_info(square)).to eq(fen_char)
+      let(:starting_string) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1' }
+      let(:piece) { class_double(Piece) }
+      subject(:starting_board) { described_class.new(starting_string, piece) }
+
+      before do
+        allow(piece).to receive(:from_fen)
       end
 
-      it 'retruns a white pawn when the given square is E2' do
-        square = 'E2'
-        fen_char = 'P'
-        expect(starting_board.square_info(square)).to eq(fen_char)
+      it 'sends Piece #from_fen exactly 32 times' do
+        expect(piece).to receive(:from_fen).exactly(32).times
+        starting_board.piece_info
       end
 
-      it 'returns nil when the given square is D4' do
-        square = 'D4'
-        expect(starting_board.square_info(square)).to be(nil)
+      it 'sends Piece #from_fen with r and A8' do
+        expect(piece).to receive(:from_fen).with('r', 'A8')
+        starting_board.piece_info
+      end
+
+      it 'sends Piece #from_fen with K and D1' do
+        expect(piece).to receive(:from_fen).with('K', 'E1')
+        starting_board.piece_info
+      end
+
+      it 'does not send Piece #from_fen with p and G4' do
+        expect(piece).not_to receive(:from_fen).with('p', 'G4')
+        starting_board.piece_info
       end
     end
   end
