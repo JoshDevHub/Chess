@@ -88,6 +88,43 @@ describe Board do
     end
   end
 
+  describe '#move_piece' do
+    context 'when there is no piece at the position' do
+      let(:piece) { class_double(Piece, 'piece') }
+      let(:fen_data) { instance_double(FEN, 'fen_data') }
+      subject(:game_board) { described_class.new(fen_data: fen_data, piece: piece) }
+      before do
+        allow(piece).to receive(:from_fen)
+        allow(fen_data).to receive(:square_info)
+      end
+
+      it 'raises a NoMethodError' do
+        starting = 'D1'
+        target = 'D2'
+        expect { game_board.move_piece(starting, target) }.to raise_error(NoMethodError)
+      end
+    end
+
+    context 'when there is a piece at the position' do
+      let(:piece) { class_double(Piece, 'piece') }
+      let(:piece_instance) { instance_double(Piece, 'piece_instance') }
+      let(:fen_data) { instance_double(FEN, 'fen_data') }
+      subject(:game_board) { described_class.new(fen_data: fen_data, piece: piece) }
+      before do
+        starting_square = 'F5'
+        allow(piece).to receive(:from_fen).and_return(piece_instance)
+        allow(fen_data).to receive(:square_info).and_return(starting_square)
+      end
+
+      it 'sends a new position message to the piece at the given square' do
+        starting_square = 'F5'
+        new_square = 'F6'
+        expect(piece_instance).to receive(:position=).with(new_square)
+        game_board.move_piece(starting_square, new_square)
+      end
+    end
+  end
+
   describe '#square_empty?' do
     context 'when there is a piece at the board positions' do
       let(:piece) { class_double(Piece, 'piece') }

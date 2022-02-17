@@ -25,6 +25,10 @@ class Board
     game_board[y][x].color
   end
 
+  def move_piece(current_square, new_square)
+    piece_at(current_square).position = new_square
+  end
+
   def square_empty?(square_name)
     x, y = to_xy_coordinate(square_name)
     game_board[y][x].nil?
