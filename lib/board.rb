@@ -13,6 +13,17 @@ class Board
   HEIGHT = 8
   WIDTH = 8
 
+  def to_s
+    board_array = @game_board.flatten.map { |square| square.nil? ? ' ' : square.to_s }
+    row_separator = '  |---+---+---+---+---+---+---+---|'
+    board_string = ''
+    board_array.each_slice(WIDTH).with_index do |row, i|
+      board_string += "#{RANK_NAMES[i]} | #{row.join(' | ')} |\n#{row_separator}\n"
+    end
+    board_string += '    A   B   C   D   E   F   G   H  '
+    board_string
+  end
+
   def piece_at(square_name)
     x, y = to_xy_coordinate(square_name)
     game_board[y][x]
