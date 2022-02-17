@@ -2,7 +2,9 @@
 
 # Parent Piece class for game pieces to inherit from
 class Piece
-  attr_reader :color, :name, :moved, :implemented_moves
+  attr_accessor :position
+
+  attr_reader :color, :name, :moved
 
   include Coordinate
 
