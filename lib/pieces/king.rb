@@ -23,4 +23,8 @@ class King < Piece
   def self.handles_notation?(char)
     %w[K k].include?(char)
   end
+
+  def to_s
+    color == 'white' ? "\u2654" : "\u265A"
+  end
 end

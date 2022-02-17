@@ -24,6 +24,10 @@ class Queen < Piece
     %w[Q q].include?(char)
   end
 
+  def to_s
+    color == 'white' ? "\u2655" : "\u265A"
+  end
+
   private
 
   def line_moves?

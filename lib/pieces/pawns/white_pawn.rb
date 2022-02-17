@@ -13,4 +13,8 @@ class WhitePawn < Pawn
   def self.handles_notation?(char)
     char == 'P'
   end
+
+  def to_s
+    "\u2659"
+  end
 end

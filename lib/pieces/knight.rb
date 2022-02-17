@@ -23,4 +23,8 @@ class Knight < Piece
   def self.handles_notation?(char)
     %w[N n].include?(char)
   end
+
+  def to_s
+    color == 'white' ? "\u2658" : "\u265E"
+  end
 end

@@ -13,4 +13,8 @@ class BlackPawn < Pawn
   def self.handles_notation?(char)
     char == 'p'
   end
+
+  def to_s
+    "\u265F"
+  end
 end

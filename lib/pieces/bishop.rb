@@ -20,6 +20,12 @@ class Bishop < Piece
     %w[B b].include?(char)
   end
 
+  def to_s
+    color == 'white' ? "\u2657" : "\u265D"
+  end
+
+  private
+
   def line_moves?
     true
   end
