@@ -4,14 +4,21 @@
 class Board
   include Coordinate
 
-  attr_reader :game_board
-
-  def initialize(fen_data:, piece:)
-    @game_board = create_board(fen_data, piece)
+  def initialize
+    @game_board = Array.new(HEIGHT) { Array.new(WIDTH) }
   end
 
   HEIGHT = 8
   WIDTH = 8
+
+  def self.from_fen(fen_data:)
+    board = Board.new
+    fen_data.each do |piece|
+      piece_square = piece.position
+      board.add_piece(piece, piece_square)
+    end
+    board
+  end
 
   def to_s
     board_array = @game_board.flatten.map { |square| square.nil? ? ' ' : square.to_s }
@@ -24,36 +31,42 @@ class Board
     board_string
   end
 
+  def add_piece(piece, square_name)
+    x, y = to_xy_coordinate(square_name)
+    @game_board[y][x] = piece
+  end
+
   def piece_at(square_name)
     x, y = to_xy_coordinate(square_name)
-    game_board[y][x]
+    @game_board[y][x]
   end
 
   def color_at(square_name)
     return nil if square_empty?(square_name)
 
     x, y = to_xy_coordinate(square_name)
-    game_board[y][x].color
+    @game_board[y][x].color
   end
 
   def move_piece(current_square, new_square)
-    piece_at(current_square).position = new_square
+    return nil if square_empty?(current_square)
+
+    piece_to_move = remove_piece(current_square)
+    piece_to_move.position = new_square
+    add_piece(piece_to_move, new_square)
+  end
+
+  def remove_piece(square_name)
+    return nil if square_empty?(square_name)
+
+    piece_to_remove = piece_at(square_name)
+    x, y = to_xy_coordinate(square_name)
+    @game_board[y][x] = nil
+    piece_to_remove
   end
 
   def square_empty?(square_name)
     x, y = to_xy_coordinate(square_name)
-    game_board[y][x].nil?
-  end
-
-  private
-
-  def create_board(fen_data, piece)
-    Array.new(HEIGHT) do |rank|
-      Array.new(WIDTH) do |file|
-        square_name = to_square_notation([file, rank])
-        square_fen = fen_data.square_info(square_name)
-        square_fen.nil? ? square_fen : piece.from_fen(square_fen, square_name)
-      end
-    end
+    @game_board[y][x].nil?
   end
 end
