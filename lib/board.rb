@@ -32,20 +32,17 @@ class Board
   end
 
   def add_piece(piece, square_name)
-    x, y = to_xy_coordinate(square_name)
-    @game_board[y][x] = piece
+    change_board_at_square(square_name, piece)
   end
 
   def piece_at(square_name)
-    x, y = to_xy_coordinate(square_name)
-    @game_board[y][x]
+    read_board_from_square(square_name)
   end
 
   def color_at(square_name)
     return nil if square_empty?(square_name)
 
-    x, y = to_xy_coordinate(square_name)
-    @game_board[y][x].color
+    read_board_from_square(square_name).color
   end
 
   def move_piece(current_square, new_square)
@@ -60,13 +57,23 @@ class Board
     return nil if square_empty?(square_name)
 
     piece_to_remove = piece_at(square_name)
-    x, y = to_xy_coordinate(square_name)
-    @game_board[y][x] = nil
+    change_board_at_square(square_name, nil)
     piece_to_remove
   end
 
   def square_empty?(square_name)
+    read_board_from_square(square_name).nil?
+  end
+
+  private
+
+  def read_board_from_square(square_name)
     x, y = to_xy_coordinate(square_name)
-    @game_board[y][x].nil?
+    @game_board[y][x]
+  end
+
+  def change_board_at_square(square_name, new_value)
+    x, y = to_xy_coordinate(square_name)
+    @game_board[y][x] = new_value
   end
 end
