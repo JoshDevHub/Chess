@@ -35,6 +35,25 @@ describe FEN do
         starting_board.piece_info
       end
     end
+
+    context 'when the fen string is random' do
+      let(:random_fen) { '5b2/7P/r1p5/3bnP1Q/1kP1p3/3r4/4BP1K/2R5 w - - 0 1' }
+      subject(:fen_data) { described_class.new(random_fen, piece) }
+
+      before do
+        allow(piece).to receive(:from_fen)
+      end
+
+      it 'sends Piece #from_fen exactly 16 times' do
+        expect(piece).to receive(:from_fen).exactly(16).times
+        fen_data.piece_info
+      end
+
+      it 'sends Piece #from_fen with R and C1' do
+        expect(piece).to receive(:from_fen).with('R', 'C1')
+        fen_data.piece_info
+      end
+    end
   end
 
   describe '#active_color' do
