@@ -24,7 +24,8 @@ class FEN
   end
 
   def active_color
-    # placeholder
+    color_info = fen_string.split(' ')[1]
+    color_info == 'w' ? 'white' : 'black'
   end
 
   def castle_info
