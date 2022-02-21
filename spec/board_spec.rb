@@ -193,4 +193,35 @@ describe Board do
       end
     end
   end
+
+  describe '#find_king' do
+    subject(:game_board) { described_class.new }
+    context "when a white piece with the name 'king' is on E1" do
+      let(:king) { instance_double(Piece, name: 'king', color: 'white', position: 'E1') }
+      let(:square) { 'E1' }
+      before do
+        game_board.add_piece(king, 'E1')
+      end
+
+      it 'returns E1' do
+        expect(game_board.find_king('white')).to be(square)
+      end
+    end
+
+    context 'when there is a white piece with the name bishop on B1' do
+      context "when there is a white piece with the name 'king' on H1" do
+        let(:decoy) { instance_double(Piece, name: 'bishop', color: 'white', position: 'B1') }
+        let(:king) { instance_double(Piece, name: 'king', color: 'white', position: 'H1') }
+        let(:square) { 'H1' }
+        before do
+          game_board.add_piece(decoy, 'B1')
+          game_board.add_piece(king, 'H1')
+        end
+
+        it 'returns H1' do
+          expect(game_board.find_king('white')).to be(square)
+        end
+      end
+    end
+  end
 end

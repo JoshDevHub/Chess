@@ -65,6 +65,13 @@ class Board
     read_board_from_square(square_name).nil?
   end
 
+  def find_king(color)
+    king = @game_board.flatten
+                      .compact
+                      .find { |piece| piece.name == 'king' && piece.color == color }
+    king.position
+  end
+
   private
 
   def read_board_from_square(square_name)
