@@ -2,7 +2,7 @@
 
 # class for handling game's Players
 class Player
-  attr_reader :color
+  attr_reader :piece_color
 
   def initialize(color:)
     @name = "Player with #{color}"
