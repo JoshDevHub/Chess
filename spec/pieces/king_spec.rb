@@ -28,12 +28,12 @@ describe King do
     end
 
     context 'when a square is blocked by a friendly piece' do
-      let(:blocking_piece) { instance_double(Piece, color: 'black') }
+      let(:block_color) { 'black' }
       context 'when the starting square is B6 and C7 is blocked' do
         let(:square) { 'B6' }
         before do
           allow(board).to receive(:square_empty?).with('C7').and_return(false)
-          allow(board).to receive(:piece_at).with('C7').and_return(blocking_piece)
+          allow(board).to receive(:color_at).with('C7').and_return(block_color)
         end
         it 'returns a list containing B7, C6, C5, B5, A5, A6, and A7' do
           moves = %w[B7 C6 C5 B5 A5 A6 A7]

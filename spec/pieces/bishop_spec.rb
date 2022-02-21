@@ -28,12 +28,12 @@ describe Bishop do
     end
 
     context 'when potential moves are blocked' do
-      let(:blocking_piece) { instance_double(Piece, color: 'white') }
+      let(:block_color) { 'white' }
       context 'when the origin square is B4 with a blocking piece on C5' do
         let(:square) { 'B4' }
         before do
           allow(board).to receive(:square_empty?).with('C5').and_return(false)
-          allow(board).to receive(:piece_at).with('C5').and_return(blocking_piece)
+          allow(board).to receive(:color_at).with('C5').and_return(block_color)
         end
 
         it 'returns a list containing A5, A3, C3, D2, and E1' do
@@ -46,7 +46,7 @@ describe Bishop do
         let(:square) { 'H8' }
         before do
           allow(board).to receive(:square_empty?).with('E5').and_return(false)
-          allow(board).to receive(:piece_at).with('E5').and_return(blocking_piece)
+          allow(board).to receive(:color_at).with('E5').and_return(block_color)
         end
 
         it 'returns a list containing G7 and F6' do

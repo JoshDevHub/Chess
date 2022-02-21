@@ -21,15 +21,15 @@ describe Queen do
     end
 
     context 'when a friendly piece is blocking' do
-      let(:blocking_piece) { instance_double(Piece, color: 'white') }
+      let(:block_color) { 'white' }
       context 'when the starting square is E4 and F5 and E6 are blocked' do
         let(:square) { 'E4' }
         before do
           allow(board).to receive(:square_empty?).with('F5').and_return(false)
-          allow(board).to receive(:piece_at).with('F5').and_return(blocking_piece)
+          allow(board).to receive(:color_at).with('F5').and_return(block_color)
 
           allow(board).to receive(:square_empty?).with('E6').and_return(false)
-          allow(board).to receive(:piece_at).with('E6').and_return(blocking_piece)
+          allow(board).to receive(:color_at).with('E6').and_return(block_color)
         end
         it 'returns a list containing E3 E2 E1 F3 G2 H1 D3 C2 B1 D4 C4 B4 A4 F4
           G4 H4 E5 D5 C6 B7 and A8' do

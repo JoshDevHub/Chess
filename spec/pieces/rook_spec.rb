@@ -21,15 +21,15 @@ describe Rook do
     end
 
     context 'when friendly pieces are blocking squares' do
-      let(:blocking_piece) { instance_double(Piece, color: 'black') }
+      let(:block_color) { 'black' }
       context 'when the starting square is C6 and B6 and D6 are blocked' do
         let(:square) { 'C6' }
         before do
           allow(board).to receive(:square_empty?).with('B6').and_return(false)
-          allow(board).to receive(:piece_at).with('B6').and_return(blocking_piece)
+          allow(board).to receive(:color_at).with('B6').and_return(block_color)
 
           allow(board).to receive(:square_empty?).with('D6').and_return(false)
-          allow(board).to receive(:piece_at).with('D6').and_return(blocking_piece)
+          allow(board).to receive(:color_at).with('D6').and_return(block_color)
         end
 
         it 'returns a list containing C7, C8, C5, C4, C3, C2, and C1' do

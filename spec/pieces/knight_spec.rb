@@ -39,13 +39,13 @@ describe Knight do
     end
 
     context 'when a same-color piece blocks one of the move squares' do
-      let(:blocking_piece) { instance_double(Piece, color: 'black') }
+      let(:block_color) { 'black' }
       context 'when the starting square is F5 and G7 is blocked' do
         let(:square) { 'F5' }
 
         before do
           allow(board).to receive(:square_empty?).with('G7').and_return(false)
-          allow(board).to receive(:piece_at).with('G7').and_return(blocking_piece)
+          allow(board).to receive(:color_at).with('G7').and_return(block_color)
         end
 
         it 'will return a list that contains H6, E7, D6, D4, E3, G3, and H4' do

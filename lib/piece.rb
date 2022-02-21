@@ -55,7 +55,7 @@ class Piece
   private
 
   def legal_move?(move, board)
-    valid_square?(move) && (board.square_empty?(move) || board.piece_at(move).color == opponent_color)
+    valid_square?(move) && (board.square_empty?(move) || board.color_at(move) == opponent_color)
   end
 
   def path_from(move, board)
