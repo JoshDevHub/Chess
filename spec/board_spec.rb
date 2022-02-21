@@ -194,33 +194,37 @@ describe Board do
     end
   end
 
-  describe '#find_king' do
+  describe '#in_check' do
     subject(:game_board) { described_class.new }
-    context "when a white piece with the name 'king' is on E1" do
-      let(:king) { instance_double(Piece, name: 'king', color: 'white', position: 'E1') }
-      let(:square) { 'E1' }
+    context 'when a white king is in check to a black piece' do
+      let(:check_square) { 'E1' }
+      let(:king) { instance_double(Piece, name: 'king', color: 'white', position: check_square) }
+      let(:black_piece) { instance_double(Piece, name: 'piece', color: 'black') }
       before do
-        game_board.add_piece(king, 'E1')
+        game_board.add_piece(black_piece, 'A1')
+        game_board.add_piece(king, check_square)
+
+        allow(black_piece).to receive(:generate_moves).with(game_board).and_return([check_square])
       end
 
-      it 'returns E1' do
-        expect(game_board.find_king('white')).to be(square)
+      it 'returns true' do
+        expect(game_board.in_check?('white')).to be(true)
       end
     end
 
-    context 'when there is a white piece with the name bishop on B1' do
-      context "when there is a white piece with the name 'king' on H1" do
-        let(:decoy) { instance_double(Piece, name: 'bishop', color: 'white', position: 'B1') }
-        let(:king) { instance_double(Piece, name: 'king', color: 'white', position: 'H1') }
-        let(:square) { 'H1' }
-        before do
-          game_board.add_piece(decoy, 'B1')
-          game_board.add_piece(king, 'H1')
-        end
+    context 'when a white king is not in check' do
+      let(:king_square) { 'E1' }
+      let(:king) { instance_double(Piece, name: 'king', color: 'white', position: king_square) }
+      let(:black_piece) { instance_double(Piece, name: 'piece', color: 'black') }
+      before do
+        game_board.add_piece(black_piece, 'A1')
+        game_board.add_piece(king, king_square)
 
-        it 'returns H1' do
-          expect(game_board.find_king('white')).to be(square)
-        end
+        allow(black_piece).to receive(:generate_moves).with(game_board).and_return(['B1'])
+      end
+
+      it 'returns false' do
+        expect(game_board.in_check?('white')).to be(false)
       end
     end
   end

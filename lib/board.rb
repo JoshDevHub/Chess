@@ -65,11 +65,12 @@ class Board
     read_board_from_square(square_name).nil?
   end
 
-  def find_king(color)
-    king = @game_board.flatten
-                      .compact
-                      .find { |piece| piece.name == 'king' && piece.color == color }
-    king.position
+  def in_check?(color)
+    king_square = find_king(color)
+    opposing_color = color == 'white' ? 'black' : 'white'
+    opposing_pieces = all_pieces_of_color(opposing_color)
+    all_opposing_moves = opposing_pieces.map { |piece| piece.generate_moves(self) }.flatten
+    all_opposing_moves.include?(king_square)
   end
 
   private
@@ -82,5 +83,16 @@ class Board
   def change_board_at_square(square_name, new_value)
     x, y = to_xy_coordinate(square_name)
     @game_board[y][x] = new_value
+  end
+
+  def find_king(color)
+    king = @game_board.flatten
+                      .compact
+                      .find { |piece| piece.name == 'king' && piece.color == color }
+    king.position
+  end
+
+  def all_pieces_of_color(color)
+    @game_board.flatten.compact.select { |piece| piece.color == color }
   end
 end
