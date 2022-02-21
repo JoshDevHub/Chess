@@ -22,6 +22,10 @@ class Pawn < Piece
 
   private
 
+  def legal_move?(move, board)
+    valid_square?(move) && board.square_empty?(move)
+  end
+
   def double_move(board)
     move_list = []
     first_move = send(moveset, @position)

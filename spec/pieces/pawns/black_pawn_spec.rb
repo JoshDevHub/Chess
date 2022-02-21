@@ -90,6 +90,26 @@ describe BlackPawn do
           expect(black_pawn.generate_moves(board)).to contain_exactly(*moves)
         end
       end
+
+      context 'when the square is C5 with white pieces on C4, B4, and D4' do
+        let(:square) { 'C5' }
+        before do
+          allow(board).to receive(:square_empty?).with('C4').and_return(false)
+          allow(board).to receive(:color_at).with('C4').and_return(opponent_color)
+
+          allow(board).to receive(:square_empty?).with('B4').and_return(false)
+          allow(board).to receive(:color_at).with('B4').and_return(opponent_color)
+
+          allow(board).to receive(:square_empty?).with('D4').and_return(false)
+          allow(board).to receive(:color_at).with('D4').and_return(opponent_color)
+        end
+
+        it 'returns a list containing B4 and D4' do
+          moves = %w[B4 D4]
+          black_pawn.piece_moved
+          expect(black_pawn.generate_moves(board)).to contain_exactly(*moves)
+        end
+      end
     end
   end
 end

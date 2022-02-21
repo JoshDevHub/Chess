@@ -91,10 +91,27 @@ describe WhitePawn do
           allow(board).to receive(:square_empty?).with('G4').and_return(false)
           allow(board).to receive(:color_at).with('G4').and_return(opponent_color)
         end
-        it 'returns a list containing B4 and C4' do
+        it 'returns a list containing F4 and G4' do
           moves = %w[F4 G4]
           white_pawn.piece_moved
           expect(white_pawn.generate_moves(board)).to contain_exactly(*moves)
+        end
+      end
+
+      context 'when the square is D3 and there are black pieces on D4 & E4' do
+        let(:square) { 'D3' }
+        let(:opponent_color) { 'black' }
+        before do
+          allow(board).to receive(:square_empty?).with('D4').and_return(false)
+          allow(board).to receive(:color_at).with('D4').and_return(opponent_color)
+
+          allow(board).to receive(:square_empty?).with('E4').and_return(false)
+          allow(board).to receive(:color_at).with('E4').and_return(opponent_color)
+        end
+
+        it 'returns a list containing E4' do
+          white_pawn.piece_moved
+          expect(white_pawn.generate_moves(board)).to contain_exactly('E4')
         end
       end
     end
