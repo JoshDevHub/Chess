@@ -54,6 +54,6 @@ class Pawn < Piece
   end
 
   def possible_double_move?
-    !@moved
+    false
   end
 end

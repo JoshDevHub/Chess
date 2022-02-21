@@ -17,4 +17,10 @@ class BlackPawn < Pawn
   def to_s
     "\u265F"
   end
+
+  private
+
+  def possible_double_move?
+    position[1] == '7'
+  end
 end

@@ -15,16 +15,14 @@ describe BlackPawn do
         context 'when the square is H2' do
           let(:square) { 'H2' }
           it 'returns a list containing H1' do
-            black_pawn.piece_moved
             expect(black_pawn.generate_moves(board)).to contain_exactly('H1')
           end
         end
 
-        context 'when the square is G7' do
-          let(:square) { 'G7' }
-          it 'returns a list containing G6' do
-            black_pawn.piece_moved
-            expect(black_pawn.generate_moves(board)).to contain_exactly('G6')
+        context 'when the square is G6' do
+          let(:square) { 'G6' }
+          it 'returns a list containing G5' do
+            expect(black_pawn.generate_moves(board)).to contain_exactly('G5')
           end
         end
       end
@@ -39,7 +37,6 @@ describe BlackPawn do
           end
 
           it 'returns an empty array' do
-            black_pawn.piece_moved
             expect(black_pawn.generate_moves(board)).to be_empty
           end
         end
@@ -86,7 +83,6 @@ describe BlackPawn do
         end
         it 'returns a list containing B4 and C4' do
           moves = %w[B4 C4]
-          black_pawn.piece_moved
           expect(black_pawn.generate_moves(board)).to contain_exactly(*moves)
         end
       end
@@ -106,7 +102,6 @@ describe BlackPawn do
 
         it 'returns a list containing B4 and D4' do
           moves = %w[B4 D4]
-          black_pawn.piece_moved
           expect(black_pawn.generate_moves(board)).to contain_exactly(*moves)
         end
       end

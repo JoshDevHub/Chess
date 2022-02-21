@@ -12,18 +12,16 @@ describe WhitePawn do
   describe '#generate_moves' do
     context 'when the @moved instance var has been set true' do
       context 'when no friendly piece is blocking' do
-        context 'when the square is H2' do
-          let(:square) { 'H2' }
-          it 'returns a list containing H3' do
-            white_pawn.piece_moved
-            expect(white_pawn.generate_moves(board)).to contain_exactly('H3')
+        context 'when the square is H3' do
+          let(:square) { 'H3' }
+          it 'returns a list containing H4' do
+            expect(white_pawn.generate_moves(board)).to contain_exactly('H4')
           end
         end
 
         context 'when the square is C5' do
           let(:square) { 'C5' }
           it 'returns a list containing C6' do
-            white_pawn.piece_moved
             expect(white_pawn.generate_moves(board)).to contain_exactly('C6')
           end
         end
@@ -39,7 +37,6 @@ describe WhitePawn do
           end
 
           it 'returns an empty array' do
-            white_pawn.piece_moved
             expect(white_pawn.generate_moves(board)).to be_empty
           end
         end
@@ -93,7 +90,6 @@ describe WhitePawn do
         end
         it 'returns a list containing F4 and G4' do
           moves = %w[F4 G4]
-          white_pawn.piece_moved
           expect(white_pawn.generate_moves(board)).to contain_exactly(*moves)
         end
       end
@@ -110,7 +106,6 @@ describe WhitePawn do
         end
 
         it 'returns a list containing E4' do
-          white_pawn.piece_moved
           expect(white_pawn.generate_moves(board)).to contain_exactly('E4')
         end
       end

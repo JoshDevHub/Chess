@@ -17,4 +17,10 @@ class WhitePawn < Pawn
   def to_s
     "\u2659"
   end
+
+  private
+
+  def possible_double_move?
+    position[1] == '2'
+  end
 end
