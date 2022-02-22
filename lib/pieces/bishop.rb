@@ -5,7 +5,7 @@ class Bishop < Piece
   def initialize(color:, position:)
     super
     @name = 'bishop'
-    @moves = DiagonalLineMove
+    @moves = [DiagonalLineMove]
   end
 
   def self.handles_notation?(char)

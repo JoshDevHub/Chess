@@ -10,13 +10,13 @@ require_relative '../../lib/moves/knight_moves'
 describe Knight do
   subject(:knight) { described_class.new(color: 'black', position: square) }
   let(:board) { instance_double(Board, square_empty?: true) }
-  let(:knight_moves) { knight.instance_variable_get(:@moves) }
+  let(:knight_moves) { knight.instance_variable_get(:@moves)[0] }
   let(:knight_move_instance) { instance_double(KnightMoves) }
   describe '#move_list' do
     let(:square) { 'B1' }
     before do
       allow(knight_moves).to receive(:new).and_return(knight_move_instance)
-      allow(knight_move_instance).to receive(:generate_moves)
+      allow(knight_move_instance).to receive(:generate_moves).and_return([])
     end
 
     it 'instantiates an instance of KnightMoves' do

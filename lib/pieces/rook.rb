@@ -5,7 +5,7 @@ class Rook < Piece
   def initialize(color:, position:)
     super
     @name = 'rook'
-    @moves = CardinalLineMove
+    @moves = [CardinalLineMove]
   end
 
   def self.handles_notation?(char)
