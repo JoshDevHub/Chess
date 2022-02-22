@@ -38,5 +38,23 @@ describe Rook do
         end
       end
     end
+
+    context 'when the rook is completely boxed in by friendly pieces' do
+      let(:block_color) { 'black' }
+      context 'when the starting square is H8 and H7 and G8 are blocked' do
+        let(:square) { 'H8' }
+        before do
+          allow(board).to receive(:square_empty?).with('H7').and_return(false)
+          allow(board).to receive(:color_at).with('H7').and_return(block_color)
+
+          allow(board).to receive(:square_empty?).with('G8').and_return(false)
+          allow(board).to receive(:color_at).with('G8').and_return(block_color)
+        end
+
+        it 'returns an empty array' do
+          expect(rook.generate_moves(board)).to be_empty
+        end
+      end
+    end
   end
 end
