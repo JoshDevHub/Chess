@@ -5,19 +5,7 @@ class Knight < Piece
   def initialize(color:, position:)
     super
     @name = 'knight'
-  end
-
-  def moveset
-    [
-      %i[up up right],
-      %i[up up left],
-      %i[down down right],
-      %i[down down left],
-      %i[left left up],
-      %i[left left down],
-      %i[right right up],
-      %i[right right down]
-    ]
+    @moves = KnightMoves
   end
 
   def self.handles_notation?(char)

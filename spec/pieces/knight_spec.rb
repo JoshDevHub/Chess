@@ -4,55 +4,29 @@ require_relative '../../lib/coordinate'
 require_relative '../../lib/board'
 require_relative '../../lib/piece'
 require_relative '../../lib/pieces/knight'
+require_relative '../../lib/move'
+require_relative '../../lib/moves/knight_moves'
 
 describe Knight do
-  let(:board) { instance_double(Board, square_empty?: true) }
   subject(:knight) { described_class.new(color: 'black', position: square) }
-  describe '#generate_moves' do
-    context 'when the board is empty' do
-      context 'when the starting square is E4' do
-        let(:square) { 'E4' }
-
-        it 'will return a list that contains D6, F6, D2, F2, C5, G5, C3, and G3' do
-          moves = %w[D6 F6 D2 F2 C5 G5 C3 G3]
-          expect(knight.generate_moves(board)).to contain_exactly(*moves)
-        end
-      end
-
-      context 'when the starting square is A8' do
-        let(:square) { 'A8' }
-
-        it 'will return a list that contains B6 and C7' do
-          moves = %w[B6 C7]
-          expect(knight.generate_moves(board)).to contain_exactly(*moves)
-        end
-      end
-
-      context 'when the piece is on B1 on an empty board' do
-        let(:square) { 'B1' }
-
-        it 'will return a list that contains A3, D2, and C3' do
-          moves = %w[A3 D2 C3]
-          expect(knight.generate_moves(board)).to contain_exactly(*moves)
-        end
-      end
+  let(:board) { instance_double(Board, square_empty?: true) }
+  let(:knight_moves) { knight.instance_variable_get(:@moves) }
+  let(:knight_move_instance) { instance_double(KnightMoves) }
+  describe '#move_list' do
+    let(:square) { 'B1' }
+    before do
+      allow(knight_moves).to receive(:new).and_return(knight_move_instance)
+      allow(knight_move_instance).to receive(:generate_moves)
     end
 
-    context 'when a same-color piece blocks one of the move squares' do
-      let(:block_color) { 'black' }
-      context 'when the starting square is F5 and G7 is blocked' do
-        let(:square) { 'F5' }
+    it 'instantiates an instance of KnightMoves' do
+      expect(knight_moves).to receive(:new)
+      knight.move_list(board)
+    end
 
-        before do
-          allow(board).to receive(:square_empty?).with('G7').and_return(false)
-          allow(board).to receive(:color_at).with('G7').and_return(block_color)
-        end
-
-        it 'will return a list that contains H6, E7, D6, D4, E3, G3, and H4' do
-          moves = %w[H6 E7 D6 D4 E3 G3 H4]
-          expect(knight.generate_moves(board)).to contain_exactly(*moves)
-        end
-      end
+    it 'sends #generate_moves to the KnightMoves instance' do
+      expect(knight_move_instance).to receive(:generate_moves)
+      knight.move_list(board)
     end
   end
 end
