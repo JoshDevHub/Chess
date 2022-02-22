@@ -4,39 +4,45 @@ require_relative '../../lib/coordinate'
 require_relative '../../lib/board'
 require_relative '../../lib/piece'
 require_relative '../../lib/pieces/queen'
+require_relative '../../lib/move'
+require_relative '../../lib/moves/diagonal_line_move'
+require_relative '../../lib/moves/cardinal_line_move'
 
 describe Queen do
-  let(:board) { instance_double(Board, square_empty?: true) }
   subject(:queen) { described_class.new(color: 'white', position: square) }
-  describe '#generate_moves' do
-    context 'when there is no friendly piece blocking' do
-      context 'when the starting square is D1' do
-        let(:square) { 'D1' }
-        it 'returns a list containing A1, B1, C1, E1, F1, G1, H1, D2, D3, D4, D5
-          D6, D7, D8, E2, F3, G4, H5, C2, C3, and C4' do
-          moves = %w[A1 B1 C1 E1 F1 G1 H1 D2 D3 D4 D5 D6 D7 D8 E2 F3 G4 H5 C2 B3 A4]
-          expect(queen.generate_moves(board)).to contain_exactly(*moves)
-        end
-      end
+  let(:board) { instance_double(Board, square_empty?: true) }
+  let(:diagonal_move) { queen.instance_variable_get(:@moves)[0] }
+  let(:diagonal_move_instance) { instance_double(DiagonalLineMove) }
+  let(:cardinal_move) { queen.instance_variable_get(:@moves)[1] }
+  let(:cardinal_move_instance) { instance_double(CardinalLineMove) }
+  describe '#move_list' do
+    let(:square) { 'D1' }
+    before do
+      allow(diagonal_move).to receive(:new).and_return(diagonal_move_instance)
+      allow(diagonal_move_instance).to receive(:generate_moves).and_return([])
+
+      allow(cardinal_move).to receive(:new).and_return(cardinal_move_instance)
+      allow(cardinal_move_instance).to receive(:generate_moves).and_return([])
     end
 
-    context 'when a friendly piece is blocking' do
-      let(:block_color) { 'white' }
-      context 'when the starting square is E4 and F5 and E6 are blocked' do
-        let(:square) { 'E4' }
-        before do
-          allow(board).to receive(:square_empty?).with('F5').and_return(false)
-          allow(board).to receive(:color_at).with('F5').and_return(block_color)
+    it 'instantiates an instance of DiagonalLineMove' do
+      expect(diagonal_move).to receive(:new)
+      queen.move_list(board)
+    end
 
-          allow(board).to receive(:square_empty?).with('E6').and_return(false)
-          allow(board).to receive(:color_at).with('E6').and_return(block_color)
-        end
-        it 'returns a list containing E3 E2 E1 F3 G2 H1 D3 C2 B1 D4 C4 B4 A4 F4
-          G4 H4 E5 D5 C6 B7 and A8' do
-          moves = %w[E3 E2 E1 F3 G2 H1 D3 C2 B1 D4 C4 B4 A4 F4 G4 H4 E5 D5 C6 B7 A8]
-          expect(queen.generate_moves(board)).to contain_exactly(*moves)
-        end
-      end
+    it 'sends #generate_moves to the DiagonalLineMove instance' do
+      expect(diagonal_move_instance).to receive(:generate_moves)
+      queen.move_list(board)
+    end
+
+    it 'instantiates an instance of CardinalLineMove' do
+      expect(cardinal_move).to receive(:new)
+      queen.move_list(board)
+    end
+
+    it 'sends #generate_moves to the CardinalLineMove instance' do
+      expect(cardinal_move_instance).to receive(:generate_moves)
+      queen.move_list(board)
     end
   end
 end
