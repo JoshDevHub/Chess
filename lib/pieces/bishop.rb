@@ -5,15 +5,7 @@ class Bishop < Piece
   def initialize(color:, position:)
     super
     @name = 'bishop'
-  end
-
-  def moveset
-    [
-      %i[up right],
-      %i[up left],
-      %i[down left],
-      %i[down right]
-    ]
+    @moves = DiagonalLineMove
   end
 
   def self.handles_notation?(char)
@@ -22,11 +14,5 @@ class Bishop < Piece
 
   def to_s
     color == 'white' ? "\u2657" : "\u265D"
-  end
-
-  private
-
-  def line_moves?
-    true
   end
 end
