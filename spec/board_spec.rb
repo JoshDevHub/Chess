@@ -204,7 +204,7 @@ describe Board do
         game_board.add_piece(black_piece, 'A1')
         game_board.add_piece(king, check_square)
 
-        allow(black_piece).to receive(:generate_moves).with(game_board).and_return([check_square])
+        allow(black_piece).to receive(:move_list).with(game_board).and_return([check_square])
       end
 
       it 'returns true' do
@@ -220,7 +220,7 @@ describe Board do
         game_board.add_piece(black_piece, 'A1')
         game_board.add_piece(king, king_square)
 
-        allow(black_piece).to receive(:generate_moves).with(game_board).and_return(['B1'])
+        allow(black_piece).to receive(:move_list).with(game_board).and_return(['B1'])
       end
 
       it 'returns false' do

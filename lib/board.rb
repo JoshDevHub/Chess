@@ -69,7 +69,7 @@ class Board
     king_square = find_king(color)
     opposing_color = color == 'white' ? 'black' : 'white'
     opposing_pieces = all_pieces_of_color(opposing_color)
-    all_opposing_moves = opposing_pieces.map { |piece| piece.generate_moves(self) }.flatten
+    all_opposing_moves = opposing_pieces.map { |piece| piece.move_list(self) }.flatten
     all_opposing_moves.include?(king_square)
   end
 
