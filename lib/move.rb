@@ -46,4 +46,8 @@ class Move
   def line_moves?
     false
   end
+
+  def opposing_color
+    @color == 'white' ? 'black' : 'white'
+  end
 end
