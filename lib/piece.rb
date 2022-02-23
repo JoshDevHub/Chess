@@ -25,7 +25,7 @@ class Piece
   def move_list(board)
     moves.each_with_object([]) do |move, list|
       generator = move.new(origin: position, board: board, color: color)
-      list + generator.generate_moves
+      list.concat(generator.generate_moves)
     end
   end
 
