@@ -15,11 +15,9 @@ class Move
   end
 
   def generate_moves
-    move_list = []
-    moveset.each do |move|
-      move_list += path_from(move)
+    moveset.each_with_object([]) do |move, list|
+      list.concat(path_from(move))
     end
-    move_list
   end
 
   private
