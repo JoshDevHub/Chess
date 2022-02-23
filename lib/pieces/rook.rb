@@ -5,11 +5,14 @@ class Rook < Piece
   def initialize(color:, position:)
     super
     @name = 'rook'
-    @moves = [CardinalLineMove]
   end
 
   def self.handles_notation?(char)
     %w[R r].include?(char)
+  end
+
+  def moves
+    [CardinalLineMove]
   end
 
   def to_s

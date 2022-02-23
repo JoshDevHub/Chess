@@ -11,16 +11,15 @@ describe Rook do
   subject(:rook) { described_class.new(color: 'black', position: square) }
   let(:board) { instance_double(Board, square_empty?: true) }
   describe '#move_list' do
-    let(:cardinal_move) { rook.instance_variable_get(:@moves)[0] }
     let(:cardinal_move_instance) { instance_double(CardinalLineMove) }
     let(:square) { 'A8' }
     before do
-      allow(cardinal_move).to receive(:new).and_return(cardinal_move_instance)
+      allow(CardinalLineMove).to receive(:new).and_return(cardinal_move_instance)
       allow(cardinal_move_instance).to receive(:generate_moves).and_return([])
     end
 
     it 'instantiates an instance of CardinalLineMove' do
-      expect(cardinal_move).to receive(:new)
+      expect(CardinalLineMove).to receive(:new)
       rook.move_list(board)
     end
 

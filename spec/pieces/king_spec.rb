@@ -10,17 +10,16 @@ require_relative '../../lib/moves/king_move'
 describe King do
   subject(:king) { described_class.new(color: 'black', position: square) }
   let(:board) { instance_double(Board, square_empty?: true) }
-  let(:king_move) { king.instance_variable_get(:@moves)[0] }
   let(:king_move_instance) { instance_double(KingMove) }
   describe '#move_list' do
     let(:square) { 'E8' }
     before do
-      allow(king_move).to receive(:new).and_return(king_move_instance)
+      allow(KingMove).to receive(:new).and_return(king_move_instance)
       allow(king_move_instance).to receive(:generate_moves).and_return([])
     end
 
     it 'instantiates an instance of KingMove' do
-      expect(king_move).to receive(:new)
+      expect(KingMove).to receive(:new)
       king.move_list(board)
     end
 

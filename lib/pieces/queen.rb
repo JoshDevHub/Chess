@@ -5,11 +5,14 @@ class Queen < Piece
   def initialize(color:, position:)
     super
     @name = 'queen'
-    @moves = [DiagonalLineMove, CardinalLineMove]
   end
 
   def self.handles_notation?(char)
     %w[Q q].include?(char)
+  end
+
+  def moves
+    [DiagonalLineMove, CardinalLineMove]
   end
 
   def to_s

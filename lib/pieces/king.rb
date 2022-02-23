@@ -5,11 +5,14 @@ class King < Piece
   def initialize(color:, position:)
     super
     @name = 'king'
-    @moves = [KingMove]
   end
 
   def self.handles_notation?(char)
     %w[K k].include?(char)
+  end
+
+  def moves
+    [KingMove]
   end
 
   def to_s

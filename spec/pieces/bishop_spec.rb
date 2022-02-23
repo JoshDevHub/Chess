@@ -10,17 +10,16 @@ require_relative '../../lib/moves/diagonal_line_move'
 describe Bishop do
   subject(:bishop) { described_class.new(color: 'white', position: square) }
   let(:board) { instance_double(Board, square_empty?: true) }
-  let(:diagonal_move) { bishop.instance_variable_get(:@moves)[0] }
   let(:diagonal_move_instance) { instance_double(DiagonalLineMove) }
   describe '#move_list' do
     let(:square) { 'C8' }
     before do
-      allow(diagonal_move).to receive(:new).and_return(diagonal_move_instance)
+      allow(DiagonalLineMove).to receive(:new).and_return(diagonal_move_instance)
       allow(diagonal_move_instance).to receive(:generate_moves).and_return([])
     end
 
     it 'instantiates an instance of DiagonalLineMove' do
-      expect(diagonal_move).to receive(:new)
+      expect(DiagonalLineMove).to receive(:new).and_return(diagonal_move_instance)
       bishop.move_list(board)
     end
 
