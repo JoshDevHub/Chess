@@ -3,8 +3,6 @@
 require_relative '../lib/coordinate'
 require_relative '../lib/piece'
 Dir[File.join(__dir__, '../lib/pieces', '*.rb')].sort.each { |file| require file }
-require_relative '../lib/pieces/pawns/white_pawn'
-require_relative '../lib/pieces/pawns/black_pawn'
 
 describe Piece do
   describe '#self.from_fen' do
@@ -78,14 +76,6 @@ describe Piece do
         opponent = 'white'
         expect(black_piece.opponent_color).to eq(opponent)
       end
-    end
-  end
-
-  subject(:generic_piece) { described_class.new(color: 'white', position: square) }
-  let(:square) { 'H8' }
-  describe '#piece_moved' do
-    it 'changes @moved to true' do
-      expect { generic_piece.piece_moved }.to change { generic_piece.moved }.to(true)
     end
   end
 end

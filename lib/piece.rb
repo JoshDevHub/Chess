@@ -14,21 +14,19 @@ class Piece
     @color = color
     @position = position
     @name = 'piece'
-    @moved = false
   end
 
   COLORS = %w[white black].freeze
 
-  def moveset
+  def moves
     []
   end
 
-  def generate_moves(board)
-    move_list = []
-    moveset.each do |move|
-      move_list += path_from(move, board)
+  def move_list(board)
+    moves.each_with_object([]) do |move, list|
+      generator = move.new(origin: position, board: board, color: color)
+      list + generator.generate_moves
     end
-    move_list
   end
 
   def to_s
@@ -48,32 +46,13 @@ class Piece
     raise NotImplementedError
   end
 
-  def piece_moved
-    @moved = true
-  end
-
   private
 
-  def legal_move?(move, board)
-    valid_square?(move) && (board.square_empty?(move) || board.color_at(move) == opponent_color)
-  end
-
-  def path_from(move, board)
-    path = []
-    current_square = @position
-    loop do
-      new_move = move.reduce(current_square) { |current, step| send(step, current) }
-      break unless legal_move?(new_move, board)
-
-      path << new_move
-      break unless line_moves?
-
-      current_square = new_move
-    end
-    path
-  end
-
   def line_moves?
+    false
+  end
+
+  def double_move?
     false
   end
 end
