@@ -73,6 +73,10 @@ class Board
     all_opposing_moves.include?(king_square)
   end
 
+  def checkmate?(color)
+    in_check?(color) && no_legal_moves?(color)
+  end
+
   def self_check_filter(piece, target_list)
     color = piece.color
     origin = piece.position
@@ -104,5 +108,13 @@ class Board
 
   def all_pieces_of_color(color)
     @game_board.flatten.compact.select { |piece| piece.color == color }
+  end
+
+  def no_legal_moves?(color)
+    all_pieces_of_color(color).each_with_object([]) do |piece, move_list|
+      moves = piece.move_list(self)
+      moves_avoiding_check = self_check_filter(piece, moves)
+      move_list.concat(moves_avoiding_check)
+    end.empty?
   end
 end
