@@ -73,6 +73,16 @@ class Board
     all_opposing_moves.include?(king_square)
   end
 
+  def self_check_filter(piece, target_list)
+    color = piece.color
+    origin = piece.position
+    target_list.reject do |target|
+      board_copy = Marshal.load(Marshal.dump(self))
+      board_copy.move_piece(origin, target)
+      board_copy.in_check?(color)
+    end
+  end
+
   private
 
   def read_board_from_square(square_name)

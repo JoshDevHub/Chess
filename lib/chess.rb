@@ -17,7 +17,7 @@ class Chess
     loop do
       puts @chess_board
       user_choice = user_input
-      move_list = @chess_board.piece_at(user_choice).generate_moves(@chess_board)
+      move_list = create_move_list(user_choice)
       puts "The available moves for this piece are: #{move_list}"
       puts 'Where would you like to move your piece?'
       chosen_move = gets.chomp
@@ -27,6 +27,12 @@ class Chess
     end
   end
   # rubocop: enable Metrics/MethodLength
+
+  def create_move_list(square)
+    piece = @chess_board.piece_at(square)
+    initial_list = piece.move_list(@chess_board)
+    @chess_board.self_check_filter(piece, initial_list)
+  end
 
   def user_input
     puts "#{@active_player}: choose the square of a piece to move :"

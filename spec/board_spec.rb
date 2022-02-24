@@ -228,4 +228,64 @@ describe Board do
       end
     end
   end
+
+  describe '#self_check_filter' do
+    subject(:game_board) { described_class.new }
+    context 'when one of the moves in a given target list would result in check' do
+      let(:piece) { instance_double(Piece, name: 'piece', color: 'white', position: 'A1') }
+      let(:attacking_piece) { instance_double(Piece, name: 'piece', color: 'black', position: 'A2') }
+      let(:king) { instance_double(Piece, name: 'king', color: 'white', position: 'B2') }
+      let(:target_list) { %w[A3] }
+      let(:attacking_moves) { %w[A2 B2] }
+      let(:board_copy) { described_class.new }
+      before do
+        game_board.add_piece(piece, 'A2')
+        game_board.add_piece(attacking_piece, 'A1')
+        game_board.add_piece(king, 'B2')
+
+        board_copy.add_piece(piece, 'A2')
+        board_copy.add_piece(attacking_piece, 'A1')
+        board_copy.add_piece(king, 'B2')
+
+        allow(piece).to receive(:position=)
+        allow(attacking_piece).to receive(:position=)
+        allow(attacking_piece).to receive(:move_list).and_return(attacking_moves)
+        allow(Marshal).to receive(:load).and_return(board_copy)
+        allow(Marshal).to receive(:dump)
+      end
+
+      it 'returns an empty array' do
+        expect(game_board.self_check_filter(piece, target_list)).to be_empty
+      end
+    end
+
+    context 'when none of the moves in the target list would result in check' do
+      let(:piece) { instance_double(Piece, name: 'piece', color: 'white', position: 'A1') }
+      let(:attacking_piece) { instance_double(Piece, name: 'piece', color: 'black', position: 'A2') }
+      let(:king) { instance_double(Piece, name: 'king', color: 'white', position: 'B2') }
+      let(:target_list) { %w[A3] }
+      let(:attacking_moves) { %w[A2 A1] }
+      let(:board_copy) { described_class.new }
+      before do
+        game_board.add_piece(piece, 'A2')
+        game_board.add_piece(attacking_piece, 'A1')
+        game_board.add_piece(king, 'B2')
+
+        board_copy.add_piece(piece, 'A2')
+        board_copy.add_piece(attacking_piece, 'A1')
+        board_copy.add_piece(king, 'B2')
+
+        allow(piece).to receive(:position=)
+        allow(attacking_piece).to receive(:position=)
+        allow(attacking_piece).to receive(:move_list).and_return(attacking_moves)
+        allow(Marshal).to receive(:load).and_return(board_copy)
+        allow(Marshal).to receive(:dump)
+      end
+
+      it 'returns the full list of target moves' do
+        moves = target_list
+        expect(game_board.self_check_filter(piece, target_list)).to contain_exactly(*moves)
+      end
+    end
+  end
 end
