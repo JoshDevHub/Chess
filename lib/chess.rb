@@ -12,21 +12,15 @@ class Chess
     @active_player = @player_white
   end
 
-  # rubocop: disable Metrics/MethodLength
   def play_chess
     loop do
       puts @chess_board
-      user_choice = user_piece_selection
-      move_list = create_move_list(user_choice)
-      puts "The available moves for this piece are: #{move_list}"
-      puts 'Where would you like to move your piece?'
-      chosen_move = gets.chomp
-      @chess_board.move_piece(user_choice, chosen_move)
-      puts @chess_board
+      user_piece_position = user_piece_selection
+      user_move = user_move_selection(user_piece_position)
+      @chess_board.move_piece(user_piece_position, user_move)
       toggle_turns
     end
   end
-  # rubocop: enable Metrics/MethodLength
 
   def create_move_list(piece_position)
     piece = @chess_board.piece_at(piece_position)
@@ -42,11 +36,6 @@ class Chess
     end
   end
 
-  def toggle_turns
-    @active_player =
-      @active_player == @player_white ? @player_black : @player_white
-  end
-
   def valid_piece_selection?(selection)
     if !valid_square?(selection)
       puts 'Please choose a valid sqaure!'
@@ -57,5 +46,22 @@ class Chess
     else
       true
     end
+  end
+
+  def user_move_selection(chosen_position)
+    move_list = create_move_list(chosen_position)
+    loop do
+      puts "The available moves for this piece are #{move_list}"
+      puts 'Choose one'
+      input = gets.chomp
+      return input if move_list.include?(input)
+
+      puts "This is an invalid move. Only choose from among this piece's legal moves"
+    end
+  end
+
+  def toggle_turns
+    @active_player =
+      @active_player == @player_white ? @player_black : @player_white
   end
 end
