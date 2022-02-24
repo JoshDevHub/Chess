@@ -48,10 +48,6 @@ class Piece
 
   private
 
-  def line_moves?
-    false
-  end
-
   def double_move?
     false
   end
