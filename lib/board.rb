@@ -78,7 +78,7 @@ class Board
   end
 
   def stalemate?(color)
-    !in_check(color) && no_legal_moves?(color)
+    !in_check?(color) && no_legal_moves?(color)
   end
 
   def self_check_filter(piece, target_list)
