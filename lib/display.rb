@@ -20,6 +20,16 @@ class Display
     puts 'Choose one'
   end
 
+  def checkmate(loser, winner)
+    puts "#{loser} has been checkmated."
+    puts "#{winner} has won. Congratulations!"
+  end
+
+  def stalemate(player)
+    puts "#{player} has no legal moves but is not in check"
+    puts 'This is a stalemate, and this game ends in a draw.'
+  end
+
   def input_error_message(message)
     puts({
       empty_square: 'That square is empty. Please choose an occupied square.',

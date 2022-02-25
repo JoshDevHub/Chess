@@ -19,6 +19,8 @@ class Chess
     display.introduction
     loop do
       display.print_board(@chess_board)
+      break unless continue_game?
+
       user_piece_position = user_piece_selection
       user_move = user_move_selection(user_piece_position)
       @chess_board.move_piece(user_piece_position, user_move)
@@ -66,5 +68,25 @@ class Chess
   def toggle_turns
     @active_player =
       @active_player == @player_white ? @player_black : @player_white
+  end
+
+  def continue_game?
+    if @chess_board.checkmate?(active_color)
+      display.checkmate(active_color, inactive_color)
+    elsif @chess_board.stalemate?(active_color)
+      display.stalemate(active_color)
+    else
+      true
+    end
+  end
+
+  private
+
+  def active_color
+    @active_player.piece_color
+  end
+
+  def inactive_color
+    active_color == 'white' ? 'black' : 'white'
   end
 end
