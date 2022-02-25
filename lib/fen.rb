@@ -33,7 +33,8 @@ class FEN
   end
 
   def en_passant_target
-    # placeholder
+    en_passant_square = fen_string.split(' ')[3]
+    en_passant_square == '-' ? nil : en_passant_square.upcase
   end
 
   def clock_info

@@ -75,4 +75,23 @@ describe FEN do
       end
     end
   end
+
+  describe '#en_passant_target' do
+    context 'when the target is empty' do
+      let(:fen_string) { 'rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2' }
+      subject(:no_en_passant) { described_class.new(fen_string, piece) }
+      it 'returns nil' do
+        expect(no_en_passant.en_passant_target).to be(nil)
+      end
+    end
+
+    context 'when the target is defined' do
+      let(:fen_string) { 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1' }
+      subject(:fen_with_en_passant) { described_class.new(fen_string, piece) }
+      it 'returns the en passant target square' do
+        target = 'E3'
+        expect(fen_with_en_passant.en_passant_target).to eq(target)
+      end
+    end
+  end
 end
