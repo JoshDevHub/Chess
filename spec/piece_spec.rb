@@ -78,4 +78,12 @@ describe Piece do
       end
     end
   end
+
+  describe '#define_en_passant_square' do
+    subject(:generic_piece) { described_class.new(color: 'white', position: 'F5') }
+    it 'returns nil' do
+      pending_move = 'F7'
+      expect(generic_piece.define_en_passant_square(pending_move)).to be(nil)
+    end
+  end
 end
