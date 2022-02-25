@@ -21,9 +21,8 @@ class BlackPawn < Piece
     "\u265F"
   end
 
-  def position=(new_position)
-    @en_passant_target = "#{position[0]}6" if double_move_executed?(new_position)
-    @position = new_position
+  def define_en_passant_square(move)
+    down(position) if double_move_executed?(move)
   end
 
   private

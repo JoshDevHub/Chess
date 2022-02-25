@@ -47,6 +47,10 @@ class Piece
     raise NotImplementedError
   end
 
+  def define_en_passant_square(_)
+    nil
+  end
+
   private
 
   def double_move?

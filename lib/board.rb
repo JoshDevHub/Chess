@@ -4,8 +4,11 @@
 class Board
   include Coordinate
 
+  attr_reader :en_passant_target
+
   def initialize
     @game_board = Array.new(HEIGHT) { Array.new(WIDTH) }
+    @en_passant_target = nil
   end
 
   HEIGHT = 8
@@ -49,6 +52,7 @@ class Board
     return nil if square_empty?(current_square)
 
     piece_to_move = remove_piece(current_square)
+    @en_passant_target = piece_to_move.define_en_passant_square(new_square)
     piece_to_move.position = new_square
     add_piece(piece_to_move, new_square)
   end

@@ -21,9 +21,8 @@ class WhitePawn < Piece
     "\u2659"
   end
 
-  def position=(new_position)
-    @en_passant_target = "#{position[0]}3" if double_move_executed?(new_position)
-    @position = new_position
+  def define_en_passant_square(move)
+    up(position) if double_move_executed?(move)
   end
 
   private
