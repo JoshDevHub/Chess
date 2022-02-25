@@ -95,4 +95,38 @@ describe BlackPawn do
       end
     end
   end
+
+  describe '#position=' do
+    context 'when a double move has not been executed' do
+      let(:square) { 'E7' }
+      let(:target) { 'E6' }
+      it 'sets en_passant_target to nil' do
+        black_pawn.position = target
+        expect(black_pawn.en_passant_target).to be(nil)
+      end
+    end
+
+    context 'when a double move has been executed' do
+      let(:square) { 'D7' }
+      let(:target) { 'D5' }
+      it 'sets en_passant_target to D6' do
+        en_passant_square = 'D6'
+        black_pawn.position = target
+        expect(black_pawn.en_passant_target).to eq(en_passant_square)
+      end
+    end
+
+    context 'when a normal move has been executed after a double move' do
+      let(:square) { 'C5' }
+      let(:target) { 'C4' }
+      before do
+        black_pawn.instance_variable_set(:@en_passant_square, 'C6')
+      end
+
+      it 'sets en_passant_target to nil' do
+        black_pawn.position = target
+        expect(black_pawn.en_passant_target).to be(nil)
+      end
+    end
+  end
 end
