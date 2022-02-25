@@ -96,36 +96,29 @@ describe WhitePawn do
     end
   end
 
-  describe '#position=' do
-    context 'when a double move has not been executed' do
-      let(:square) { 'E4' }
-      let(:target) { 'E5' }
-      it 'sets en_passant_target to nil' do
-        white_pawn.position = target
-        expect(white_pawn.en_passant_target).to be(nil)
+  describe '#define_en_passant_square' do
+    context 'when the passed in move indicates a normal pawn move' do
+      let(:square) { 'F5' }
+      let(:target) { 'F6' }
+      it 'returns nil' do
+        expect(white_pawn.define_en_passant_square(target)).to be(nil)
       end
     end
 
-    context 'when a double move has been executed' do
-      let(:square) { 'D2' }
-      let(:target) { 'D4' }
-      it 'sets en_passant_target to D3' do
-        en_passant_square = 'D3'
-        white_pawn.position = target
-        expect(white_pawn.en_passant_target).to eq(en_passant_square)
+    context 'when the passed in move indicates a capture move' do
+      let(:square) { 'E2' }
+      let(:target) { 'D3' }
+      it 'returns nil' do
+        expect(white_pawn.define_en_passant_square(target)).to be(nil)
       end
     end
 
-    context 'when a normal move has been executed after a double move' do
-      let(:square) { 'C4' }
-      let(:target) { 'C5' }
-      before do
-        white_pawn.instance_variable_set(:@en_passant_square, 'C2')
-      end
-
-      it 'sets en_passant_target to nil' do
-        white_pawn.position = target
-        expect(white_pawn.en_passant_target).to be(nil)
+    context 'when the passed in move indicates a double move' do
+      let(:square) { 'B2' }
+      let(:target) { 'B4' }
+      let(:en_passant) { 'B3' }
+      it 'returns the position above the origin' do
+        expect(white_pawn.define_en_passant_square(target)).to eq(en_passant)
       end
     end
   end
