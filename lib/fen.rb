@@ -37,8 +37,14 @@ class FEN
     en_passant_square == '-' ? nil : en_passant_square.upcase
   end
 
-  def clock_info
-    # placeholder
+  def half_move_clock
+    clock = fen_string.split(' ')[4]
+    clock.to_i
+  end
+
+  def full_move_clock
+    clock = fen_string.split(' ')[5]
+    clock.to_i
   end
 
   private

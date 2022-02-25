@@ -94,4 +94,44 @@ describe FEN do
       end
     end
   end
+
+  describe '#half_move_clock' do
+    context 'when the clock is zero' do
+      let(:fen_string) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1' }
+      subject(:starting_fen) { described_class.new(fen_string, piece) }
+      it 'returns 0' do
+        expected_number = 0
+        expect(starting_fen.half_move_clock).to eq(expected_number)
+      end
+    end
+
+    context 'when the clock is one' do
+      let(:fen_string) { 'rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2' }
+      subject(:fen) { described_class.new(fen_string, piece) }
+      it 'returns 1' do
+        expected_number = 1
+        expect(fen.half_move_clock).to eq(expected_number)
+      end
+    end
+  end
+
+  describe '#full_move_clock' do
+    context "when it's the first move of the game" do
+      let(:fen_string) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1' }
+      subject(:first_move) { described_class.new(fen_string, piece) }
+      it 'returns 1' do
+        expected_number = 1
+        expect(first_move.full_move_clock).to eq(expected_number)
+      end
+    end
+
+    context "when it's the fourth move of the game" do
+      let(:fen_string) { 'rnbqkb1r/pp2pppp/5n2/2pp4/3P1B2/4P3/PPP2PPP/RN1QKBNR w KQkq - 0 4' }
+      subject(:fourth_move) { described_class.new(fen_string, piece) }
+      it 'returns 4' do
+        expected_number = 4
+        expect(fourth_move.full_move_clock).to eq(expected_number)
+      end
+    end
+  end
 end
