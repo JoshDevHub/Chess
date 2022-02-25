@@ -4,7 +4,7 @@
 class Piece
   attr_accessor :position
 
-  attr_reader :color, :name, :moved
+  attr_reader :color, :name, :en_passant_target
 
   include Coordinate
 
@@ -14,6 +14,7 @@ class Piece
     @color = color
     @position = position
     @name = 'piece'
+    @en_passant_target = nil
   end
 
   COLORS = %w[white black].freeze
