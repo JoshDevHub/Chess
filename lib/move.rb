@@ -49,4 +49,8 @@ class Move
   def opposing_color
     @color == 'white' ? 'black' : 'white'
   end
+
+  def capture_en_passant?(_)
+    false
+  end
 end
