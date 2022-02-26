@@ -132,32 +132,40 @@ describe Board do
     let(:piece) {  instance_double(Piece) }
     subject(:game_board) { described_class.new }
     context 'when there is no piece at the position' do
+      let(:position) { 'E4' }
+      let(:new_position) { 'E5' }
       it 'returns nil' do
-        position = 'E4'
-        new_position = 'E5'
         expect(game_board.move_piece(position, new_position)).to be(nil)
+      end
+
+      it 'does not alter the board state' do
+        board_data = game_board.instance_variable_get(:@game_board)
+        expect { game_board.move_piece(position, new_position) }.not_to change { board_data }
       end
     end
 
-    context 'when there is a piece at the given position' do
-      before do
-        game_board.add_piece(piece, 'F5')
-        allow(piece).to receive(:position=)
-      end
+    context 'when the piece does not set an en passant target' do
+      context 'when there is a piece at the given position' do
+        before do
+          game_board.add_piece(piece, 'F5')
+          allow(piece).to receive(:position=)
+          allow(piece).to receive(:define_en_passant_square).and_return(nil)
+        end
 
-      it 'sends a new position message to the piece at the given square' do
-        starting_square = 'F5'
-        new_square = 'F6'
-        expect(piece).to receive(:position=).with(new_square)
-        game_board.move_piece(starting_square, new_square)
-      end
+        it 'sends a new position message to the piece at the given square' do
+          starting_square = 'F5'
+          new_square = 'F6'
+          expect(piece).to receive(:position=).with(new_square)
+          game_board.move_piece(starting_square, new_square)
+        end
 
-      it 'moves the piece to the new square' do
-        starting_square = 'F5'
-        new_square = 'F6'
-        game_board.move_piece(starting_square, new_square)
-        new_square_board_position = game_board.instance_variable_get(:@game_board)[2][5]
-        expect(new_square_board_position).to be(piece)
+        it 'moves the piece to the new square' do
+          starting_square = 'F5'
+          new_square = 'F6'
+          game_board.move_piece(starting_square, new_square)
+          new_square_board_position = game_board.instance_variable_get(:@game_board)[2][5]
+          expect(new_square_board_position).to be(piece)
+        end
       end
     end
   end
@@ -248,7 +256,9 @@ describe Board do
         board_copy.add_piece(king, 'B2')
 
         allow(piece).to receive(:position=)
+        allow(piece).to receive(:define_en_passant_square)
         allow(attacking_piece).to receive(:position=)
+        allow(attacking_piece).to receive(:define_en_passant_square)
         allow(attacking_piece).to receive(:move_list).and_return(attacking_moves)
         allow(Marshal).to receive(:load).and_return(board_copy)
         allow(Marshal).to receive(:dump)
@@ -276,7 +286,9 @@ describe Board do
         board_copy.add_piece(king, 'B2')
 
         allow(piece).to receive(:position=)
+        allow(piece).to receive(:define_en_passant_square)
         allow(attacking_piece).to receive(:position=)
+        allow(attacking_piece).to receive(:define_en_passant_square)
         allow(attacking_piece).to receive(:move_list).and_return(attacking_moves)
         allow(Marshal).to receive(:load).and_return(board_copy)
         allow(Marshal).to receive(:dump)
