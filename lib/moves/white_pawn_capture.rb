@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-# Move subclass for Black Pawn capture moves
-class DiagonalDownCapture < Move
+# Move subclass for White Pawn capture moves
+class WhitePawnCapture < Move
   def moveset
     [
-      %i[down right],
-      %i[down left]
+      %i[up right],
+      %i[up left]
     ]
   end
 

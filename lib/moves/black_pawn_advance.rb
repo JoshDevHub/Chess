@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # class that manages one down move in accordance with needs of Black Pawns
-class OneDownMove < Move
+class BlackPawnAdvance < Move
   def moveset
     [
       %i[down]

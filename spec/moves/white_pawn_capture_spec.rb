@@ -3,9 +3,9 @@
 require_relative '../../lib/coordinate'
 require_relative '../../lib/board'
 require_relative '../../lib/move'
-require_relative '../../lib/moves/diagonal_up_capture'
+require_relative '../../lib/moves/white_pawn_capture'
 
-describe DiagonalUpCapture do
+describe WhitePawnCapture do
   let(:board) { instance_double(Board, color_at: nil) }
   let(:color) { 'white' }
   let(:enemy_color) { 'black' }

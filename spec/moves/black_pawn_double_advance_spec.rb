@@ -3,9 +3,9 @@
 require_relative '../../lib/coordinate'
 require_relative '../../lib/board'
 require_relative '../../lib/move'
-require_relative '../../lib/moves/double_down_move'
+require_relative '../../lib/moves/black_pawn_double_advance'
 
-describe DoubleDownMove do
+describe BlackPawnDoubleAdvance do
   let(:board) { instance_double(Board, square_empty?: true) }
   subject(:double_down) { described_class.new(origin: origin, color: 'black', board: board) }
   describe '#generate_moves' do

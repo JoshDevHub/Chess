@@ -12,8 +12,8 @@ class WhitePawn < Piece
   end
 
   def moves
-    list = [OneUpMove, DiagonalUpCapture]
-    list << DoubleUpMove if double_move?
+    list = [WhitePawnAdvance, WhitePawnCapture]
+    list << WhitePawnDoubleAdvance if double_move?
     list
   end
 

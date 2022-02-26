@@ -12,8 +12,8 @@ class BlackPawn < Piece
   end
 
   def moves
-    list = [OneDownMove, DiagonalDownCapture]
-    list << DoubleDownMove if double_move?
+    list = [BlackPawnAdvance, BlackPawnCapture]
+    list << BlackPawnDoubleAdvance if double_move?
     list
   end
 

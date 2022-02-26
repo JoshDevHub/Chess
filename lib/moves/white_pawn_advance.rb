@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # class for generating one north move in accordance to needs of White Pawn
-class OneUpMove < Move
+class WhitePawnAdvance < Move
   def moveset
     [
       %i[up]
