@@ -168,6 +168,32 @@ describe Board do
         end
       end
     end
+
+    context 'when the piece does set an en passant target' do
+      let(:starting_square) { 'B2' }
+      let(:new_square) { 'B4' }
+      before do
+        game_board.add_piece(piece, 'B2')
+        allow(piece).to receive(:position=)
+        allow(piece).to receive(:define_en_passant_square).and_return('B3')
+      end
+
+      it 'sends a new position message to the piece at the given square' do
+        expect(piece).to receive(:position=).with(new_square)
+        game_board.move_piece(starting_square, new_square)
+      end
+
+      it 'moves the piece to the new square on the game board' do
+        game_board.move_piece(starting_square, new_square)
+        board_data_position = game_board.instance_variable_get(:@game_board)[4][1]
+        expect(board_data_position).to be(piece)
+      end
+
+      it 'sets the en passant target square to B3' do
+        game_board.move_piece(starting_square, new_square)
+        expect(game_board.en_passant_target).to eq('B3')
+      end
+    end
   end
 
   describe '#square_empty?' do
