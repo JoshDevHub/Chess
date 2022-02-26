@@ -25,6 +25,10 @@ class WhitePawn < Piece
     up(position) if double_move_executed?(move)
   end
 
+  def capture_en_passant?(square)
+    square[1] == '6'
+  end
+
   private
 
   def double_move?

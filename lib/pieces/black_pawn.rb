@@ -25,6 +25,10 @@ class BlackPawn < Piece
     down(position) if double_move_executed?(move)
   end
 
+  def capture_en_passant?(square)
+    square[1] == '3'
+  end
+
   private
 
   def double_move?

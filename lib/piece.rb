@@ -47,8 +47,12 @@ class Piece
     raise NotImplementedError
   end
 
-  def define_en_passant_square(_)
+  def define_en_passant_square(_square)
     nil
+  end
+
+  def capture_en_passant?(_square)
+    false
   end
 
   private

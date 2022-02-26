@@ -52,6 +52,7 @@ class Board
     return nil if square_empty?(current_square)
 
     piece_to_move = remove_piece(current_square)
+    handle_en_passant(piece_to_move, new_square)
     @en_passant_target = piece_to_move.define_en_passant_square(new_square)
     piece_to_move.position = new_square
     add_piece(piece_to_move, new_square)
@@ -124,5 +125,12 @@ class Board
       moves_avoiding_check = self_check_filter(piece, moves)
       move_list.concat(moves_avoiding_check)
     end.empty?
+  end
+
+  def handle_en_passant(piece, target)
+    return unless target == en_passant_target && piece.capture_en_passant?(target)
+
+    capture_square = piece.color == 'white' ? send(:down, target) : send(:up, target)
+    remove_piece(capture_square)
   end
 end
