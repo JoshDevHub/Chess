@@ -122,4 +122,40 @@ describe WhitePawn do
       end
     end
   end
+
+  describe '#capture_en_passant?' do
+    let(:square) { 'B5' }
+    context 'when the given square is not an en passant square for white' do
+      context 'when the given square is nil' do
+        let(:given_square) { nil }
+        it 'returns nil or false' do
+          expect(white_pawn.capture_en_passant?(given_square)).to be_falsey
+        end
+      end
+
+      context 'when the square is not nil' do
+        let(:given_square) { 'B7' }
+        it 'returns nil or false' do
+          expect(white_pawn.capture_en_passant?(given_square)).to be_falsey
+        end
+
+        let(:given_square) { 'B3' }
+        it 'returns nil or false' do
+          expect(white_pawn.capture_en_passant?(given_square)).to be_falsey
+        end
+      end
+    end
+
+    context 'when the given square is an en passant square for white' do
+      let(:given_square) { 'C6' }
+      it 'returns true' do
+        expect(white_pawn.capture_en_passant?(given_square)).to be(true)
+      end
+
+      let(:given_square) { 'A6' }
+      it 'returns true' do
+        expect(white_pawn.capture_en_passant?(given_square)).to be(true)
+      end
+    end
+  end
 end

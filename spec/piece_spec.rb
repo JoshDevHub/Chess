@@ -86,4 +86,12 @@ describe Piece do
       expect(generic_piece.define_en_passant_square(pending_move)).to be(nil)
     end
   end
+
+  describe '#capture_en_passant?' do
+    subject(:generic_piece) { described_class.new(color: 'white', position: 'E4') }
+    it 'returns false' do
+      target_square = 'E5'
+      expect(generic_piece.capture_en_passant?(target_square)).to be(false)
+    end
+  end
 end

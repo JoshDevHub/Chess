@@ -122,4 +122,40 @@ describe BlackPawn do
       end
     end
   end
+
+  describe '#capture_en_passant?' do
+    let(:square) { 'B4' }
+    context 'when the given square is not an en passant square for white' do
+      context 'when the given square is nil' do
+        let(:given_square) { nil }
+        it 'returns nil or false' do
+          expect(black_pawn.capture_en_passant?(given_square)).to be_falsey
+        end
+      end
+
+      context 'when the square is not nil' do
+        let(:given_square) { 'B2' }
+        it 'returns nil or false' do
+          expect(black_pawn.capture_en_passant?(given_square)).to be_falsey
+        end
+
+        let(:given_square) { 'B1' }
+        it 'returns nil or false' do
+          expect(black_pawn.capture_en_passant?(given_square)).to be_falsey
+        end
+      end
+    end
+
+    context 'when the given square is an en passant square for white' do
+      let(:given_square) { 'C3' }
+      it 'returns true' do
+        expect(black_pawn.capture_en_passant?(given_square)).to be(true)
+      end
+
+      let(:given_square) { 'A3' }
+      it 'returns true' do
+        expect(black_pawn.capture_en_passant?(given_square)).to be(true)
+      end
+    end
+  end
 end
