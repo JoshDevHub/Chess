@@ -26,7 +26,7 @@ class WhitePawn < Piece
   end
 
   def capture_en_passant?(square)
-    square[1] == '6'
+    square[1] == '6' if square
   end
 
   private

@@ -26,7 +26,7 @@ class BlackPawn < Piece
   end
 
   def capture_en_passant?(square)
-    square[1] == '3'
+    square[1] == '3' if square
   end
 
   private
