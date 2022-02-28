@@ -194,6 +194,28 @@ describe Board do
         expect(game_board.en_passant_target).to eq('B3')
       end
     end
+
+    context 'when the piece takes an opponent piece with en passant' do
+      let(:starting_square) { 'B5' }
+      let(:attacking_piece) { instance_double(Piece, color: 'white', position: starting_square) }
+      let(:target_square) { 'C6' }
+
+      let(:capture_square) { 'C5' }
+      let(:captured_piece) { instance_double(Piece, color: 'black', position: capture_square) }
+      before do
+        game_board.add_piece(attacking_piece, 'B5')
+        game_board.add_piece(captured_piece, 'C5')
+        allow(attacking_piece).to receive(:position=).with(target_square)
+        allow(attacking_piece).to receive(:capture_en_passant?).and_return(true)
+        allow(attacking_piece).to receive(:define_en_passant_square)
+        allow(game_board).to receive(:en_passant_target).and_return(target_square)
+      end
+
+      it 'removes the captured piece' do
+        game_board.move_piece(starting_square, target_square)
+        expect(game_board.piece_at(capture_square)).to be(nil)
+      end
+    end
   end
 
   describe '#square_empty?' do
