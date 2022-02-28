@@ -29,6 +29,10 @@ class BlackPawn < Piece
     square[1] == '3' if square
   end
 
+  def can_promote?
+    position[1] == '1'
+  end
+
   private
 
   def double_move?

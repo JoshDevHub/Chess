@@ -158,4 +158,38 @@ describe BlackPawn do
       end
     end
   end
+
+  describe '#can_promote?' do
+    context 'when the pawn cannot promote' do
+      context 'when the black pawn is on C4' do
+        let(:square) { 'C4' }
+        it 'returns false' do
+          expect(black_pawn.can_promote?).to be(false)
+        end
+      end
+
+      context 'when the pawn is on F2' do
+        let(:square) { 'F2' }
+        it 'returns false' do
+          expect(black_pawn.can_promote?).to be(false)
+        end
+      end
+    end
+
+    context 'when the pawn can promote' do
+      context 'when the white pawn is on C1' do
+        let(:square) { 'C1' }
+        it 'returns true' do
+          expect(black_pawn.can_promote?).to be(true)
+        end
+      end
+
+      context 'when teh pawn is on F1' do
+        let(:square) { 'F1' }
+        it 'returns true' do
+          expect(black_pawn.can_promote?).to be(true)
+        end
+      end
+    end
+  end
 end

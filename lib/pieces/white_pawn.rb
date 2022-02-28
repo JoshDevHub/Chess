@@ -29,6 +29,10 @@ class WhitePawn < Piece
     square[1] == '6' if square
   end
 
+  def can_promote?
+    position[1] == '8'
+  end
+
   private
 
   def double_move?

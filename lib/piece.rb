@@ -55,6 +55,10 @@ class Piece
     false
   end
 
+  def can_promote?
+    false
+  end
+
   private
 
   def double_move?

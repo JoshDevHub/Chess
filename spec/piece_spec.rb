@@ -94,4 +94,11 @@ describe Piece do
       expect(generic_piece.capture_en_passant?(target_square)).to be(false)
     end
   end
+
+  describe '#can_promote?' do
+    subject(:generic_piece) { described_class.new(color: 'white', position: 'E4') }
+    it 'returns false' do
+      expect(generic_piece.can_promote?).to be(false)
+    end
+  end
 end
