@@ -400,4 +400,54 @@ describe Board do
       end
     end
   end
+
+  describe '#stalemate?' do
+    let(:color) { 'black' }
+    context 'when black is in stalemate' do
+      subject(:stalemate_board) { described_class.new }
+      let(:piece) { instance_double(Piece, color: color) }
+      before do
+        stalemate_board.add_piece(piece, 'A2')
+        allow(piece).to receive(:move_list).and_return([])
+        allow(stalemate_board).to receive(:in_check?).with(color).and_return(false)
+        allow(stalemate_board).to receive(:self_check_filter).and_return([])
+      end
+
+      it 'returns true' do
+        expect(stalemate_board.stalemate?(color)).to be(true)
+      end
+    end
+
+    context 'when black is not in stalemate' do
+      context 'when black has legal moves' do
+        subject(:stalemate_board) { described_class.new }
+        let(:piece) { instance_double(Piece, color: color) }
+        before do
+          stalemate_board.add_piece(piece, 'A2')
+          allow(piece).to receive(:move_list).and_return(['A1'])
+          allow(stalemate_board).to receive(:in_check?).with(color).and_return(false)
+          allow(stalemate_board).to receive(:self_check_filter).and_return(['A1'])
+        end
+
+        it 'returns false' do
+          expect(stalemate_board.stalemate?(color)).to be(false)
+        end
+      end
+
+      context 'when black is in check' do
+        subject(:stalemate_board) { described_class.new }
+        let(:piece) { instance_double(Piece, color: color) }
+        before do
+          stalemate_board.add_piece(piece, 'A2')
+          allow(piece).to receive(:move_list).and_return([])
+          allow(stalemate_board).to receive(:in_check?).with(color).and_return(true)
+          allow(stalemate_board).to receive(:self_check_filter).and_return([])
+        end
+
+        it 'returns false' do
+          expect(stalemate_board.stalemate?(color)).to be(false)
+        end
+      end
+    end
+  end
 end
