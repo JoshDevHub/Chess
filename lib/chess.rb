@@ -37,7 +37,7 @@ class Chess
   def user_piece_selection
     loop do
       display.piece_choice(@active_player)
-      input = gets.chomp
+      input = user_square_input
       return input if valid_piece_selection?(input)
     end
   end
@@ -58,7 +58,7 @@ class Chess
     move_list = create_move_list(chosen_position)
     loop do
       display.move_choice(move_list)
-      input = gets.chomp
+      input = user_square_input
       return input if move_list.include?(input)
 
       display.input_error_message(:invalid_move)
@@ -84,6 +84,10 @@ class Chess
 
   def active_color
     @active_player.piece_color
+  end
+
+  def user_square_input
+    gets.chomp.upcase
   end
 
   def inactive_color
