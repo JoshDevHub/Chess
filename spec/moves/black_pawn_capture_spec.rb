@@ -15,6 +15,7 @@ describe BlackPawnCapture do
       let(:origin) { 'F3' }
       before do
         allow(board).to receive(:color_at).with('G2').and_return(enemy_color)
+        allow(board).to receive(:en_passant_target)
       end
 
       it 'returns a list containg G2' do
@@ -26,6 +27,7 @@ describe BlackPawnCapture do
       let(:origin) { 'C5' }
       before do
         allow(board).to receive(:color_at).with('B4').and_return(enemy_color)
+        allow(board).to receive(:en_passant_target)
       end
 
       it 'returns a list containing B4' do
@@ -52,6 +54,7 @@ describe BlackPawnCapture do
       let(:origin) { 'B3' }
       before do
         allow(board).to receive(:color_at).with('A2').and_return(color)
+        allow(board).to receive(:en_passant_target)
       end
 
       it 'returns an empty list' do
