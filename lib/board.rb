@@ -130,7 +130,7 @@ class Board
   def handle_en_passant(piece, target)
     return unless target == en_passant_target && piece.capture_en_passant?(target)
 
-    capture_square = piece.color == 'white' ? send(:down, target) : send(:up, target)
+    capture_square = piece.color == 'white' ? down(target) : up(target)
     remove_piece(capture_square)
   end
 end
