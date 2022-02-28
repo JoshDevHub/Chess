@@ -348,4 +348,56 @@ describe Board do
       end
     end
   end
+
+  describe '#checkmate?' do
+    context 'when the color to check is white' do
+      let(:color) { 'white' }
+      context 'when white is in checkmate' do
+        subject(:checkmate_board) { described_class.new }
+        let(:piece) { instance_double(Piece, color: color) }
+        before do
+          checkmate_board.add_piece(piece, 'A2')
+          allow(piece).to receive(:move_list).and_return([])
+          allow(checkmate_board).to receive(:in_check?).with(color).and_return(true)
+          allow(checkmate_board).to receive(:self_check_filter).and_return([])
+        end
+
+        it 'returns true' do
+          expect(checkmate_board.checkmate?(color)).to be(true)
+        end
+      end
+
+      context 'when white is not in checkmate' do
+        context 'when white has legal moves' do
+          subject(:checkmate_board) { described_class.new }
+          let(:piece) { instance_double(Piece, color: color) }
+          before do
+            checkmate_board.add_piece(piece, 'A2')
+            allow(piece).to receive(:move_list).and_return(['A1'])
+            allow(checkmate_board).to receive(:in_check?).with(color).and_return(true)
+            allow(checkmate_board).to receive(:self_check_filter).and_return(['A1'])
+          end
+
+          it 'returns false' do
+            expect(checkmate_board.checkmate?(color)).to be(false)
+          end
+        end
+
+        context 'when white is not in check' do
+          subject(:checkmate_board) { described_class.new }
+          let(:piece) { instance_double(Piece, color: color) }
+          before do
+            checkmate_board.add_piece(piece, 'A2')
+            allow(piece).to receive(:move_list).and_return([])
+            allow(checkmate_board).to receive(:in_check?).with(color).and_return(false)
+            allow(checkmate_board).to receive(:self_check_filter).and_return([])
+          end
+
+          it 'returns false' do
+            expect(checkmate_board.checkmate?(color)).to be(false)
+          end
+        end
+      end
+    end
+  end
 end
