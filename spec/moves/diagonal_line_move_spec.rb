@@ -55,5 +55,21 @@ describe DiagonalLineMove do
         end
       end
     end
+
+    context 'when a piece is available for capture' do
+      let(:capture_color) { 'black' }
+      context 'when the origin square is C3 and an enemy piece is on E5' do
+        let(:origin) { 'C3' }
+        before do
+          allow(board).to receive(:square_empty?).with('E5').and_return(false)
+          allow(board).to receive(:color_at).with('E5').and_return(capture_color)
+        end
+
+        it 'returns a list containing B2, A1, D2, E1, D4, E5, B4, and A5' do
+          moves = %w[B2 A1 D2 E1 D4 E5 B4 A5]
+          expect(diagonal_moves.generate_moves).to contain_exactly(*moves)
+        end
+      end
+    end
   end
 end
