@@ -18,15 +18,18 @@ class Chess
   def play_chess
     display.introduction
     loop do
-      display.print_board(@chess_board)
+      game_loop
       break unless continue_game?
-
-      user_piece_position = user_origin_selection
-      user_move = user_target_selection(user_piece_position)
-      @chess_board.move_piece(user_piece_position, user_move)
-      promotion_script(user_move)
-      toggle_turns
     end
+    # TODO: #play_again
+  end
+
+  def game_loop
+    display.print_board(@chess_board)
+    user_piece_position = user_origin_selection
+    @chess_board.move_piece(user_piece_position, user_move)
+    promotion_script(user_move)
+    toggle_turns
   end
 
   def create_move_list(piece_position)
@@ -40,6 +43,7 @@ class Chess
     take_user_input(:valid_origin_selection?)
   end
 
+  # rubocop: disable Metrics/MethodLength
   def valid_origin_selection?(selection)
     if !valid_square?(selection)
       display.input_error_message(:invalid_square)
@@ -47,10 +51,13 @@ class Chess
       display.input_error_message(:empty_square)
     elsif @chess_board.color_at(selection) != @active_player.piece_color
       display.input_error_message(:wrong_color)
+    elsif create_move_list(selection).empty?
+      display.input_error_message(:no_moves)
     else
       true
     end
   end
+  # rubocop: enable Metrics/MethodLength
 
   def toggle_turns
     @active_player =
