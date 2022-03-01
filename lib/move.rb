@@ -31,7 +31,7 @@ class Move
       break unless legal_move?(new_move)
 
       path << new_move
-      break unless line_moves?
+      break if one_step_moves? || capture_move?(new_move)
 
       current_square = new_move
     end
@@ -42,8 +42,12 @@ class Move
     valid_square?(square) && (@board.square_empty?(square) || @board.color_at(square) != @color)
   end
 
-  def line_moves?
-    false
+  def capture_move?(square)
+    @board.color_at(square) == opposing_color
+  end
+
+  def one_step_moves?
+    true
   end
 
   def opposing_color

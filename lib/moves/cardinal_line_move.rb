@@ -13,7 +13,7 @@ class CardinalLineMove < Move
 
   private
 
-  def line_moves?
-    true
+  def one_step_moves?
+    false
   end
 end

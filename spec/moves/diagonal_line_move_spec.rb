@@ -7,7 +7,7 @@ require_relative '../../lib/moves/diagonal_line_move'
 
 describe DiagonalLineMove do
   describe '#generate_moves' do
-    let(:board) { instance_double(Board, square_empty?: true) }
+    let(:board) { instance_double(Board, square_empty?: true, color_at: nil) }
     subject(:diagonal_moves) { described_class.new(origin: origin, color: 'white', board: board) }
     context 'when no piece is blocking' do
       context 'when the origin square is D4' do

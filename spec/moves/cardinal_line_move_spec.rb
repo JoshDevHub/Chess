@@ -7,7 +7,7 @@ require_relative '../../lib/moves/cardinal_line_move'
 
 describe CardinalLineMove do
   subject(:cardinal_line) { described_class.new(color: 'black', origin: origin, board: board) }
-  let(:board) { instance_double(Board, square_empty?: true) }
+  let(:board) { instance_double(Board, square_empty?: true, color_at: nil) }
   describe '#generate_moves' do
     context 'when no friendly piece is blocking any squares' do
       context 'when the starting square is A8' do
@@ -39,7 +39,7 @@ describe CardinalLineMove do
       end
     end
 
-    context 'when the rook is completely boxed in by friendly pieces' do
+    context 'when the piece is completely boxed in by friendly pieces' do
       let(:block_color) { 'black' }
       context 'when the starting square is H8 and H7 and G8 are blocked' do
         let(:origin) { 'H8' }
@@ -53,6 +53,22 @@ describe CardinalLineMove do
 
         it 'returns an empty array' do
           expect(cardinal_line.generate_moves).to be_empty
+        end
+      end
+    end
+
+    context 'when a piece is available for capture' do
+      let(:capture_color) { 'white' }
+      context 'when the origin is H4 and an enemy piece is on F4' do
+        let(:origin) { 'H4' }
+        before do
+          allow(board).to receive(:square_empty?).with('F4').and_return(false)
+          allow(board).to receive(:color_at).with('F4').and_return(capture_color)
+        end
+
+        it 'returns a list with H1, H2, H3, H5, H6, H7, H8, G4 and F4' do
+          moves = %w[H1 H2 H3 H5 H6 H7 H8 G4 F4]
+          expect(cardinal_line.generate_moves).to contain_exactly(*moves)
         end
       end
     end
