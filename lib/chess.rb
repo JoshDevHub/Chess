@@ -36,11 +36,8 @@ class Chess
   end
 
   def user_origin_selection
-    loop do
-      display.piece_choice(@active_player)
-      input = user_square_input
-      return input if valid_origin_selection?(input)
-    end
+    display.piece_choice(@active_player)
+    take_user_input(:valid_origin_selection?)
   end
 
   def valid_origin_selection?(selection)
@@ -52,17 +49,6 @@ class Chess
       display.input_error_message(:wrong_color)
     else
       true
-    end
-  end
-
-  def user_target_selection(chosen_position)
-    move_list = create_move_list(chosen_position)
-    loop do
-      display.move_choice(move_list)
-      input = user_square_input
-      return input if move_list.include?(input)
-
-      display.input_error_message(:invalid_move)
     end
   end
 
@@ -84,23 +70,35 @@ class Chess
   def promotion_script(square)
     return unless @chess_board.piece_at(square).can_promote?
 
-    user_selection = promotion_piece_selection
+    display.promotion_message(@active_player)
+    user_selection = take_user_input(:valid_promotion_piece_selection?)
     new_piece = Piece.from_fen(user_selection, square)
     @chess_board.add_piece(new_piece, square)
   end
 
-  def promotion_piece_selection
+  def take_user_input(validator, *validation_args)
     loop do
-      display.promotion_message(@active_player)
-      selection = gets.chomp.upcase
-      return selection if valid_promotion_piece_selection?(selection)
-
-      display.input_error_message(:invalid_piece)
+      user_input = gets.upcase.chomp
+      return user_input if send(validator, user_input, *validation_args)
     end
   end
 
   def valid_promotion_piece_selection?(selection)
-    %w[Q R B N].include?(selection)
+    return true if %w[Q R B N].include?(selection)
+
+    display.invalid_promotion_piece
+  end
+
+  def user_target_selection(chosen_position)
+    move_list = create_move_list(chosen_position)
+    display.move_choice(move_list)
+    take_user_input(:valid_move_selection?, move_list)
+  end
+
+  def valid_move_selection?(selection, move_list)
+    return true if move_list.include?(selection)
+
+    display.input_error_message(:invalid_move)
   end
 
   private
@@ -113,10 +111,6 @@ class Chess
     piece_fen = active_color == 'white' ? fen_symbol : fen_symbol.downcase
     new_piece = Piece.from_fen(piece_fen, position)
     @chess_board.add_piece(new_piece, position)
-  end
-
-  def user_square_input
-    gets.chomp.upcase
   end
 
   def inactive_color
