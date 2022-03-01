@@ -91,8 +91,7 @@ class Chess
 
   def promotion_piece_selection
     loop do
-      puts "#{@active_player}: your pawn has reached the back rank! It can promote to a new piece."
-      puts 'What piece do you wish to promote to? Enter a piece using its chess notation (Q, R, B, or N)'
+      display.promotion_message(@active_player)
       selection = gets.chomp.upcase
       return selection if valid_promotion_piece_selection?(selection)
 
