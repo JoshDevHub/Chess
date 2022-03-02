@@ -21,4 +21,21 @@ describe Square do
       end
     end
   end
+
+  describe '#add_piece' do
+    context 'when the square is unoccupied' do
+      subject(:square) { described_class.new(name: 'A1') }
+      it 'changes @piece from nil to the given piece' do
+        expect { square.add_piece(piece) }.to change { square.piece }.from(nil).to(piece)
+      end
+    end
+
+    context 'when the square is occupied' do
+      subject(:square) { described_class.new(name: 'A1', piece: piece) }
+      let(:new_piece) { instance_double(Piece) }
+      it 'changes @piece from the current piece to the given piece' do
+        expect { square.add_piece(new_piece) }.to change { square.piece }.from(piece).to(new_piece)
+      end
+    end
+  end
 end
