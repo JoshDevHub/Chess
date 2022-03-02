@@ -6,21 +6,31 @@ class Board
 
   attr_reader :en_passant_target
 
-  def initialize
-    @game_board = Array.new(HEIGHT) { Array.new(WIDTH) }
+  def initialize(square)
+    @game_board = Array.new(HEIGHT) do |rank|
+      Array.new(WIDTH) do |file|
+        square_name = to_square_notation([file, rank])
+        square.new(name: square_name)
+      end
+    end
     @en_passant_target = nil
   end
 
   HEIGHT = 8
   WIDTH = 8
 
-  def self.from_fen(fen_data:)
-    board = Board.new
+  def self.from_fen(fen_data:, square:)
+    board = Board.new(square)
     fen_data.each do |piece|
       piece_square = piece.position
-      board.add_piece(piece, piece_square)
+      board_square = board.access_square(piece_square)
+      board_square.add_piece(piece)
     end
     board
+  end
+
+  def access_square(square_name)
+    @game_board.flatten.find { |square| square_name == square.name }
   end
 
   def to_s
