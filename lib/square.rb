@@ -9,6 +9,14 @@ class Square
     @piece = piece
   end
 
+  def to_s
+    if unoccupied?
+      '    '
+    else
+      " #{piece}  "
+    end
+  end
+
   def unoccupied?
     @piece.nil?
   end

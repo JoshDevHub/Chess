@@ -5,7 +5,7 @@ require_relative '../lib/square'
 require_relative '../lib/piece'
 
 describe Square do
-  let(:piece) { instance_double(Piece) }
+  let(:piece) { instance_double(Piece, to_s: 'piece') }
   describe '#unoccupied?' do
     context 'when the square is empty' do
       subject(:square) { described_class.new(name: 'A1') }
@@ -98,6 +98,24 @@ describe Square do
       it "returns the first character in the square's name" do
         first_character = 'H'
         expect(square.file).to eq(first_character)
+      end
+    end
+  end
+
+  describe '#to_s' do
+    context 'when the square is empty' do
+      subject(:square) { described_class.new(name: 'A1') }
+      it 'returns a string with four spaces' do
+        four_spaces = '    '
+        expect(square.to_s).to eq(four_spaces)
+      end
+    end
+
+    context 'when the square has a piece' do
+      subject(:square) { described_class.new(name: 'A1', piece: piece) }
+      it 'returns a string with 1 space, the piece as a string, and 2 more spaces' do
+        expected_string = ' piece  '
+        expect(square.to_s).to eq(expected_string)
       end
     end
   end
