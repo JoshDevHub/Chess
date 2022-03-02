@@ -18,7 +18,7 @@ class Square
   end
 
   def unoccupied?
-    @piece.nil?
+    piece.nil?
   end
 
   def add_piece(piece)
@@ -31,6 +31,12 @@ class Square
     piece_to_remove = @piece
     @piece = nil
     piece_to_remove
+  end
+
+  def piece_color
+    return if unoccupied?
+
+    piece.color
   end
 
   def rank

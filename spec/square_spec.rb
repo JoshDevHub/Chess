@@ -119,4 +119,37 @@ describe Square do
       end
     end
   end
+
+  describe '#piece_color' do
+    context 'when the square is empty' do
+      subject(:square) { described_class.new(name: 'A1') }
+      it 'returns nil' do
+        expect(square.piece_color).to be(nil)
+      end
+    end
+
+    context 'when the color of the piece in the square is orange' do
+      let(:color) { 'orange' }
+      subject(:square) { described_class.new(name: 'A1', piece: piece) }
+      before do
+        allow(piece).to receive(:color).and_return(color)
+      end
+
+      it "returns the string 'orange'" do
+        expect(square.piece_color).to eq(color)
+      end
+    end
+
+    context 'when the color of the piece in the square is black' do
+      let(:color) { 'black' }
+      subject(:square) { described_class.new(name: 'A1', piece: piece) }
+      before do
+        allow(piece).to receive(:color).and_return(color)
+      end
+
+      it "returns the string 'black'" do
+        expect(square.piece_color).to eq(color)
+      end
+    end
+  end
 end
