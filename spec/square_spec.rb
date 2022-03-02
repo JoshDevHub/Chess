@@ -38,4 +38,29 @@ describe Square do
       end
     end
   end
+
+  describe '#remove_piece' do
+    context 'when the square is unoccupied' do
+      subject(:square) { described_class.new(name: 'A1') }
+      it 'returns nil' do
+        expect(square.remove_piece).to be(nil)
+      end
+
+      it 'does not change the value held at @piece' do
+        expect { square.remove_piece }.to_not change { square.piece }
+        square.remove_piece
+      end
+    end
+
+    context 'when the square is occupied' do
+      subject(:square) { described_class.new(name: 'A1', piece: piece) }
+      it 'returns the removed piece' do
+        expect(square.remove_piece).to eq(piece)
+      end
+
+      it 'changes @piece from piece to nil' do
+        expect { square.remove_piece }.to change { square.piece }.from(piece).to(nil)
+      end
+    end
+  end
 end

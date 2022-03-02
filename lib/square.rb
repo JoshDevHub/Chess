@@ -16,4 +16,12 @@ class Square
   def add_piece(piece)
     @piece = piece
   end
+
+  def remove_piece
+    return if unoccupied?
+
+    piece_to_remove = @piece
+    @piece = nil
+    piece_to_remove
+  end
 end
