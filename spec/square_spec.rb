@@ -63,4 +63,42 @@ describe Square do
       end
     end
   end
+
+  describe '#rank' do
+    subject(:square) { described_class.new(name: name) }
+    context 'when the square name is A1' do
+      let(:name) { 'A1' }
+      it "returns the second character in the square's name" do
+        second_character = '1'
+        expect(square.rank).to eq(second_character)
+      end
+    end
+
+    context 'when the square name is C8' do
+      let(:name) { 'C8' }
+      it "returns the second character in the square's name" do
+        second_character = '8'
+        expect(square.rank).to eq(second_character)
+      end
+    end
+  end
+
+  describe '#file' do
+    subject(:square) { described_class.new(name: name) }
+    context 'when the square name is E4' do
+      let(:name) { 'E4' }
+      it "returns the first character in the square's name" do
+        first_character = 'E'
+        expect(square.file).to eq(first_character)
+      end
+    end
+
+    context 'when the square name is H3' do
+      let(:name) { 'H3' }
+      it "returns the first character in the square's name" do
+        first_character = 'H'
+        expect(square.file).to eq(first_character)
+      end
+    end
+  end
 end

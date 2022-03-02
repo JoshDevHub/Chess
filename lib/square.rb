@@ -24,4 +24,12 @@ class Square
     @piece = nil
     piece_to_remove
   end
+
+  def rank
+    name[1]
+  end
+
+  def file
+    name[0]
+  end
 end
