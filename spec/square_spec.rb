@@ -152,4 +152,51 @@ describe Square do
       end
     end
   end
+
+  describe '#occupied_by_king?' do
+    context 'when the square has a white king' do
+      let(:color) { 'white' }
+      let(:king) { instance_double(Piece, name: 'king', color: color) }
+      subject(:king_square) { described_class.new(name: 'E4', piece: king) }
+      it 'returns true' do
+        expect(king_square.occupied_by_king?(color)).to be(true)
+      end
+    end
+
+    context 'when the square has a black king' do
+      let(:color) { 'black' }
+      let(:king) { instance_double(Piece, name: 'king', color: color) }
+      subject(:king_square) { described_class.new(name: 'E8', piece: king) }
+      it 'returns true' do
+        expect(king_square.occupied_by_king?(color)).to be(true)
+      end
+    end
+
+    context 'when the square does not have a king' do
+      let(:color) { 'white' }
+      let(:piece) { instance_double(Piece, name: 'piece', color: color) }
+      subject(:generic_square) { described_class.new(name: 'E4', piece: piece) }
+      it 'returns false' do
+        expect(generic_square.occupied_by_king?(color)).to be(false)
+      end
+    end
+
+    context 'when the square has no piece' do
+      context 'when the color is black' do
+        let(:color) { 'black' }
+        subject(:empty_square) { described_class.new(name: 'E8') }
+        it 'returns false' do
+          expect(empty_square.occupied_by_king?(color)).to be(false)
+        end
+      end
+
+      context 'when the color is white' do
+        let(:color) { 'white' }
+        subject(:empty_square) { described_class.new(name: 'E8') }
+        it 'returns false' do
+          expect(empty_square.occupied_by_king?(color)).to be(false)
+        end
+      end
+    end
+  end
 end

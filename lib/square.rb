@@ -39,6 +39,12 @@ class Square
     piece.color
   end
 
+  def occupied_by_king?(color)
+    return false if unoccupied?
+
+    piece.name == 'king' && piece.color == color
+  end
+
   def rank
     name[1]
   end
