@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../../lib/coordinate'
+require_relative '../../lib/square'
 require_relative '../../lib/board'
 require_relative '../../lib/move'
 require_relative '../../lib/moves/king_move'
@@ -8,7 +9,8 @@ require_relative '../../lib/moves/king_move'
 describe KingMove do
   subject(:king_move) { described_class.new(color: 'black', origin: origin, board: board) }
   describe '#generate_moves' do
-    let(:board) { instance_double(Board, square_empty?: true) }
+    let(:board) { instance_double(Board, access_square: square) }
+    let(:square) { instance_double(Square, unoccupied?: true, piece_color: nil) }
     context 'when no squares are blocked by friendly pieces' do
       context 'when the starting square is E7' do
         let(:origin) { 'E7' }
@@ -29,11 +31,11 @@ describe KingMove do
 
     context 'when a square is blocked by a friendly piece' do
       let(:block_color) { 'black' }
+      let(:block_square) { instance_double(Square, unoccupied?: false, piece_color: block_color) }
       context 'when the starting square is B6 and C7 is blocked' do
         let(:origin) { 'B6' }
         before do
-          allow(board).to receive(:square_empty?).with('C7').and_return(false)
-          allow(board).to receive(:color_at).with('C7').and_return(block_color)
+          allow(board).to receive(:access_square).with('C7').and_return(block_square)
         end
         it 'returns a list containing B7, C6, C5, B5, A5, A6, and A7' do
           moves = %w[B7 C6 C5 B5 A5 A6 A7]
