@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
 require_relative '../../lib/coordinate'
+require_relative '../../lib/square'
 require_relative '../../lib/board'
 require_relative '../../lib/move'
 require_relative '../../lib/moves/cardinal_line_move'
 
 describe CardinalLineMove do
   subject(:cardinal_line) { described_class.new(color: 'black', origin: origin, board: board) }
-  let(:board) { instance_double(Board, square_empty?: true, color_at: nil) }
+  let(:board) { instance_double(Board, access_square: square) }
+  let(:square) { instance_double(Square, unoccupied?: true, piece_color: nil) }
   describe '#generate_moves' do
     context 'when no friendly piece is blocking any squares' do
       context 'when the starting square is A8' do
@@ -22,14 +24,12 @@ describe CardinalLineMove do
 
     context 'when friendly pieces are blocking squares' do
       let(:block_color) { 'black' }
+      let(:block_square) { instance_double(Square, unoccupied?: false, piece_color: block_color) }
       context 'when the starting square is C6 and B6 and D6 are blocked' do
         let(:origin) { 'C6' }
         before do
-          allow(board).to receive(:square_empty?).with('B6').and_return(false)
-          allow(board).to receive(:color_at).with('B6').and_return(block_color)
-
-          allow(board).to receive(:square_empty?).with('D6').and_return(false)
-          allow(board).to receive(:color_at).with('D6').and_return(block_color)
+          allow(board).to receive(:access_square).with('B6').and_return(block_square)
+          allow(board).to receive(:access_square).with('D6').and_return(block_square)
         end
 
         it 'returns a list containing C7, C8, C5, C4, C3, C2, and C1' do
@@ -41,14 +41,12 @@ describe CardinalLineMove do
 
     context 'when the piece is completely boxed in by friendly pieces' do
       let(:block_color) { 'black' }
+      let(:block_square) { instance_double(Square, unoccupied?: false, piece_color: block_color) }
       context 'when the starting square is H8 and H7 and G8 are blocked' do
         let(:origin) { 'H8' }
         before do
-          allow(board).to receive(:square_empty?).with('H7').and_return(false)
-          allow(board).to receive(:color_at).with('H7').and_return(block_color)
-
-          allow(board).to receive(:square_empty?).with('G8').and_return(false)
-          allow(board).to receive(:color_at).with('G8').and_return(block_color)
+          allow(board).to receive(:access_square).with('H7').and_return(block_square)
+          allow(board).to receive(:access_square).with('G8').and_return(block_square)
         end
 
         it 'returns an empty array' do
@@ -59,11 +57,11 @@ describe CardinalLineMove do
 
     context 'when a piece is available for capture' do
       let(:capture_color) { 'white' }
+      let(:capture_square) { instance_double(Square, unoccupied?: false, piece_color: capture_color) }
       context 'when the origin is H4 and an enemy piece is on F4' do
         let(:origin) { 'H4' }
         before do
-          allow(board).to receive(:square_empty?).with('F4').and_return(false)
-          allow(board).to receive(:color_at).with('F4').and_return(capture_color)
+          allow(board).to receive(:access_square).with('F4').and_return(capture_square)
         end
 
         it 'returns a list with H1, H2, H3, H5, H6, H7, H8, G4 and F4' do
