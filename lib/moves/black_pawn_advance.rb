@@ -11,6 +11,9 @@ class BlackPawnAdvance < Move
   private
 
   def legal_move?(square)
-    valid_square?(square) && @board.square_empty?(square)
+    return false unless valid_square?(square)
+
+    board_square = @board.access_square(square)
+    board_square.unoccupied?
   end
 end

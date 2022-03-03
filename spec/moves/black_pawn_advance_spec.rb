@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 require_relative '../../lib/coordinate'
+require_relative '../../lib/square'
 require_relative '../../lib/board'
 require_relative '../../lib/move'
 require_relative '../../lib/moves/black_pawn_advance'
 
 describe BlackPawnAdvance do
-  let(:board) { instance_double(Board, square_empty?: true) }
+  let(:board) { instance_double(Board, access_square: square) }
+  let(:square) { instance_double(Square, unoccupied?: true) }
   subject(:down_move) { described_class.new(color: 'black', origin: origin, board: board) }
   describe '#generate_moves' do
     context 'when the target square is unblocked' do
@@ -28,8 +30,9 @@ describe BlackPawnAdvance do
     context 'when the target square is blocked' do
       context 'when the origin is F6 and F5 is blocked' do
         let(:origin) { 'F6' }
+        let(:block_square) { instance_double(Square, unoccupied?: false) }
         before do
-          allow(board).to receive(:square_empty?).with('F5').and_return(false)
+          allow(board).to receive(:access_square).with('F5').and_return(block_square)
         end
 
         it 'returns an empty list' do
