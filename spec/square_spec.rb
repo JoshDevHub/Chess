@@ -64,58 +64,51 @@ describe Square do
     end
   end
 
-  describe '#rank' do
-    subject(:square) { described_class.new(name: name) }
-    context 'when the square name is A1' do
-      let(:name) { 'A1' }
-      it "returns the second character in the square's name" do
-        second_character = '1'
-        expect(square.rank).to eq(second_character)
-      end
-    end
-
-    context 'when the square name is C8' do
-      let(:name) { 'C8' }
-      it "returns the second character in the square's name" do
-        second_character = '8'
-        expect(square.rank).to eq(second_character)
-      end
-    end
-  end
-
-  describe '#file' do
-    subject(:square) { described_class.new(name: name) }
-    context 'when the square name is E4' do
-      let(:name) { 'E4' }
-      it "returns the first character in the square's name" do
-        first_character = 'E'
-        expect(square.file).to eq(first_character)
-      end
-    end
-
-    context 'when the square name is H3' do
-      let(:name) { 'H3' }
-      it "returns the first character in the square's name" do
-        first_character = 'H'
-        expect(square.file).to eq(first_character)
-      end
-    end
-  end
-
   describe '#to_s' do
-    context 'when the square is empty' do
-      subject(:square) { described_class.new(name: 'A1') }
-      it 'returns a string with four spaces' do
-        four_spaces = '    '
-        expect(square.to_s).to eq(four_spaces)
+    context 'when the square should be gray' do
+      context 'when the square is empty' do
+        subject(:square) { described_class.new(name: 'B1') }
+        it 'returns a string with three spaces and ANSI colors for black foreground with gray background' do
+          black_fg_code = "\e[0m\e[0m"
+          gray_bg_code = "\e[47m\e[30m"
+          spaces = '   '
+          expected_output = "#{gray_bg_code}#{spaces}#{black_fg_code}"
+          expect(square.to_s).to eq(expected_output)
+        end
+      end
+
+      context 'when the square has a piece' do
+        subject(:square) { described_class.new(name: 'B1', piece: piece) }
+        it 'returns a string with the piece and ANSI colors for black foreground with gray background' do
+          black_fg_code = "\e[0m\e[0m"
+          gray_bg_code = "\e[47m\e[30m"
+          piece_string = piece.to_s
+          expected_output = "#{gray_bg_code} #{piece_string} #{black_fg_code}"
+          expect(square.to_s).to eq(expected_output)
+        end
       end
     end
+    context 'when the square should be magenta' do
+      context 'when the square is empty' do
+        subject(:square) { described_class.new(name: 'A1') }
+        it 'returns a string with three spaces and ANSI colors for black foreground with magenta background' do
+          black_fg_code = "\e[0m\e[0m"
+          magenta_bg_code = "\e[45m\e[30m"
+          spaces = '   '
+          expected_output = "#{magenta_bg_code}#{spaces}#{black_fg_code}"
+          expect(square.to_s).to eq(expected_output)
+        end
+      end
 
-    context 'when the square has a piece' do
-      subject(:square) { described_class.new(name: 'A1', piece: piece) }
-      it 'returns a string with 1 space, the piece as a string, and 2 more spaces' do
-        expected_string = ' piece  '
-        expect(square.to_s).to eq(expected_string)
+      context 'when the square has a piece' do
+        subject(:square) { described_class.new(name: 'A1', piece: piece) }
+        it 'returns a string with three spaces and ANSI colors for black foreground with magenta background' do
+          black_fg_code = "\e[0m\e[0m"
+          magenta_bg_code = "\e[45m\e[30m"
+          piece_string = piece.to_s
+          expected_output = "#{magenta_bg_code} #{piece_string} #{black_fg_code}"
+          expect(square.to_s).to eq(expected_output)
+        end
       end
     end
   end

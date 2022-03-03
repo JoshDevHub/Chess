@@ -2,6 +2,8 @@
 
 # class for representing the cells contained on a chess board
 class Square
+  include Coordinate
+
   attr_reader :name, :piece
 
   def initialize(name:, piece: nil)
@@ -10,11 +12,9 @@ class Square
   end
 
   def to_s
-    if unoccupied?
-      '    '
-    else
-      " #{piece}  "
-    end
+    string = unoccupied? ? '   ' : " #{piece} "
+    darken_string = fg_black(string)
+    bg_color(darken_string)
   end
 
   def unoccupied?
@@ -45,11 +45,22 @@ class Square
     piece.name == 'king' && piece.color == color
   end
 
-  def rank
-    name[1]
+  private
+
+  def bg_color(string)
+    x, y = to_xy_coordinate(name)
+    (x + y).even? ? bg_gray(string) : bg_magenta(string)
   end
 
-  def file
-    name[0]
+  def fg_black(string)
+    "\e[30m#{string}\e[0m"
+  end
+
+  def bg_gray(string)
+    "\e[47m#{string}\e[0m"
+  end
+
+  def bg_magenta(string)
+    "\e[45m#{string}\e[0m"
   end
 end
