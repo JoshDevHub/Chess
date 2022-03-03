@@ -91,7 +91,9 @@ class Board
   end
 
   def all_pieces_of_color(color)
-    @game_board.flatten.select { |square| square.piece_color == color }
+    @game_board.flatten
+               .select { |square| square.piece_color == color }
+               .map(&:piece)
   end
 
   def no_legal_moves?(color)
