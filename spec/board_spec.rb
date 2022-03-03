@@ -195,106 +195,117 @@ describe Board do
       end
     end
   end
+
+  describe '#in_check' do
+    subject(:game_board) { described_class.new(square_class) }
+    context 'when a white king is in check to a black piece' do
+      let(:color) { 'white' }
+      let(:empty_squares) { instance_double(Square, occupied_by_king?: false, piece_color: nil) }
+      let(:king_square) { instance_double(Square, name: 'E1', piece_color: 'white', occupied_by_king?: true) }
+      let(:attacker_square) { instance_double(Square, piece_color: 'black', occupied_by_king?: false, piece: attacker) }
+      let(:attacker) { instance_double(Piece, move_list: ['E1']) }
+      before do
+        allow(square_class).to receive(:new).and_return(empty_squares)
+        allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
+        allow(square_class).to receive(:new).with(name: 'E2').and_return(attacker_square)
+      end
+
+      it 'returns true' do
+        expect(game_board.in_check?('white')).to be(true)
+      end
+    end
+
+    context 'when a white king is not in check to a black piece' do
+      let(:color) { 'white' }
+      let(:empty_squares) { instance_double(Square, occupied_by_king?: false, piece_color: nil) }
+      let(:king_square) { instance_double(Square, name: 'E1', piece_color: 'white', occupied_by_king?: true) }
+      let(:attacker_square) { instance_double(Square, piece_color: 'black', occupied_by_king?: false, piece: attacker) }
+      let(:attacker) { instance_double(Piece, move_list: ['E3']) }
+      before do
+        allow(square_class).to receive(:new).and_return(empty_squares)
+        allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
+        allow(square_class).to receive(:new).with(name: 'E2').and_return(attacker_square)
+      end
+
+      it 'returns false' do
+        expect(game_board.in_check?('white')).to be(false)
+      end
+    end
+
+    context 'when a black king is in check to a white piece' do
+      let(:color) { 'black' }
+      let(:empty_squares) { instance_double(Square, occupied_by_king?: false, piece_color: nil) }
+      let(:king_square) { instance_double(Square, name: 'E8', piece_color: color, occupied_by_king?: true) }
+      let(:attacker_square) { instance_double(Square, piece_color: 'white', occupied_by_king?: false, piece: attacker) }
+      let(:attacker) { instance_double(Piece, move_list: ['E8']) }
+      before do
+        allow(square_class).to receive(:new).and_return(empty_squares)
+        allow(square_class).to receive(:new).with(name: 'E8').and_return(king_square)
+        allow(square_class).to receive(:new).with(name: 'E7').and_return(attacker_square)
+      end
+
+      it 'returns true' do
+        expect(game_board.in_check?('black')).to be(true)
+      end
+    end
+
+    context 'when a black king is not in check to a white piece' do
+      let(:color) { 'black' }
+      let(:empty_squares) { instance_double(Square, occupied_by_king?: false, piece_color: nil) }
+      let(:king_square) { instance_double(Square, name: 'E8', piece_color: 'black', occupied_by_king?: true) }
+      let(:attacker_square) { instance_double(Square, piece_color: 'white', occupied_by_king?: false, piece: attacker) }
+      let(:attacker) { instance_double(Piece, move_list: ['E6']) }
+      before do
+        allow(square_class).to receive(:new).and_return(empty_squares)
+        allow(square_class).to receive(:new).with(name: 'E8').and_return(king_square)
+        allow(square_class).to receive(:new).with(name: 'E6').and_return(attacker_square)
+      end
+
+      it 'returns false' do
+        expect(game_board.in_check?('black')).to be(false)
+      end
+    end
+  end
+
+  describe '#self_check_filter' do
+    subject(:game_board) { described_class.new(square_class) }
+    context 'when all of the moves in a target list would result in check' do
+      let(:origin) { 'B2' }
+      let(:moving_piece) { instance_double(Piece, position: origin, color: 'white') }
+      let(:target_list) { %w[A1 A2 A3] }
+      let(:in_check_board) { described_class.new(square_class) }
+      before do
+        allow(Marshal).to receive(:load).and_return(in_check_board)
+        allow(Marshal).to receive(:dump)
+        allow(in_check_board).to receive(:in_check?).and_return(true)
+        allow(in_check_board).to receive(:move_piece).with(origin, 'A1')
+        allow(in_check_board).to receive(:move_piece).with(origin, 'A2')
+        allow(in_check_board).to receive(:move_piece).with(origin, 'A3')
+      end
+      it 'returns an empty array' do
+        expect(game_board.self_check_filter(moving_piece, target_list)).to be_empty
+      end
+    end
+
+    context 'when none of the moves in a target list would result in check' do
+      let(:origin) { 'B2' }
+      let(:moving_piece) { instance_double(Piece, position: origin, color: 'white') }
+      let(:target_list) { %w[A1 A2 A3] }
+      let(:in_check_board) { described_class.new(square_class) }
+      before do
+        allow(Marshal).to receive(:load).and_return(in_check_board)
+        allow(Marshal).to receive(:dump)
+        allow(in_check_board).to receive(:in_check?).and_return(false)
+        allow(in_check_board).to receive(:move_piece).with(origin, 'A1')
+        allow(in_check_board).to receive(:move_piece).with(origin, 'A2')
+        allow(in_check_board).to receive(:move_piece).with(origin, 'A3')
+      end
+      it 'returns an empty array' do
+        expect(game_board.self_check_filter(moving_piece, target_list)).to eq(target_list)
+      end
+    end
+  end
 end
-
-#   describe '#in_check' do
-#     subject(:game_board) { described_class.new }
-#     context 'when a white king is in check to a black piece' do
-#       let(:check_square) { 'E1' }
-#       let(:king) { instance_double(Piece, name: 'king', color: 'white', position: check_square) }
-#       let(:black_piece) { instance_double(Piece, name: 'piece', color: 'black') }
-#       before do
-#         game_board.add_piece(black_piece, 'A1')
-#         game_board.add_piece(king, check_square)
-
-#         allow(black_piece).to receive(:move_list).with(game_board).and_return([check_square])
-#       end
-
-#       xit 'returns true' do
-#         expect(game_board.in_check?('white')).to be(true)
-#       end
-#     end
-
-#     context 'when a white king is not in check' do
-#       let(:king_square) { 'E1' }
-#       let(:king) { instance_double(Piece, name: 'king', color: 'white', position: king_square) }
-#       let(:black_piece) { instance_double(Piece, name: 'piece', color: 'black') }
-#       before do
-#         game_board.add_piece(black_piece, 'A1')
-#         game_board.add_piece(king, king_square)
-
-#         allow(black_piece).to receive(:move_list).with(game_board).and_return(['B1'])
-#       end
-
-#       xit 'returns false' do
-#         expect(game_board.in_check?('white')).to be(false)
-#       end
-#     end
-#   end
-
-#   describe '#self_check_filter' do
-#     subject(:game_board) { described_class.new }
-#     context 'when one of the moves in a given target list would result in check' do
-#       let(:piece) { instance_double(Piece, name: 'piece', color: 'white', position: 'A1') }
-#       let(:attacking_piece) { instance_double(Piece, name: 'piece', color: 'black', position: 'A2') }
-#       let(:king) { instance_double(Piece, name: 'king', color: 'white', position: 'B2') }
-#       let(:target_list) { %w[A3] }
-#       let(:attacking_moves) { %w[A2 B2] }
-#       let(:board_copy) { described_class.new }
-#       before do
-#         game_board.add_piece(piece, 'A2')
-#         game_board.add_piece(attacking_piece, 'A1')
-#         game_board.add_piece(king, 'B2')
-
-#         board_copy.add_piece(piece, 'A2')
-#         board_copy.add_piece(attacking_piece, 'A1')
-#         board_copy.add_piece(king, 'B2')
-
-#         allow(piece).to receive(:position=)
-#         allow(piece).to receive(:define_en_passant_square)
-#         allow(attacking_piece).to receive(:position=)
-#         allow(attacking_piece).to receive(:define_en_passant_square)
-#         allow(attacking_piece).to receive(:move_list).and_return(attacking_moves)
-#         allow(Marshal).to receive(:load).and_return(board_copy)
-#         allow(Marshal).to receive(:dump)
-#       end
-
-#       xit 'returns an empty array' do
-#         expect(game_board.self_check_filter(piece, target_list)).to be_empty
-#       end
-#     end
-
-#     context 'when none of the moves in the target list would result in check' do
-#       let(:piece) { instance_double(Piece, name: 'piece', color: 'white', position: 'A1') }
-#       let(:attacking_piece) { instance_double(Piece, name: 'piece', color: 'black', position: 'A2') }
-#       let(:king) { instance_double(Piece, name: 'king', color: 'white', position: 'B2') }
-#       let(:target_list) { %w[A3] }
-#       let(:attacking_moves) { %w[A2 A1] }
-#       let(:board_copy) { described_class.new }
-#       before do
-#         game_board.add_piece(piece, 'A2')
-#         game_board.add_piece(attacking_piece, 'A1')
-#         game_board.add_piece(king, 'B2')
-
-#         board_copy.add_piece(piece, 'A2')
-#         board_copy.add_piece(attacking_piece, 'A1')
-#         board_copy.add_piece(king, 'B2')
-
-#         allow(piece).to receive(:position=)
-#         allow(piece).to receive(:define_en_passant_square)
-#         allow(attacking_piece).to receive(:position=)
-#         allow(attacking_piece).to receive(:define_en_passant_square)
-#         allow(attacking_piece).to receive(:move_list).and_return(attacking_moves)
-#         allow(Marshal).to receive(:load).and_return(board_copy)
-#         allow(Marshal).to receive(:dump)
-#       end
-
-#       xit 'returns the full list of target moves' do
-#         moves = target_list
-#         expect(game_board.self_check_filter(piece, target_list)).to contain_exactly(*moves)
-#       end
-#     end
-#   end
 
 #   describe '#checkmate?' do
 #     context 'when the color to check is white' do
