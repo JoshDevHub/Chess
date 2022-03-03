@@ -12,8 +12,10 @@ class BlackPawnCapture < Move
   private
 
   def legal_move?(square)
-    valid_square?(square) &&
-      (@board.color_at(square) == opposing_color || capture_en_passant?(square))
+    return false unless valid_square?(square)
+
+    board_square = @board.access_square(square)
+    board_square.piece_color == opposing_color || capture_en_passant?(square)
   end
 
   def capture_en_passant?(square)
