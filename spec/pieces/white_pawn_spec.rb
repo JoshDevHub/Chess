@@ -10,7 +10,7 @@ require_relative '../../lib/moves/white_pawn_double_advance'
 require_relative '../../lib/moves/white_pawn_advance'
 
 describe WhitePawn do
-  let(:board) { instance_double(Board, square_empty?: true) }
+  let(:board) { instance_double(Board) }
   subject(:white_pawn) { described_class.new(color: 'white', position: square) }
   describe '#move_list' do
     let(:double_up_instance) { instance_double(WhitePawnDoubleAdvance) }

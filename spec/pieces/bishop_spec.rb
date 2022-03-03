@@ -9,7 +9,7 @@ require_relative '../../lib/moves/diagonal_line_move'
 
 describe Bishop do
   subject(:bishop) { described_class.new(color: 'white', position: square) }
-  let(:board) { instance_double(Board, square_empty?: true) }
+  let(:board) { instance_double(Board) }
   let(:diagonal_move_instance) { instance_double(DiagonalLineMove) }
   describe '#move_list' do
     let(:square) { 'C8' }

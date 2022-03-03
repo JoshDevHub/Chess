@@ -10,7 +10,7 @@ require_relative '../../lib/moves/cardinal_line_move'
 
 describe Queen do
   subject(:queen) { described_class.new(color: 'white', position: square) }
-  let(:board) { instance_double(Board, square_empty?: true) }
+  let(:board) { instance_double(Board) }
   let(:diagonal_move_instance) { instance_double(DiagonalLineMove) }
   let(:cardinal_move_instance) { instance_double(CardinalLineMove) }
   describe '#move_list' do

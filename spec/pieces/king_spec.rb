@@ -9,7 +9,7 @@ require_relative '../../lib/moves/king_move'
 
 describe King do
   subject(:king) { described_class.new(color: 'black', position: square) }
-  let(:board) { instance_double(Board, square_empty?: true) }
+  let(:board) { instance_double(Board) }
   let(:king_move_instance) { instance_double(KingMove) }
   describe '#move_list' do
     let(:square) { 'E8' }

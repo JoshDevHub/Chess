@@ -9,7 +9,7 @@ require_relative '../../lib/moves/cardinal_line_move'
 
 describe Rook do
   subject(:rook) { described_class.new(color: 'black', position: square) }
-  let(:board) { instance_double(Board, square_empty?: true) }
+  let(:board) { instance_double(Board) }
   describe '#move_list' do
     let(:cardinal_move_instance) { instance_double(CardinalLineMove) }
     let(:square) { 'A8' }

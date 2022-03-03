@@ -10,7 +10,7 @@ require_relative '../../lib/moves/black_pawn_double_advance'
 require_relative '../../lib/moves/black_pawn_advance'
 
 describe BlackPawn do
-  let(:board) { instance_double(Board, square_empty?: true) }
+  let(:board) { instance_double(Board) }
   subject(:black_pawn) { described_class.new(color: 'black', position: square) }
   describe '#move_list' do
     let(:double_down_instance) { instance_double(BlackPawnDoubleAdvance) }
