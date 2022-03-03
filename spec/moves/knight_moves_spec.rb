@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 require_relative '../../lib/coordinate'
+require_relative '../../lib/square'
 require_relative '../../lib/board'
 require_relative '../../lib/move'
 require_relative '../../lib/moves/knight_moves'
 
 describe KnightMoves do
-  let(:board) { instance_double(Board, square_empty?: true) }
+  let(:board) { instance_double(Board, access_square: square) }
+  let(:square) { instance_double(Square, unoccupied?: true, piece_color: nil) }
   subject(:knight_moves) { described_class.new(origin: origin, board: board, color: 'black') }
   describe '#generate_moves' do
     context 'when the board is empty' do
@@ -40,12 +42,11 @@ describe KnightMoves do
 
     context 'when a same-color piece blocks one of the move squares' do
       let(:block_color) { 'black' }
+      let(:block_square) { instance_double(Square, unoccupied?: false, piece_color: block_color) }
       context 'when the starting square is F5 and G7 is blocked' do
         let(:origin) { 'F5' }
-
         before do
-          allow(board).to receive(:square_empty?).with('G7').and_return(false)
-          allow(board).to receive(:color_at).with('G7').and_return(block_color)
+          allow(board).to receive(:access_square).with('G7').and_return(block_square)
         end
 
         it 'will return a list that contains H6, E7, D6, D4, E3, G3, and H4' do
