@@ -39,11 +39,15 @@ class Move
   end
 
   def legal_move?(square)
-    valid_square?(square) && (@board.square_empty?(square) || @board.color_at(square) != @color)
+    return false unless valid_square?(square)
+
+    board_square = @board.access_square(square)
+    board_square.unoccupied? || board_square.piece_color == opposing_color
   end
 
   def capture_move?(square)
-    @board.color_at(square) == opposing_color
+    board_square = @board.access_square(square)
+    board_square.piece_color == opposing_color
   end
 
   def one_step_moves?
