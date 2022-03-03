@@ -44,40 +44,16 @@ class Board
     board_string
   end
 
-  def add_piece(piece, square_name)
-    change_board_at_square(square_name, piece)
-  end
-
-  def piece_at(square_name)
-    read_board_from_square(square_name)
-  end
-
-  def color_at(square_name)
-    return nil if square_empty?(square_name)
-
-    read_board_from_square(square_name).color
-  end
-
   def move_piece(current_square, new_square)
-    return nil if square_empty?(current_square)
+    square = access_square(current_square)
+    return if square.unoccupied?
 
-    piece_to_move = remove_piece(current_square)
+    piece_to_move = square.remove_piece
     handle_en_passant(piece_to_move, new_square)
     @en_passant_target = piece_to_move.define_en_passant_square(new_square)
     piece_to_move.position = new_square
-    add_piece(piece_to_move, new_square)
-  end
-
-  def remove_piece(square_name)
-    return nil if square_empty?(square_name)
-
-    piece_to_remove = piece_at(square_name)
-    change_board_at_square(square_name, nil)
-    piece_to_remove
-  end
-
-  def square_empty?(square_name)
-    read_board_from_square(square_name).nil?
+    target_square = access_square(new_square)
+    target_square.add_piece(piece_to_move)
   end
 
   def in_check?(color)
@@ -108,25 +84,14 @@ class Board
 
   private
 
-  def read_board_from_square(square_name)
-    x, y = to_xy_coordinate(square_name)
-    @game_board[y][x]
-  end
-
-  def change_board_at_square(square_name, new_value)
-    x, y = to_xy_coordinate(square_name)
-    @game_board[y][x] = new_value
-  end
-
   def find_king(color)
-    king = @game_board.flatten
-                      .compact
-                      .find { |piece| piece.name == 'king' && piece.color == color }
-    king.position
+    king_square = @game_board.flatten
+                             .find { |square| square.occupied_by_king?(color) }
+    king_square.name
   end
 
   def all_pieces_of_color(color)
-    @game_board.flatten.compact.select { |piece| piece.color == color }
+    @game_board.flatten.select { |square| square.piece_color == color }
   end
 
   def no_legal_moves?(color)
@@ -140,7 +105,7 @@ class Board
   def handle_en_passant(piece, target)
     return unless target == en_passant_target && piece.capture_en_passant?(target)
 
-    capture_square = piece.color == 'white' ? down(target) : up(target)
-    remove_piece(capture_square)
+    capture_square_name = piece.color == 'white' ? down(target) : up(target)
+    access_square(capture_square_name).remove_piece
   end
 end
