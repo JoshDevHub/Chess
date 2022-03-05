@@ -34,7 +34,7 @@ class Board
   end
 
   def to_s
-    board_array = @game_board.flatten.map { |square| square.nil? ? ' ' : square.to_s }
+    board_array = @game_board.flatten.map(&:to_s)
     board_string = ''
     board_array.each_slice(WIDTH).with_index do |row, i|
       board_string += "#{RANK_NAMES[i]}|#{row.join}|\n"
