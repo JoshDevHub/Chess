@@ -11,8 +11,8 @@ module Coordinate
   end
 
   def to_xy_coordinate(square_notation)
-    x, y = square_notation.chars
-    [FILE_NAMES.index(x), RANK_NAMES.index(y)]
+    x_coord, y_coord = square_notation.chars
+    [FILE_NAMES.index(x_coord), RANK_NAMES.index(y_coord)]
   end
 
   def valid_square?(square)

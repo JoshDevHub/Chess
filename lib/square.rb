@@ -48,8 +48,8 @@ class Square
   private
 
   def bg_color(string)
-    x, y = to_xy_coordinate(name)
-    (x + y).even? ? bg_gray(string) : bg_magenta(string)
+    x_coord, y_coord = to_xy_coordinate(name)
+    (x_coord + y_coord).even? ? bg_gray(string) : bg_magenta(string)
   end
 
   def fg_black(string)
