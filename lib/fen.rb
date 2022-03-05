@@ -24,8 +24,18 @@ class FEN
     color_info == 'w' ? 'white' : 'black'
   end
 
-  def castle_info
-    # placeholder
+  def white_castle_info
+    {
+      king_side: castle_string.include?('K'),
+      queen_side: castle_string.include?('Q')
+    }
+  end
+
+  def black_castle_info
+    {
+      king_side: castle_string.include?('k'),
+      queen_side: castle_string.include?('q')
+    }
   end
 
   def en_passant_target
@@ -44,6 +54,10 @@ class FEN
   end
 
   private
+
+  def castle_string
+    fen_string.split(' ')[2]
+  end
 
   def parse_ranks(rank, y_coord)
     pieces = []

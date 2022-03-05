@@ -134,4 +134,98 @@ describe FEN do
       end
     end
   end
+
+  describe '#white_castle_info' do
+    subject(:castle_fen) { described_class.new(fen_string, piece) }
+    context 'when the fen string indicates white can castle to both sides' do
+      let(:fen_string) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1' }
+      it 'returns a hash with the key: value of king_side: true' do
+        expect(castle_fen.white_castle_info[:king_side]).to be(true)
+      end
+
+      it 'returns a hash with the key: value of queen_side: true' do
+        expect(castle_fen.white_castle_info[:queen_side]).to be(true)
+      end
+    end
+
+    context 'when the fen string indicates white can only castle king side' do
+      let(:fen_string) { 'rn1qkb1r/ppp1pp1p/5np1/3p1b2/3P1B2/2N5/PPPQPPPP/2R1KBNR b Kkq - 5 5' }
+      it 'returns a hash with the key: value of king_side: true' do
+        expect(castle_fen.white_castle_info[:king_side]).to be(true)
+      end
+
+      it 'returns a hash with the key: value of queen_side: false' do
+        expect(castle_fen.white_castle_info[:queen_side]).to be(false)
+      end
+    end
+
+    context 'when the fen string indicates white can only castle queen side' do
+      let(:fen_string) { 'rn1qkb1r/ppp1pp1p/5np1/3p4/3P4/4PP1P/PPP2P2/RNBQKBR1 b Qkq - 1 6' }
+      it 'returns a hash with the key: value of king_side: false' do
+        expect(castle_fen.white_castle_info[:king_side]).to be(false)
+      end
+
+      it 'returns a hash with the key: value of queen_side: true' do
+        expect(castle_fen.white_castle_info[:queen_side]).to be(true)
+      end
+    end
+
+    context 'when the fen string indicates white cannot castle to either side' do
+      let(:fen_string) { 'rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPPKPPP/RNBQ1BNR b kq - 1 2' }
+      it 'returns a hash with the key: value of king_side: false' do
+        expect(castle_fen.white_castle_info[:king_side]).to be(false)
+      end
+
+      it 'returns a hash with the key: value of queen_side: false' do
+        expect(castle_fen.white_castle_info[:queen_side]).to be(false)
+      end
+    end
+  end
+
+  describe '#black_castle_info' do
+    subject(:castle_fen) { described_class.new(fen_string, piece) }
+    context 'when the fen string indicates black can castle to both sides' do
+      let(:fen_string) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1' }
+      it 'returns a hash with the key: value of king_side: true' do
+        expect(castle_fen.black_castle_info[:king_side]).to be(true)
+      end
+
+      it 'returns a hash with the key: value of queen_side: true' do
+        expect(castle_fen.black_castle_info[:queen_side]).to be(true)
+      end
+    end
+
+    context 'when the fen string indicates black can only castle king side' do
+      let(:fen_string) { 'rn1qkb1r/ppp1pp1p/5np1/3p1b2/3P1B2/2N5/PPPQPPPP/2R1KBNR b Kk - 5 5' }
+      it 'returns a hash with the key: value of king_side: true' do
+        expect(castle_fen.black_castle_info[:king_side]).to be(true)
+      end
+
+      it 'returns a hash with the key: value of queen_side: false' do
+        expect(castle_fen.black_castle_info[:queen_side]).to be(false)
+      end
+    end
+
+    context 'when the fen string indicates black can only castle queen side' do
+      let(:fen_string) { 'rn1qkb1r/ppp1pp1p/5np1/3p4/3P4/4PP1P/PPP2P2/RNBQKBR1 b Qq - 1 6' }
+      it 'returns a hash with the key: value of king_side: false' do
+        expect(castle_fen.black_castle_info[:king_side]).to be(false)
+      end
+
+      it 'returns a hash with the key: value of queen_side: true' do
+        expect(castle_fen.black_castle_info[:queen_side]).to be(true)
+      end
+    end
+
+    context 'when the fen string indicates black cannot castle to either side' do
+      let(:fen_string) { 'rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPPKPPP/RNBQ1BNR b - - 1 2' }
+      it 'returns a hash with the key: value of king_side: false' do
+        expect(castle_fen.black_castle_info[:king_side]).to be(false)
+      end
+
+      it 'returns a hash with the key: value of queen_side: false' do
+        expect(castle_fen.black_castle_info[:queen_side]).to be(false)
+      end
+    end
+  end
 end
