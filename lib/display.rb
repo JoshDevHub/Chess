@@ -8,24 +8,25 @@ class Display
   end
 
   def print_board(board)
+    system('clear')
     puts board
   end
 
-  def piece_choice(player)
+  def piece_choice_prompt(player)
     puts "#{player}: choose the square of a piece to move :"
   end
 
-  def move_choice(move_list)
+  def move_choice_prompt(move_list)
     puts "The available moves for this piece are #{move_list}"
     puts 'Choose one'
   end
 
-  def checkmate(loser, winner)
+  def checkmate_message(loser, winner)
     puts "#{loser} has been checkmated."
     puts "#{winner} has won. Congratulations!"
   end
 
-  def stalemate(player)
+  def stalemate_message(player)
     puts "#{player} has no legal moves but is not in check"
     puts 'This is a stalemate, and this game ends in a draw.'
   end

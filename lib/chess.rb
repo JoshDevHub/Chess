@@ -34,7 +34,7 @@ class Chess
   end
 
   def user_origin_selection
-    display.piece_choice(@active_player)
+    display.piece_choice_prompt(@active_player)
     input = take_user_square_input
     return input if valid_origin_selection?(input)
 
@@ -66,7 +66,7 @@ class Chess
   def move_script(square)
     move_list = create_move_list(square)
     loop do
-      display.move_choice(move_list)
+      display.move_choice_prompt(move_list)
       user_input = take_user_square_input
       return user_input if valid_move_selection?(user_input, move_list)
     end
@@ -92,9 +92,9 @@ class Chess
 
   def continue_game?
     if @chess_board.checkmate?(active_color)
-      display.checkmate(active_color, inactive_color)
+      display.checkmate_message(active_color, inactive_color)
     elsif @chess_board.stalemate?(active_color)
-      display.stalemate(active_color)
+      display.stalemate_message(active_color)
     else
       true
     end
