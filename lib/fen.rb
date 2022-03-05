@@ -14,9 +14,9 @@ class FEN
   def piece_info
     info = fen_string.split(' ')[0].chars.map(&empty_expand).join('').split('/')
     pieces = []
-    info.each_with_index do |rank, y|
-      rank.each_char.with_index do |chr, x|
-        square_name = to_square_notation([x, y])
+    info.each_with_index do |rank, y_coord|
+      rank.each_char.with_index do |chr, x_coord|
+        square_name = to_square_notation([x_coord, y_coord])
         pieces << @piece.from_fen(chr, square_name) unless chr == '.'
       end
     end
@@ -50,6 +50,9 @@ class FEN
   private
 
   def empty_expand
-    ->(square) { square.to_i.positive? ? '.' * square.to_i : square }
+    lambda do |character|
+      character_to_number = character.to_i
+      character_to_number.positive? ? '.' * character_to_number : character
+    end
   end
 end
