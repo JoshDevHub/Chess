@@ -16,6 +16,11 @@ class CastleManager
     @castle_options[key]
   end
 
+  def remove_castle_option(color, side)
+    key = "#{color}_#{side}_side".to_sym
+    @castle_options[key] = false
+  end
+
   def remove_all_castles_for_color(color)
     @castle_options = @castle_options.map do |key, value|
       value = false if key.start_with?(color)

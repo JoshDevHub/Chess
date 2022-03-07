@@ -134,6 +134,60 @@ describe CastleManager do
     end
   end
 
+  describe '#remove_castle_option' do
+    context 'when the chosen option is initially true' do
+      let(:castle_opts) do
+        {
+          white_king_side: true,
+          white_queen_side: true,
+          black_king_side: true,
+          black_queen_side: true
+        }
+      end
+      subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
+
+      context 'when the given option is a white color and king side' do
+        it 'changes the key :white_king_side to false' do
+          expected_options = {
+            white_king_side: false,
+            white_queen_side: true,
+            black_king_side: true,
+            black_queen_side: true
+          }
+          castle_manager.remove_castle_option('white', :king)
+          instance_options = castle_manager.instance_variable_get(:@castle_options)
+          expect(instance_options).to eq(expected_options)
+        end
+      end
+    end
+
+    context 'when the chosen option is initially false' do
+      let(:castle_opts) do
+        {
+          white_king_side: false,
+          white_queen_side: false,
+          black_king_side: false,
+          black_queen_side: false
+        }
+      end
+      subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
+
+      context 'when the given option is black color and queen side' do
+        it 'does not change the key :black_queen_side' do
+          expected_options = {
+            white_king_side: false,
+            white_queen_side: false,
+            black_king_side: false,
+            black_queen_side: false
+          }
+          castle_manager.remove_castle_option('black', :queen)
+          instance_options = castle_manager.instance_variable_get(:@castle_options)
+          expect(instance_options).to eq(expected_options)
+        end
+      end
+    end
+  end
+
   describe '#remove_all_castles_for_color' do
     context 'when the color is initially able to castle' do
       let(:castle_opts) do
