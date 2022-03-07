@@ -49,10 +49,7 @@ class Board
 
     piece_to_move = square.remove_piece
     handle_en_passant(piece_to_move, new_square)
-    @en_passant_target = piece_to_move.define_en_passant_square(new_square)
-    piece_to_move.position = new_square
-    target_square = access_square(new_square)
-    target_square.add_piece(piece_to_move)
+    execute_move(piece_to_move, new_square)
   end
 
   def in_check?(color)
@@ -83,6 +80,12 @@ class Board
 
   private
 
+  def execute_move(piece, target)
+    piece.position = target
+    target_square = access_square(target)
+    target_square.add_piece(piece)
+  end
+
   def find_king(color)
     king_square = @game_board.flatten
                              .find { |square| square.occupied_by_king?(color) }
@@ -104,6 +107,7 @@ class Board
   end
 
   def handle_en_passant(piece, target)
+    @en_passant_target = piece.define_en_passant_square(target)
     return unless target == en_passant_target && piece.capture_en_passant?(target)
 
     capture_square_name = piece.color == 'white' ? down(target) : up(target)
