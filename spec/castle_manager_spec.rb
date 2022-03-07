@@ -133,4 +133,160 @@ describe CastleManager do
       end
     end
   end
+
+  describe '#remove_all_castles_for_color' do
+    context 'when the color is initially able to castle' do
+      let(:castle_opts) do
+        {
+          white_king_side: true,
+          white_queen_side: true,
+          black_king_side: true,
+          black_queen_side: true
+        }
+      end
+      subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
+      context 'when the color is white' do
+        let(:color) { 'white' }
+        it 'changes white_king_side in castle options to false' do
+          key_to_check = :white_king_side
+          expect { castle_manager.remove_all_castles_for_color(color) }
+            .to change { castle_manager.instance_variable_get(:@castle_options)[key_to_check] }
+            .from(true).to(false)
+        end
+
+        it 'changes white_queen_side in castle options to false' do
+          key_to_check = :white_queen_side
+          expect { castle_manager.remove_all_castles_for_color(color) }
+            .to change { castle_manager.instance_variable_get(:@castle_options)[key_to_check] }
+            .from(true).to(false)
+        end
+
+        it 'does not change black_king_side in castle options to false' do
+          key_to_check = :black_king_side
+          expect { castle_manager.remove_all_castles_for_color(color) }
+            .not_to change { castle_manager.instance_variable_get(:@castle_options)[key_to_check] }
+            .from(true)
+        end
+
+        it 'does not change black_queen_side in castle options to false' do
+          key_to_check = :black_queen_side
+          expect { castle_manager.remove_all_castles_for_color(color) }
+            .not_to change { castle_manager.instance_variable_get(:@castle_options)[key_to_check] }
+            .from(true)
+        end
+      end
+
+      context 'when the color is black' do
+        let(:color) { 'black' }
+        it 'changes black_king_side in castle options to false' do
+          key_to_check = :black_king_side
+          expect { castle_manager.remove_all_castles_for_color(color) }
+            .to change { castle_manager.instance_variable_get(:@castle_options)[key_to_check] }
+            .from(true).to(false)
+        end
+
+        it 'changes black_queen_side in castle options to false' do
+          key_to_check = :black_queen_side
+          expect { castle_manager.remove_all_castles_for_color(color) }
+            .to change { castle_manager.instance_variable_get(:@castle_options)[key_to_check] }
+            .from(true).to(false)
+        end
+
+        it 'does not change white_king_side in castle options to false' do
+          key_to_check = :white_king_side
+          expect { castle_manager.remove_all_castles_for_color(color) }
+            .not_to change { castle_manager.instance_variable_get(:@castle_options)[key_to_check] }
+            .from(true)
+        end
+
+        it 'does not change white_queen_side in castle options to false' do
+          key_to_check = :white_queen_side
+          expect { castle_manager.remove_all_castles_for_color(color) }
+            .not_to change { castle_manager.instance_variable_get(:@castle_options)[key_to_check] }
+            .from(true)
+        end
+      end
+    end
+
+    context 'when the color cannot castle and the other color can castle' do
+      subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
+      context 'when the color is white' do
+        let(:castle_opts) do
+          {
+            white_king_side: false,
+            white_queen_side: false,
+            black_king_side: true,
+            black_queen_side: true
+          }
+        end
+        let(:color) { 'white' }
+        it 'does not change white_king_side in castle options from false' do
+          key_to_check = :white_king_side
+          expect { castle_manager.remove_all_castles_for_color(color) }
+            .not_to change { castle_manager.instance_variable_get(:@castle_options)[key_to_check] }
+            .from(false)
+        end
+
+        it 'does not change white_queen_side in castle options from false' do
+          key_to_check = :white_queen_side
+          expect { castle_manager.remove_all_castles_for_color(color) }
+            .not_to change { castle_manager.instance_variable_get(:@castle_options)[key_to_check] }
+            .from(false)
+        end
+
+        it 'does not change black_king_side in castle options from true' do
+          key_to_check = :black_king_side
+          expect { castle_manager.remove_all_castles_for_color(color) }
+            .not_to change { castle_manager.instance_variable_get(:@castle_options)[key_to_check] }
+            .from(true)
+        end
+
+        it 'does not change black_queen_side in castle options to true' do
+          key_to_check = :black_queen_side
+          expect { castle_manager.remove_all_castles_for_color(color) }
+            .not_to change { castle_manager.instance_variable_get(:@castle_options)[key_to_check] }
+            .from(true)
+        end
+      end
+
+      context 'when the color is black' do
+        let(:color) { 'black' }
+        let(:castle_opts) do
+          {
+            white_king_side: true,
+            white_queen_side: true,
+            black_king_side: false,
+            black_queen_side: false
+          }
+        end
+        it 'does not change black_king_side in castle options from false' do
+          key_to_check = :black_king_side
+          expect { castle_manager.remove_all_castles_for_color(color) }
+            .not_to change { castle_manager.instance_variable_get(:@castle_options)[key_to_check] }
+            .from(false)
+        end
+
+        it 'does not change black_queen_side in castle options from false' do
+          key_to_check = :black_queen_side
+          expect { castle_manager.remove_all_castles_for_color(color) }
+            .not_to change { castle_manager.instance_variable_get(:@castle_options)[key_to_check] }
+            .from(false)
+        end
+
+        it 'does not change white_king_side in castle options from true' do
+          key_to_check = :white_king_side
+          expect { castle_manager.remove_all_castles_for_color(color) }
+            .not_to change { castle_manager.instance_variable_get(:@castle_options)[key_to_check] }
+            .from(true)
+        end
+
+        it 'does not change white_queen_side in castle options to true' do
+          key_to_check = :white_queen_side
+          expect { castle_manager.remove_all_castles_for_color(color) }
+            .not_to change { castle_manager.instance_variable_get(:@castle_options)[key_to_check] }
+            .from(true)
+        end
+      end
+    end
+  end
 end
