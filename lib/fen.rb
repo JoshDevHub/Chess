@@ -24,17 +24,12 @@ class FEN
     color_info == 'w' ? 'white' : 'black'
   end
 
-  def white_castle_info
+  def castle_info
     {
-      king_side: castle_string.include?('K'),
-      queen_side: castle_string.include?('Q')
-    }
-  end
-
-  def black_castle_info
-    {
-      king_side: castle_string.include?('k'),
-      queen_side: castle_string.include?('q')
+      white_king_side: castle_string.include?('K'),
+      white_queen_side: castle_string.include?('Q'),
+      black_king_side: castle_string.include?('k'),
+      black_queen_side: castle_string.include?('q')
     }
   end
 
