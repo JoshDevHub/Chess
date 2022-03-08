@@ -8,8 +8,12 @@ class Display
   end
 
   def print_board(board)
-    system('clear')
     puts board
+  end
+
+  def check_message(player)
+    puts "#{player}, your king is under attack!"
+    puts "Your next move will have to escape check.\n\n"
   end
 
   def piece_choice_prompt(player)

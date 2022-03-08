@@ -22,6 +22,7 @@ class Chess
     loop do
       system('clear')
       display.print_board(@chess_board)
+      display.check_message(@active_player) if @chess_board.in_check?(active_color)
       user_piece_position = user_origin_selection
       user_move_selection = move_script(user_piece_position)
       @chess_board.move_piece(user_piece_position, user_move_selection)
