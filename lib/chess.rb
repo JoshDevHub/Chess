@@ -13,25 +13,25 @@ class Chess
     @player_black = Player.new(color: 'black')
     @active_player = @player_white
     @display = Display.new
+    @castle_manager = CastleManager.new(castle_options: fen.castle_info)
   end
 
-  def play_chess
+  # rubocop: disable Metrics/MethodLength
+  def game_script
     display.introduction
     loop do
-      game_loop
+      system('clear')
+      display.print_board(@chess_board)
+      user_piece_position = user_origin_selection
+      user_move_selection = move_script(user_piece_position)
+      @chess_board.move_piece(user_piece_position, user_move_selection)
+      promotion_script(user_move_selection)
       break unless continue_game?
-    end
-    # TODO: #play_again
-  end
 
-  def game_loop
-    display.print_board(@chess_board)
-    user_piece_position = user_origin_selection
-    user_move_selection = move_script(user_piece_position)
-    @chess_board.move_piece(user_piece_position, user_move_selection)
-    promotion_script(user_move_selection)
-    toggle_turns
+      toggle_turns
+    end
   end
+  # rubocop: enable Metrics/MethodLength
 
   def user_origin_selection
     display.piece_choice_prompt(@active_player)
@@ -75,7 +75,7 @@ class Chess
   def create_move_list(piece_position)
     square = @chess_board.access_square(piece_position)
     piece = square.piece
-    initial_list = piece.move_list(@chess_board)
+    initial_list = piece.move_list(@chess_board, @castle_manager)
     @chess_board.self_check_filter(piece, initial_list)
   end
 
