@@ -12,8 +12,7 @@ class King < Piece
   end
 
   def moves
-    list = [KingMove]
-    list.push(WhiteKingSideCastle, WhiteQueenSideCastle) if @color == 'white'
+    [KingMove, KingSideCastle, QueenSideCastle]
   end
 
   def to_s

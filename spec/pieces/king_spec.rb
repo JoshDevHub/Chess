@@ -6,21 +6,21 @@ require_relative '../../lib/piece'
 require_relative '../../lib/pieces/king'
 require_relative '../../lib/move'
 require_relative '../../lib/moves/king_move'
-require_relative '../../lib/moves/white_king_side_castle'
-require_relative '../../lib/moves/white_queen_side_castle'
+require_relative '../../lib/moves/king_side_castle'
+require_relative '../../lib/moves/queen_side_castle'
 
 describe King do
   subject(:king) { described_class.new(color: 'white', position: square) }
   let(:board) { instance_double(Board) }
   let(:king_move_instance) { instance_double(KingMove) }
-  let(:king_castle_move) { instance_double(WhiteKingSideCastle) }
-  let(:queen_castle_move) { instance_double(WhiteQueenSideCastle) }
+  let(:king_castle_move) { instance_double(KingSideCastle) }
+  let(:queen_castle_move) { instance_double(QueenSideCastle) }
   describe '#move_list' do
     let(:square) { 'E8' }
     before do
       allow(KingMove).to receive(:new).and_return(king_move_instance)
-      allow(WhiteKingSideCastle).to receive(:new).and_return(king_castle_move)
-      allow(WhiteQueenSideCastle).to receive(:new).and_return(queen_castle_move)
+      allow(KingSideCastle).to receive(:new).and_return(king_castle_move)
+      allow(QueenSideCastle).to receive(:new).and_return(queen_castle_move)
       allow(king_move_instance).to receive(:generate_moves).and_return([])
       allow(king_castle_move).to receive(:generate_moves).and_return([])
       allow(queen_castle_move).to receive(:generate_moves).and_return([])
@@ -37,7 +37,7 @@ describe King do
     end
 
     it 'instantiates an instance of WhiteKingSideCastle' do
-      expect(WhiteKingSideCastle).to receive(:new)
+      expect(KingSideCastle).to receive(:new)
       king.move_list(board)
     end
 
@@ -47,7 +47,7 @@ describe King do
     end
 
     it 'instantiates an instance of WhiteQueenSideCastle' do
-      expect(WhiteQueenSideCastle).to receive(:new)
+      expect(QueenSideCastle).to receive(:new)
       king.move_list(board)
     end
 
