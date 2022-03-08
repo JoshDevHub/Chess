@@ -65,6 +65,6 @@ class Square
   end
 
   def bg_magenta(string)
-    "\e[45m#{string}\e[0m"
+    "\e[48;2;136;119;183m#{string}\e[0m"
   end
 end
