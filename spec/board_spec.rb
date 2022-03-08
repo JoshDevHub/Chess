@@ -88,7 +88,7 @@ describe Board do
         before do
           allow(game_board).to receive(:access_square).with(origin).and_return(origin_square)
           allow(game_board).to receive(:access_square).with(target).and_return(target_square)
-          allow(piece).to receive(:position=)
+          allow(piece).to receive(:move_position)
         end
 
         it 'sends #remove_piece message to origin square' do
@@ -101,8 +101,8 @@ describe Board do
           game_board.move_piece(origin, target)
         end
 
-        it 'sends #position= to the moving piece with the target square name' do
-          expect(piece).to receive(:position=).with(target)
+        it 'sends #move_position to the moving piece with the target square name' do
+          expect(piece).to receive(:move_position).with(target)
           game_board.move_piece(origin, target)
         end
 
@@ -120,7 +120,7 @@ describe Board do
         before do
           allow(game_board).to receive(:access_square).with(origin).and_return(origin_square)
           allow(game_board).to receive(:access_square).with(target).and_return(target_square)
-          allow(piece).to receive(:position=)
+          allow(piece).to receive(:move_position)
           allow(piece).to receive(:define_en_passant_square).with(target).and_return('E3')
         end
 
@@ -139,8 +139,8 @@ describe Board do
           expect { game_board.move_piece(origin, target) }.to change { game_board.en_passant_target }.to(return_square)
         end
 
-        it 'sends #position= to the moving piece with the target square name' do
-          expect(piece).to receive(:position=).with(target)
+        it 'sends #move_position to the moving piece with the target square name' do
+          expect(piece).to receive(:move_position).with(target)
           game_board.move_piece(origin, target)
         end
 
@@ -163,7 +163,7 @@ describe Board do
           allow(game_board).to receive(:access_square).with(target).and_return(target_square)
           allow(game_board).to receive(:access_square).with('D4').and_return(capture_square)
           allow(game_board).to receive(:en_passant_target).and_return(target)
-          allow(piece).to receive(:position=)
+          allow(piece).to receive(:move_position)
           allow(piece).to receive(:define_en_passant_square).with(target)
           allow(piece).to receive(:capture_en_passant?).with(target).and_return(true)
         end
@@ -178,8 +178,8 @@ describe Board do
           game_board.move_piece(origin, target)
         end
 
-        it 'sends #position= to the moving piece with the target square name' do
-          expect(piece).to receive(:position=).with(target)
+        it 'sends #move_position to the moving piece with the target square name' do
+          expect(piece).to receive(:move_position).with(target)
           game_board.move_piece(origin, target)
         end
 

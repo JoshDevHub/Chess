@@ -81,7 +81,7 @@ class Board
   private
 
   def execute_move(piece, target)
-    piece.position = target
+    piece.move_position(target)
     target_square = access_square(target)
     target_square.add_piece(piece)
   end

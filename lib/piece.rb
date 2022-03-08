@@ -2,9 +2,7 @@
 
 # Parent Piece class for game pieces to inherit from
 class Piece
-  attr_accessor :position
-
-  attr_reader :color, :name, :en_passant_target
+  attr_reader :color, :position, :name, :en_passant_target
 
   include Coordinate
 
@@ -45,6 +43,10 @@ class Piece
   rescue NoMethodError
     puts 'This piece is not supported'
     raise NotImplementedError
+  end
+
+  def move_position(target_position)
+    @position = target_position
   end
 
   def define_en_passant_square(_square)
