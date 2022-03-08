@@ -4,10 +4,11 @@
 class Move
   include Coordinate
 
-  def initialize(origin:, board:, color:)
+  def initialize(origin:, board:, color:, castle_manager: nil)
     @origin = origin
     @board = board
     @color = color
+    @castle_manager = castle_manager
   end
 
   def moveset

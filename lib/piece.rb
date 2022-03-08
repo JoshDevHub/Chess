@@ -21,9 +21,9 @@ class Piece
     []
   end
 
-  def move_list(board)
+  def move_list(board, castle_manager = nil)
     moves.each_with_object([]) do |move, list|
-      generator = move.new(origin: position, board: board, color: color)
+      generator = move.new(origin: position, board: board, color: color, castle_manager: castle_manager)
       list.concat(generator.generate_moves)
     end
   end

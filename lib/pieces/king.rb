@@ -12,7 +12,7 @@ class King < Piece
   end
 
   def moves
-    [KingMove]
+    [KingMove, WhiteKingSideCastle]
   end
 
   def to_s
