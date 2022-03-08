@@ -55,9 +55,7 @@ class Board
   def in_check?(color)
     king_square = find_king(color)
     opposing_color = color == 'white' ? 'black' : 'white'
-    opposing_pieces = all_pieces_of_color(opposing_color)
-    all_opposing_moves = opposing_pieces.map { |piece| piece.move_list(self) }.flatten
-    all_opposing_moves.include?(king_square)
+    square_under_attack_from_color?(opposing_color, king_square)
   end
 
   def checkmate?(color)
@@ -76,6 +74,12 @@ class Board
       board_copy.move_piece(origin, target)
       board_copy.in_check?(color)
     end
+  end
+
+  def square_under_attack_from_color?(color, square)
+    attacking_pieces = all_pieces_of_color(color)
+    all_attacking_moves = attacking_pieces.map { |piece| piece.move_list(self) }.flatten
+    all_attacking_moves.include?(square)
   end
 
   private
