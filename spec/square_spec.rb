@@ -22,6 +22,22 @@ describe Square do
     end
   end
 
+  describe '#occupied?' do
+    context 'when the square is empty' do
+      subject(:square) { described_class.new(name: 'A8') }
+      it 'returns false' do
+        expect(square.occupied?).to be(false)
+      end
+    end
+
+    context 'when the square has a piece' do
+      subject(:square) { described_class.new(name: 'A8', piece: piece) }
+      it 'returns true' do
+        expect(square.occupied?).to be(true)
+      end
+    end
+  end
+
   describe '#add_piece' do
     context 'when the square is unoccupied' do
       subject(:square) { described_class.new(name: 'A1') }

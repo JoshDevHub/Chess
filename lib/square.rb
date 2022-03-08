@@ -21,6 +21,10 @@ class Square
     piece.nil?
   end
 
+  def occupied?
+    !unoccupied?
+  end
+
   def add_piece(piece)
     @piece = piece
   end
