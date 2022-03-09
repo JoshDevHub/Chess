@@ -61,6 +61,10 @@ class Piece
     false
   end
 
+  def absent?
+    false
+  end
+
   private
 
   def double_move?
