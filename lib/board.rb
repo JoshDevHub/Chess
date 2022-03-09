@@ -37,9 +37,9 @@ class Board
     board_array = @game_board.flatten.map(&:to_s)
     board_string = ''
     board_array.each_slice(WIDTH).with_index do |row, i|
-      board_string += "#{RANK_NAMES[i]}|#{row.join}|\n"
+      board_string += "#{RANK_NAMES[i].rjust(4)}|#{row.join}|\n"
     end
-    board_string += '   A  B  C  D  E  F  G  H  '
+    board_string += '      A  B  C  D  E  F  G  H  '
     board_string
   end
 

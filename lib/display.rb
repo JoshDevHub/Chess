@@ -8,7 +8,9 @@ class Display
   end
 
   def print_board(board)
+    puts "\n\n"
     puts board
+    puts "\n"
   end
 
   def check_message(player)
@@ -41,7 +43,7 @@ class Display
   end
 
   def input_error_message(message)
-    puts({
+    print({
       empty_square: 'That square is empty. Please choose an occupied square.',
       invalid_promotion_piece: "That doesn't represent a piece you can use. Input Q, R, B, or N please.",
       invalid_square: 'This square is not on the board. Use letters A-H and numbers 1-8 for your selection!',
@@ -49,5 +51,7 @@ class Display
       no_moves: "This piece doesn't have any legal moves! Please choose a different piece",
       wrong_color: 'That is not your piece. Only choose among pieces of your color.'
     }[message])
+    sleep(2.5)
+    print "\e[2K\r\e[A\e[2K"
   end
 end
