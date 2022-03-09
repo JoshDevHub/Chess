@@ -5,15 +5,14 @@ require_relative '../lib/square'
 require_relative '../lib/board'
 require_relative '../lib/piece'
 require_relative '../lib/display'
-require_relative '../lib/player'
 require_relative '../lib/move_interface'
 require_relative '../lib/move_interfaces/move_list_interface'
 require_relative '../lib/move_interfaces/move_inline_interface'
 
 describe MoveInterface do
   let(:board) { instance_double(Board) }
-  let(:player) { instance_double(Player, piece_color: 'white') }
   let(:display) { instance_double(Display) }
+  let(:active_color) { 'white' }
   describe '#self.for_input' do
     subject(:move_interface) { described_class }
     context 'when the given input has a size of 2' do
@@ -21,7 +20,7 @@ describe MoveInterface do
       let(:arguments) do
         {
           board: board,
-          active_player: player,
+          active_color: active_color,
           display: display,
           user_input: input
         }
@@ -36,7 +35,7 @@ describe MoveInterface do
       let(:arguments) do
         {
           board: board,
-          active_player: player,
+          active_color: active_color,
           display: display,
           user_input: input
         }
@@ -51,7 +50,7 @@ describe MoveInterface do
       let(:arguments) do
         {
           board: board,
-          active_player: player,
+          active_color: active_color,
           display: display,
           user_input: input
         }
@@ -66,7 +65,7 @@ describe MoveInterface do
       let(:arguments) do
         {
           board: board,
-          active_player: player,
+          active_color: active_color,
           display: display,
           user_input: input
         }
@@ -82,7 +81,7 @@ describe MoveInterface do
     let(:arguments) do
       {
         board: board,
-        active_player: player,
+        active_color: active_color,
         display: display,
         user_input: 'ABC'
       }
@@ -97,7 +96,7 @@ describe MoveInterface do
     let(:arguments) do
       {
         board: board,
-        active_player: player,
+        active_color: active_color,
         display: display,
         user_input: 'E2E4'
       }
@@ -110,7 +109,6 @@ describe MoveInterface do
       before do
         allow(board).to receive(:access_square).with('E2').and_return(e2_square)
         allow(board).to receive(:self_check_filter).with(piece, move_list).and_return(move_list)
-        allow(player).to receive(:piece_color).and_return(color)
         allow(display).to receive(:input_error_message)
         allow(e2_square).to receive(:piece).and_return(piece)
       end

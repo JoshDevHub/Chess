@@ -4,8 +4,8 @@
 class MoveInterface
   include Coordinate
 
-  def self.for_input(board:, display:, active_player:, user_input:)
-    argument_hash = { board: board, display: display, active_player: active_player, user_input: user_input }
+  def self.for_input(board:, display:, active_color:, user_input:)
+    argument_hash = { board: board, display: display, active_color: active_color, user_input: user_input }
     case user_input.size
     when 2
       MoveListInterface.new(**argument_hash)
@@ -16,10 +16,10 @@ class MoveInterface
     end
   end
 
-  def initialize(board:, display:, active_player:, user_input:)
+  def initialize(board:, display:, active_color:, user_input:)
     @board = board
     @display = display
-    @active_player = active_player
+    @active_color = active_color
     @user_input = user_input
   end
 
@@ -50,7 +50,7 @@ class MoveInterface
   end
 
   def piece_color_matches_player?(square)
-    return true if square.piece_color == @active_player.piece_color
+    return true if square.piece_color == @active_color
 
     @display.input_error_message(:wrong_color)
   end
