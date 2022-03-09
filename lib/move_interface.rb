@@ -24,6 +24,6 @@ class MoveInterface
   end
 
   def move_selection
-    # placeholder
+    nil
   end
 end
