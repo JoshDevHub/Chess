@@ -4,8 +4,9 @@
 class MoveInterface
   include Coordinate
 
-  def self.for_input(board:, display:, active_color:, user_input:)
-    argument_hash = { board: board, display: display, active_color: active_color, user_input: user_input }
+  def self.for_input(board:, display:, active_color:, castle_manager:, user_input:)
+    argument_hash = { board: board, display: display, active_color: active_color,
+                      castle_manager: castle_manager, user_input: user_input }
     case user_input.size
     when 2
       MoveListInterface.new(**argument_hash)
@@ -16,11 +17,12 @@ class MoveInterface
     end
   end
 
-  def initialize(board:, display:, active_color:, user_input:)
+  def initialize(board:, display:, active_color:, castle_manager:, user_input:)
     @board = board
     @display = display
     @active_color = active_color
     @user_input = user_input
+    @castle_manager = castle_manager
   end
 
   def move_selection

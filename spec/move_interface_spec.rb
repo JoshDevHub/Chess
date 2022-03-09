@@ -13,6 +13,7 @@ describe MoveInterface do
   let(:board) { instance_double(Board) }
   let(:display) { instance_double(Display) }
   let(:active_color) { 'white' }
+  let(:castle_manager) { 'castler' }
   describe '#self.for_input' do
     subject(:move_interface) { described_class }
     context 'when the given input has a size of 2' do
@@ -22,7 +23,8 @@ describe MoveInterface do
           board: board,
           active_color: active_color,
           display: display,
-          user_input: input
+          user_input: input,
+          castle_manager: castle_manager
         }
       end
       it 'returns an instance of MoveListInterface' do
@@ -37,7 +39,8 @@ describe MoveInterface do
           board: board,
           active_color: active_color,
           display: display,
-          user_input: input
+          user_input: input,
+          castle_manager: castle_manager
         }
       end
       it 'returns an instance of MoveInlineInterface' do
@@ -52,7 +55,8 @@ describe MoveInterface do
           board: board,
           active_color: active_color,
           display: display,
-          user_input: input
+          user_input: input,
+          castle_manager: castle_manager
         }
       end
       it 'returns an instance of MoveInlineInterface' do
@@ -67,7 +71,8 @@ describe MoveInterface do
           board: board,
           active_color: active_color,
           display: display,
-          user_input: input
+          user_input: input,
+          castle_manager: castle_manager
         }
       end
       it 'returns an instance of MoveInlineInterface' do
@@ -83,7 +88,8 @@ describe MoveInterface do
         board: board,
         active_color: active_color,
         display: display,
-        user_input: 'ABC'
+        user_input: 'ABC',
+        castle_manager: castle_manager
       }
     end
     it 'returns nil' do
@@ -98,7 +104,8 @@ describe MoveInterface do
         board: board,
         active_color: active_color,
         display: display,
-        user_input: 'E2E4'
+        user_input: 'E2E4',
+        castle_manager: castle_manager
       }
     end
     context 'when the origin is valid' do
