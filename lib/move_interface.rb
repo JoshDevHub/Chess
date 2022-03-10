@@ -44,6 +44,8 @@ class MoveInterface
 
   private
 
+  attr_reader :board, :display, :active_color, :user_input, :castle_manager
+
   def validators
     %i[
       occupied_square?
