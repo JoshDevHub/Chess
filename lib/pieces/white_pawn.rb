@@ -18,7 +18,7 @@ class WhitePawn < Piece
   end
 
   def to_s
-    "\u2659"
+    " \u2659 "
   end
 
   def define_en_passant_square(move)

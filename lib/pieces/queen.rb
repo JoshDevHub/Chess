@@ -16,6 +16,6 @@ class Queen < Piece
   end
 
   def to_s
-    color == 'white' ? "\u2655" : "\u265B"
+    color == 'white' ? " \u2655 " : " \u265B "
   end
 end

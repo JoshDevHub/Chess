@@ -16,6 +16,6 @@ class King < Piece
   end
 
   def to_s
-    color == 'white' ? "\u2654" : "\u265A"
+    color == 'white' ? " \u2654 " : " \u265A "
   end
 end

@@ -18,7 +18,7 @@ class BlackPawn < Piece
   end
 
   def to_s
-    "\u265F"
+    " \u265F "
   end
 
   def define_en_passant_square(move)
