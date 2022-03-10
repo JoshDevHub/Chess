@@ -52,6 +52,7 @@ class Display
   def input_error_message(message)
     print({
       empty_square: 'That square is empty. Please choose an occupied square.',
+      invalid_initial_input: 'Unable to parse that input. Please use one of the two valid formats',
       invalid_promotion_piece: "That doesn't represent a piece you can use. Input Q, R, B, or N please.",
       invalid_square: 'This square is not on the board. Use letters A-H and numbers 1-8 for your selection!',
       invalid_move: "This is an invalid move. Only choose from among this piece's legal moves",
