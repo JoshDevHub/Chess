@@ -4,21 +4,26 @@
 class Square
   include Coordinate
 
-  attr_reader :name, :piece
+  attr_reader :name
 
   def initialize(name:, piece: nil)
     @name = name
     @piece = piece
+    @null_piece = NullPiece.new
+  end
+
+  def piece
+    @piece ||= @null_piece
   end
 
   def to_s
-    string = unoccupied? ? '   ' : " #{piece} "
+    string = piece.to_s
     darken_string = fg_black(string)
     bg_color(darken_string)
   end
 
   def unoccupied?
-    piece.nil?
+    piece.absent?
   end
 
   def add_piece(piece)
@@ -26,22 +31,16 @@ class Square
   end
 
   def remove_piece
-    return if unoccupied?
-
-    piece_to_remove = @piece
-    @piece = nil
+    piece_to_remove = piece
+    @piece = @null_piece
     piece_to_remove
   end
 
   def piece_color
-    return if unoccupied?
-
     piece.color
   end
 
   def occupied_by_king?(color)
-    return false if unoccupied?
-
     piece.name == 'king' && piece.color == color
   end
 
