@@ -33,11 +33,24 @@ class MoveInterface
     return false unless valid_square_name?(origin)
 
     square = @board.access_square(origin)
-    occupied_square?(square) && piece_color_matches_player?(square) &&
-      origin_contains_legal_moves?(square)
+    validators.all? { |validator| send(validator, square) }
+  end
+
+  def valid_target?(target, target_list)
+    return true if target_list.include?(target)
+
+    @display.input_error_message(:invalid_move)
   end
 
   private
+
+  def validators
+    %i[
+      occupied_square?
+      piece_color_matches_player?
+      origin_contains_legal_moves?
+    ]
+  end
 
   def valid_square_name?(square_name)
     return true if valid_square?(square_name)

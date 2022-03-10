@@ -203,4 +203,52 @@ describe MoveInterface do
       end
     end
   end
+
+  describe '#valid_target?' do
+    let(:interface_args) do
+      {
+        board: board,
+        active_color: active_color,
+        display: display,
+        user_input: 'E1',
+        castle_manager: castle_manager
+      }
+    end
+    subject(:move_interface) { described_class.new(**interface_args) }
+    context 'when the target is valid' do
+      before do
+        allow(display).to receive(:input_error_message)
+      end
+      it 'returns true' do
+        target_list = %w[E2 E3]
+        target = 'E2'
+        expect(move_interface.valid_target?(target, target_list)).to be(true)
+      end
+
+      it 'does not send #input_error_message to display' do
+        target_list = %w[E2 E3]
+        target = 'E2'
+        expect(display).to_not receive(:input_error_message)
+        move_interface.valid_target?(target, target_list)
+      end
+    end
+
+    context 'when the target is invalid' do
+      before do
+        allow(display).to receive(:input_error_message)
+      end
+      it 'returns falsey' do
+        target_list = %w[E2 E3]
+        target = 'E4'
+        expect(move_interface.valid_target?(target, target_list)).to be_falsey
+      end
+
+      it 'sends #input_error_message to display with :invalid_move' do
+        target_list = %w[E2 E3]
+        target = 'E4'
+        expect(display).to receive(:input_error_message).with(:invalid_move)
+        move_interface.valid_target?(target, target_list)
+      end
+    end
+  end
 end
