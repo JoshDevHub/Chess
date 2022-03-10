@@ -26,7 +26,7 @@ class MoveInterface
   end
 
   def move_selection
-    nil
+    display.input_error_message(:invalid_initial_input)
   end
 
   def valid_origin?(origin)

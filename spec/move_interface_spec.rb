@@ -92,8 +92,17 @@ describe MoveInterface do
         castle_manager: castle_manager
       }
     end
+    before do
+      allow(display).to receive(:input_error_message)
+    end
+
     it 'returns nil' do
       expect(default_move_interface.move_selection).to be(nil)
+    end
+
+    it 'sends #input_error_message to display with :invalid_initial_input' do
+      expect(display).to receive(:input_error_message).with(:invalid_initial_input)
+      default_move_interface.move_selection
     end
   end
 
