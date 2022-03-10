@@ -24,6 +24,8 @@ class Move
 
   private
 
+  attr_reader :board, :color, :castle_manager
+
   def path_from(square)
     path = []
     current_square = @origin

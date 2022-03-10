@@ -13,7 +13,7 @@ class WhitePawnAdvance < Move
   def legal_move?(square)
     return false unless valid_square?(square)
 
-    board_square = @board.access_square(square)
+    board_square = board.access_square(square)
     board_square.unoccupied?
   end
 end
