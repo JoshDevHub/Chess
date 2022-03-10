@@ -43,6 +43,13 @@ class Board
     board_string
   end
 
+  def move_list_from_origin(origin, castle_manager)
+    square = access_square(origin)
+    piece_to_move = square.piece
+    initial_list = piece_to_move.move_list(self, castle_manager)
+    self_check_filter(piece_to_move, initial_list)
+  end
+
   def move_piece(current_square, new_square)
     square = access_square(current_square)
     return if square.unoccupied?

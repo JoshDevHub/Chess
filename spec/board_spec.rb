@@ -4,6 +4,7 @@ require_relative '../lib/coordinate'
 require_relative '../lib/square'
 require_relative '../lib/board'
 require_relative '../lib/piece'
+require_relative '../lib/pieces/null_piece'
 
 describe Board do
   let(:square_class) { class_double(Square, new: nil) }
@@ -60,6 +61,30 @@ describe Board do
       square_name = 'C4'
       square = game_board.access_square(square_name)
       expect(square.name).to eq(square_name)
+    end
+  end
+
+  describe '#move_list_from_origin' do
+    subject(:game_board) { described_class.new(Square) }
+    let(:origin_square) { instance_double(Square) }
+    let(:piece) { instance_double(Piece) }
+    let(:castle_manager) { double('castle_manager') }
+    let(:move_list) { double('move_list') }
+    let(:origin) { 'A1' }
+    before do
+      allow(game_board).to receive(:access_square).with('A1').and_return(origin_square)
+      allow(origin_square).to receive(:piece).and_return(piece)
+      allow(piece).to receive(:move_list).with(game_board, castle_manager).and_return(move_list)
+      allow(game_board).to receive(:self_check_filter).with(piece, move_list)
+    end
+    it 'sends a #piece to the origin square' do
+      expect(origin_square).to receive(:piece)
+      game_board.move_list_from_origin(origin, castle_manager)
+    end
+
+    it 'sends #move_list to the piece' do
+      expect(piece).to receive(:move_list).with(game_board, castle_manager)
+      game_board.move_list_from_origin(origin, castle_manager)
     end
   end
 
