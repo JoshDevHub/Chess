@@ -13,6 +13,7 @@ class Chess
     @player_black = Player.new(color: 'black')
     @active_player = @player_white
     @display = Display.new
+    @move_interface = MoveInterface
     @castle_manager = CastleManager.new(castle_options: fen.castle_info)
   end
 
@@ -22,68 +23,26 @@ class Chess
     loop do
       system('clear')
       display.print_board(@chess_board)
-      display.check_message(@active_player) if @chess_board.in_check?(active_color)
-      user_piece_position = user_origin_selection
-      user_move_selection = move_script(user_piece_position)
-      @chess_board.move_piece(user_piece_position, user_move_selection)
-      promotion_script(user_move_selection)
       break unless continue_game?
 
+      display.check_message(@active_player) if @chess_board.in_check?(active_color)
+      origin, target = active_player_move.values
+      @chess_board.move_piece(origin, target)
+      promotion_script(target)
       toggle_turns
     end
   end
   # rubocop: enable Metrics/MethodLength
 
-  def user_origin_selection
-    display.piece_choice_prompt(@active_player)
-    input = take_user_square_input
-    return input if valid_origin_selection?(input)
-
-    user_origin_selection
-  end
-
-  def take_user_square_input
+  def active_player_move
     loop do
-      user_input = gets.chomp.upcase
-      return user_input if valid_square?(user_input)
-
-      display.input_error_message(:invalid_square)
+      display.initial_input_prompt(@active_player)
+      input = gets.upcase.gsub(/[[:space:]]/, '')
+      interface_args = { board: @chess_board, display: display, active_color: active_color,
+                         user_input: input, castle_manager: @castle_manager }
+      move = @move_interface.for_input(**interface_args).move_selection
+      return move if move
     end
-  end
-
-  def valid_origin_selection?(selection)
-    square = @chess_board.access_square(selection)
-    if square.unoccupied?
-      display.input_error_message(:empty_square)
-    elsif square.piece_color != active_color
-      display.input_error_message(:wrong_color)
-    elsif create_move_list(selection).empty?
-      display.input_error_message(:no_moves)
-    else
-      true
-    end
-  end
-
-  def move_script(square)
-    move_list = create_move_list(square)
-    loop do
-      display.move_choice_prompt(move_list)
-      user_input = take_user_square_input
-      return user_input if valid_move_selection?(user_input, move_list)
-    end
-  end
-
-  def create_move_list(piece_position)
-    square = @chess_board.access_square(piece_position)
-    piece = square.piece
-    initial_list = piece.move_list(@chess_board, @castle_manager)
-    @chess_board.self_check_filter(piece, initial_list)
-  end
-
-  def valid_move_selection?(selection, move_list)
-    return true if move_list.include?(selection)
-
-    display.input_error_message(:invalid_move)
   end
 
   def toggle_turns
@@ -128,7 +87,7 @@ class Chess
 
   def promote_piece(fen_symbol, square)
     piece_fen = active_color == 'white' ? fen_symbol : fen_symbol.downcase
-    new_piece = Piece.from_fen(piece_fen, position.name)
+    new_piece = Piece.from_fen(piece_fen, square.name)
     square.add_piece(new_piece)
   end
 
