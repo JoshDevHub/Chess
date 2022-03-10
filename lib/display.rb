@@ -18,8 +18,15 @@ class Display
     puts "Your next move will have to escape check.\n\n"
   end
 
-  def piece_choice_prompt(player)
-    puts "#{player}: choose the square of a piece to move :"
+  def initial_input_prompt(player)
+    puts <<~HEREDOC
+      #{player}: it's your turn to move a piece.
+
+        You can enter an origin square and target square in one line OR
+        You can enter an origin square and see a list of moves to pick from.
+
+      Enter your choice  >>
+    HEREDOC
   end
 
   def move_choice_prompt(move_list)
