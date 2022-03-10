@@ -118,10 +118,10 @@ class Board
   end
 
   def handle_en_passant(piece, target)
+    if target == en_passant_target && piece.capture_en_passant?(target)
+      capture_square_name = piece.color == 'white' ? down(target) : up(target)
+      access_square(capture_square_name).remove_piece
+    end
     @en_passant_target = piece.define_en_passant_square(target)
-    return unless target == en_passant_target && piece.capture_en_passant?(target)
-
-    capture_square_name = piece.color == 'white' ? down(target) : up(target)
-    access_square(capture_square_name).remove_piece
   end
 end
