@@ -134,6 +134,75 @@ describe CastleManager do
     end
   end
 
+  describe '#castle_rights_for_color?' do
+    subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
+    context 'when both colors can castle to at least one side' do
+      let(:castle_opts) do
+        {
+          white_king_side: true,
+          white_queen_side: true,
+          black_king_side: false,
+          black_queen_side: true
+        }
+      end
+      context 'when the given color is white' do
+        it 'returns true' do
+          expect(castle_manager.castle_rights_for_color?('white')).to be(true)
+        end
+      end
+
+      context 'when the given color is black' do
+        it 'returns true' do
+          expect(castle_manager.castle_rights_for_color?('black')).to be(true)
+        end
+      end
+    end
+
+    context 'when one color can castle and the other cannot' do
+      let(:castle_opts) do
+        {
+          white_king_side: true,
+          white_queen_side: false,
+          black_king_side: false,
+          black_queen_side: false
+        }
+      end
+      context 'when the given color is white' do
+        it 'returns true' do
+          expect(castle_manager.castle_rights_for_color?('white')).to be(true)
+        end
+      end
+
+      context 'when the given color is black' do
+        it 'returns false' do
+          expect(castle_manager.castle_rights_for_color?('black')).to be(false)
+        end
+      end
+    end
+
+    context 'when neither color can castle' do
+      let(:castle_opts) do
+        {
+          white_king_side: false,
+          white_queen_side: false,
+          black_king_side: false,
+          black_queen_side: false
+        }
+      end
+      context 'when the given color is white' do
+        it 'returns false' do
+          expect(castle_manager.castle_rights_for_color?('white')).to be(false)
+        end
+      end
+
+      context 'when the given color is black' do
+        it 'returns false' do
+          expect(castle_manager.castle_rights_for_color?('black')).to be(false)
+        end
+      end
+    end
+  end
+
   describe '#remove_castle_option' do
     context 'when the chosen option is initially true' do
       let(:castle_opts) do

@@ -16,6 +16,10 @@ class CastleManager
     @castle_options[key]
   end
 
+  def castle_rights_for_color?(color)
+    can_castle?(color, :king) || can_castle?(color, :queen)
+  end
+
   def remove_castle_option(color, side)
     key = "#{color}_#{side}_side".to_sym
     @castle_options[key] = false
