@@ -20,7 +20,8 @@ class King < Piece
   end
 
   def involved_in_castling?
-    true
+    rank = color == 'white' ? '1' : '8'
+    position == "E#{rank}"
   end
 
   def castle_move?(target)

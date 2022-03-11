@@ -20,6 +20,7 @@ class Rook < Piece
   end
 
   def involved_in_castling?
-    true
+    rank = color == 'white' ? '1' : '8'
+    position == "A#{rank}" || position == "H#{rank}"
   end
 end

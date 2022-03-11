@@ -30,9 +30,68 @@ describe Rook do
   end
 
   describe '#involved_in_castling?' do
-    subject(:rook) { described_class.new(color: 'black', position: 'A8') }
-    it 'returns true' do
-      expect(rook.involved_in_castling?).to be(true)
+    subject(:rook) { described_class.new(color: color, position: position) }
+    context 'when the rook is white' do
+      let(:color) { 'white' }
+      context 'when the rook is involved in castling' do
+        context 'when the rook is on A1' do
+          let(:position) { 'A1' }
+          it 'returns true' do
+            expect(rook.involved_in_castling?).to be(true)
+          end
+        end
+
+        context 'when the rook is on H1' do
+          let(:position) { 'H1' }
+          it 'returns true' do
+            expect(rook.involved_in_castling?).to be(true)
+          end
+        end
+      end
+
+      context 'when the rook is not involved in castling' do
+        context 'when the rook is on A2' do
+          let(:position) { 'A2' }
+          it 'returns false' do
+            expect(rook.involved_in_castling?).to be(false)
+          end
+        end
+
+        context 'when the rook is on A8' do
+          let(:position) { 'A8' }
+          it 'returns false' do
+            expect(rook.involved_in_castling?).to be(false)
+          end
+        end
+      end
+    end
+
+    context 'when the rook is black' do
+      let(:color) { 'black' }
+      context 'when the rook is involved in castling' do
+        context 'when the rook is on A8' do
+          let(:position) { 'A8' }
+          it 'returns true' do
+            expect(rook.involved_in_castling?).to be(true)
+          end
+        end
+
+        context 'when the rook is on H8' do
+          let(:position) { 'H8' }
+          it 'returns true' do
+            expect(rook.involved_in_castling?).to be(true)
+          end
+        end
+      end
+
+      context 'when the rook is not involved in castling' do
+        context 'when the rook is on H1' do
+          let(:position) { 'H1' }
+          it 'returns false' do
+            expect(rook.involved_in_castling?).to be(false)
+          end
+        end
+      end
     end
   end
 end

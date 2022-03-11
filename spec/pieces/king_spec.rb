@@ -58,9 +58,60 @@ describe King do
   end
 
   describe '#involved_in_castling?' do
-    subject(:king) { described_class.new(color: 'white', position: 'E1') }
-    it 'returns true' do
-      expect(king.involved_in_castling?).to be(true)
+    subject(:king) { described_class.new(color: color, position: position) }
+    context 'when the king is white' do
+      let(:color) { 'white' }
+      context 'when the king is on E1' do
+        let(:position) { 'E1' }
+        it 'returns true' do
+          expect(king.involved_in_castling?).to be(true)
+        end
+      end
+
+      context 'when the king is on E2' do
+        let(:position) { 'E2' }
+        it 'returns false' do
+          expect(king.involved_in_castling?).to be(false)
+        end
+      end
+
+      context 'when the king is on E8' do
+        let(:position) { 'E8' }
+        it 'returns false' do
+          expect(king.involved_in_castling?).to be(false)
+        end
+      end
+
+      context 'when the king is on D1' do
+        let(:position) { 'D1' }
+        it 'returns false' do
+          expect(king.involved_in_castling?).to be(false)
+        end
+      end
+    end
+
+    context 'when the king is black' do
+      let(:color) { 'black' }
+      context 'when the king is on E8' do
+        let(:position) { 'E8' }
+        it 'returns true' do
+          expect(king.involved_in_castling?).to be(true)
+        end
+      end
+
+      context 'when the king is on E1' do
+        let(:position) { 'E1' }
+        it 'returns false' do
+          expect(king.involved_in_castling?).to be(false)
+        end
+      end
+
+      context 'when the king is on F8' do
+        let(:position) { 'F8' }
+        it 'returns false' do
+          expect(king.involved_in_castling?).to be(false)
+        end
+      end
     end
   end
 
