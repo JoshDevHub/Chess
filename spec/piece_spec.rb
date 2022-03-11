@@ -101,4 +101,11 @@ describe Piece do
       expect(generic_piece.can_promote?).to be(false)
     end
   end
+
+  describe '#involved_in_castling?' do
+    subject(:generic_piece) { described_class.new(color: 'black', position: 'A1') }
+    it 'returns false' do
+      expect(generic_piece.involved_in_castling?).to be(false)
+    end
+  end
 end

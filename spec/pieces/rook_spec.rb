@@ -28,4 +28,11 @@ describe Rook do
       rook.move_list(board)
     end
   end
+
+  describe '#involved_in_castling?' do
+    subject(:rook) { described_class.new(color: 'black', position: 'A8') }
+    it 'returns true' do
+      expect(rook.involved_in_castling?).to be(true)
+    end
+  end
 end

@@ -18,4 +18,8 @@ class King < Piece
   def to_s
     color == 'white' ? " \u2654 " : " \u265A "
   end
+
+  def involved_in_castling?
+    true
+  end
 end

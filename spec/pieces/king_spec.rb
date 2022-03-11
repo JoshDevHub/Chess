@@ -56,4 +56,11 @@ describe King do
       king.move_list(board)
     end
   end
+
+  describe '#involved_in_castling?' do
+    subject(:king) { described_class.new(color: 'white', position: 'E1') }
+    it 'returns true' do
+      expect(king.involved_in_castling?).to be(true)
+    end
+  end
 end

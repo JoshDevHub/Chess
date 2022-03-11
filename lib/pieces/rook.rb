@@ -18,4 +18,8 @@ class Rook < Piece
   def to_s
     color == 'white' ? " \u2656 " : " \u265C "
   end
+
+  def involved_in_castling?
+    true
+  end
 end

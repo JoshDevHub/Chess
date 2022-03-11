@@ -61,6 +61,10 @@ class Piece
     false
   end
 
+  def involved_in_castling?
+    false
+  end
+
   def absent?
     false
   end
