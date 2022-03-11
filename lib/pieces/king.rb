@@ -22,4 +22,10 @@ class King < Piece
   def involved_in_castling?
     true
   end
+
+  def castle_move?(target)
+    rank = color == 'white' ? '1' : '8'
+    castle_origin, *castle_targets = %w[E C G].map { |file| file + rank }
+    position == castle_origin && castle_targets.include?(target)
+  end
 end

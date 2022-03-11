@@ -63,4 +63,82 @@ describe King do
       expect(king.involved_in_castling?).to be(true)
     end
   end
+
+  describe '#castle_move?' do
+    context 'when the king has a white color' do
+      subject(:king) { described_class.new(color: 'white', position: position) }
+      context 'when the move is a castle move' do
+        let(:position) { 'E1' }
+        context 'when the move is a king side castle' do
+          let(:target) { 'G1' }
+          it 'returns true' do
+            expect(king.castle_move?(target)).to be(true)
+          end
+        end
+
+        context 'when the move is a queen side castle' do
+          let(:target) { 'C1' }
+          it 'returns true' do
+            expect(king.castle_move?(target)).to be(true)
+          end
+        end
+      end
+
+      context 'when the move is not a castle move' do
+        context 'when the position is E1 but the target is not G1 or C1' do
+          let(:position) { 'E1' }
+          let(:target) { 'F1' }
+          it 'returns false' do
+            expect(king.castle_move?(target)).to be(false)
+          end
+        end
+
+        context 'when the target is G1 or C1 but the position is not E1' do
+          let(:position) { 'F1' }
+          let(:target) { 'G1' }
+          it 'returns false' do
+            expect(king.castle_move?(target)).to be(false)
+          end
+        end
+      end
+    end
+
+    context 'when the king has a black color' do
+      subject(:black_king) { described_class.new(color: 'black', position: position) }
+      context 'when the move is a castle move' do
+        let(:position) { 'E8' }
+        context 'when the move is a king side castle' do
+          let(:target) { 'G8' }
+          it 'returns true' do
+            expect(black_king.castle_move?(target)).to be(true)
+          end
+        end
+
+        context 'when the move is a queen side castle' do
+          let(:target) { 'C8' }
+          it 'returns true' do
+            expect(black_king.castle_move?(target)).to be(true)
+          end
+        end
+      end
+
+      context 'when the move is not a castle move' do
+        context 'when the position is E8 but the target is not G8 or C8' do
+          let(:position) { 'E8' }
+          let(:target) { 'D8' }
+          it 'returns false' do
+            expect(black_king.castle_move?(target)).to be(false)
+          end
+        end
+
+        context 'when the target is G8 or C8 but the position is not E8' do
+          let(:position) { 'B8' }
+          let(:target) { 'C8' }
+          it 'returns false' do
+            expect(black_king.castle_move?(target)).to be(false)
+          end
+        end
+      end
+    end
+  end
 end

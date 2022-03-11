@@ -65,6 +65,10 @@ class Piece
     false
   end
 
+  def castle_move?(_target)
+    false
+  end
+
   def absent?
     false
   end

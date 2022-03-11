@@ -108,4 +108,12 @@ describe Piece do
       expect(generic_piece.involved_in_castling?).to be(false)
     end
   end
+
+  describe '#castle_move?' do
+    subject(:generic_piece) { described_class.new(color: 'black', position: 'A1') }
+    it 'returns false' do
+      placeholder_arg = 'A1'
+      expect(generic_piece.castle_move?(placeholder_arg)).to be(false)
+    end
+  end
 end
