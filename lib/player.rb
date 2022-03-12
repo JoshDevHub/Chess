@@ -14,7 +14,7 @@ class Player
   end
 
   def create_user_name
-    puts 'Enter your player name >>'
+    puts "#{@name}: what would you like your player name to be?  >>"
     input = gets.strip
     @name = input
   end
