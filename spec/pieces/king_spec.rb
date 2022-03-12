@@ -8,6 +8,7 @@ require_relative '../../lib/move'
 require_relative '../../lib/moves/king_move'
 require_relative '../../lib/moves/king_side_castle'
 require_relative '../../lib/moves/queen_side_castle'
+require_relative '../../lib/castle_manager'
 
 describe King do
   subject(:king) { described_class.new(color: 'white', position: square) }
@@ -189,6 +190,26 @@ describe King do
             expect(black_king.castle_move?(target)).to be(false)
           end
         end
+      end
+    end
+  end
+
+  describe '#disable_castle_rights' do
+    subject(:king) { described_class.new(color: color, position: 'E1') }
+    let(:castle_manager) { instance_double(CastleManager) }
+    context 'when the king is white' do
+      let(:color) { 'white' }
+      it 'sends #remove_all_castles_for_color to the given castle_manager with color' do
+        expect(castle_manager).to receive(:remove_all_castles_for_color).with(color)
+        king.disable_castle_rights(castle_manager)
+      end
+    end
+
+    context 'when the king is black' do
+      let(:color) { 'black' }
+      it 'sends #remove_all_castles_for_color to the given castle_manager with color' do
+        expect(castle_manager).to receive(:remove_all_castles_for_color).with(color)
+        king.disable_castle_rights(castle_manager)
       end
     end
   end

@@ -116,4 +116,12 @@ describe Piece do
       expect(generic_piece.castle_move?(placeholder_arg)).to be(false)
     end
   end
+
+  describe '#disable_castle_rights' do
+    subject(:generic_piece) { described_class.new(color: 'white', position: 'A1') }
+    it 'returns nil' do
+      dummy_castler = 'castle_manager'
+      expect(generic_piece.disable_castle_rights(dummy_castler)).to be(nil)
+    end
+  end
 end

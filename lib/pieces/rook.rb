@@ -23,4 +23,12 @@ class Rook < Piece
     rank = color == 'white' ? '1' : '8'
     position == "A#{rank}" || position == "H#{rank}"
   end
+
+  def disable_castle_rights(castle_manager)
+    file = position[0].to_sym
+    side = { A: :queen, H: :king }[file]
+    return unless side
+
+    castle_manager.remove_castle_option(color, side)
+  end
 end

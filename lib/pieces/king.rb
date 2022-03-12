@@ -24,6 +24,10 @@ class King < Piece
     position == "E#{rank}"
   end
 
+  def disable_castle_rights(castle_manager)
+    castle_manager.remove_all_castles_for_color(color)
+  end
+
   def castle_move?(target)
     rank = color == 'white' ? '1' : '8'
     castle_origin, *castle_targets = %w[E C G].map { |file| file + rank }

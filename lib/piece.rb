@@ -69,6 +69,10 @@ class Piece
     false
   end
 
+  def disable_castle_rights(_castle_manager)
+    nil
+  end
+
   def absent?
     false
   end
