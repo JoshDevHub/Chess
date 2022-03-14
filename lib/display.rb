@@ -76,7 +76,11 @@ class Display
       wrong_color: 'That is not your piece. Only choose among pieces of your color.'
     }[message])
     sleep(2.5)
-    print "\e[2K\r\e[A\e[2K"
+    delete_displayed_lines(1)
+  end
+
+  def delete_display_lines(number_of_lines)
+    print "\r#{"\e[A\e" * number_of_lines}\e[J"
   end
 
   private

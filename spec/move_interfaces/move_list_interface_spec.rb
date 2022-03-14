@@ -53,6 +53,11 @@ describe MoveListInterface do
         move_list_interface.move_selection
       end
 
+      it 'calls #gets once' do
+        expect(move_list_interface).to receive(:gets).once
+        move_list_interface.move_selection
+      end
+
       it 'returns a hash with the key: origin set to user_input' do
         returned_hash = move_list_interface.move_selection
         expect(returned_hash[:origin]).to eq(user_input)
@@ -72,11 +77,12 @@ describe MoveListInterface do
         allow(move_list_interface).to receive(:valid_origin?).with(user_input).and_return(true)
         allow(board).to receive(:move_list_from_origin).and_return(target_list)
         allow(display).to receive(:move_choice_prompt)
+        allow(display).to receive(:delete_display_lines)
         allow(move_list_interface).to receive(:gets).and_return('back')
       end
-      it 'sends #print to self with ansi sequence to delete 4 lines' do
-        expected_ansi_code = "\r#{"\e[A\e" * 4}\e[J"
-        expect(move_list_interface).to receive(:print).with(expected_ansi_code)
+      it 'sends #delete_display_lines to display with the number 4' do
+        lines_to_delete = 4
+        expect(display).to receive(:delete_display_lines).with(lines_to_delete)
         move_list_interface.move_selection
       end
     end
@@ -98,8 +104,13 @@ describe MoveListInterface do
         move_list_interface.move_selection
       end
 
-      it 'sends #move_choice_prompt to display twice' do
-        expect(display).to receive(:move_choice_prompt).twice
+      it 'sends #move_choice_prompt to display' do
+        expect(display).to receive(:move_choice_prompt)
+        move_list_interface.move_selection
+      end
+
+      it 'calls #gets twice' do
+        expect(move_list_interface).to receive(:gets).twice
         move_list_interface.move_selection
       end
 
