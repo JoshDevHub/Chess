@@ -76,7 +76,7 @@ class Display
       wrong_color: 'That is not your piece. Only choose among pieces of your color.'
     }[message])
     sleep(2.5)
-    delete_displayed_lines(1)
+    delete_display_lines(1)
   end
 
   def delete_display_lines(number_of_lines)
