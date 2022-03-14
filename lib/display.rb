@@ -14,8 +14,10 @@ class Display
   end
 
   def check_message(player)
-    puts "#{player}, your king is under attack!"
-    puts "Your next move will have to escape check.\n\n"
+    puts <<~HEREDOC
+      #{player}, your king is under attack!
+      You next move must escape check.\n\n
+    HEREDOC
   end
 
   def initial_input_prompt(player)
@@ -38,18 +40,29 @@ class Display
   end
 
   def checkmate_message(loser, winner)
-    puts "#{loser} has been checkmated."
-    puts "#{winner} has won. Congratulations!"
+    puts <<~HEREDOC
+      #{loser} has been checkmated.
+      #{winner} has won the game. Congratulations!
+    HEREDOC
   end
 
   def stalemate_message(player)
-    puts "#{player} has no legal moves but is not in check"
-    puts 'This is a stalemate, and this game ends in a draw.'
+    puts <<~HEREDOC
+      #{player} has no legal moves but is not in check.
+      This is a stalemat, and the game ends in a draw.
+    HEREDOC
   end
 
   def promotion_message(player)
-    puts "#{player}: your pawn has reached the back rank! It can promote to a new piece."
-    puts 'What piece do you wish to promote to? Enter a piece using its chess notation (Q, R, B, or N)'
+    puts <<~HEREDOC
+      #{player}: your pawn has reached the back rank! It can now promote to a new piece.
+
+      Enter the piece you wish to promote to using its chess notation:
+        Q for Queen
+        R for Rook
+        B for Bishop
+        N for Knight
+    HEREDOC
   end
 
   def input_error_message(message)
