@@ -29,4 +29,23 @@ class CastleManager
     remove_castle_option(color, :king)
     remove_castle_option(color, :queen)
   end
+
+  def handle_castling(piece, target, board)
+    if piece.castle_move?(target)
+      rook_origin, rook_target = rook_castle_move_map[target.to_sym]
+      board.move_piece(rook_origin, rook_target)
+    end
+    piece.disable_castle_rights(self)
+  end
+
+  private
+
+  def rook_castle_move_map
+    {
+      C1: %w[A1 D1],
+      G1: %w[H1 F1],
+      C8: %w[A8 D8],
+      G8: %w[H8 F8]
+    }
+  end
 end

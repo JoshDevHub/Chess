@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
+require_relative '../lib/coordinate'
 require_relative '../lib/castle_manager'
+require_relative '../lib/board'
+require_relative '../lib/piece'
 
 describe CastleManager do
   describe '#can_castle?' do
@@ -409,6 +412,67 @@ describe CastleManager do
             .not_to change { castle_manager.instance_variable_get(:@castle_options)[key_to_check] }
             .from(true)
         end
+      end
+    end
+  end
+
+  describe '#handle_castling' do
+    let(:castle_opts) do
+      {
+        white_king_side: true,
+        white_queen_side: true,
+        black_king_side: false,
+        black_queen_side: false
+      }
+    end
+    subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
+    let(:board) { instance_double(Board) }
+    let(:piece) { instance_double(Piece) }
+    let(:target) { 'C1' }
+    context 'when the move being executed is a castling move' do
+      before do
+        allow(piece).to receive(:castle_move?).and_return(true)
+        allow(board).to receive(:move_piece)
+        allow(piece).to receive(:disable_castle_rights)
+      end
+
+      it 'sends #castle_move? with target to the given piece' do
+        expect(piece).to receive(:castle_move?).with(target)
+        castle_manager.handle_castling(piece, target, board)
+      end
+
+      it 'sends #move_piece to the board with the coordinates of a rook to move' do
+        expected_origin = 'A1'
+        expected_target = 'D1'
+        expect(board).to receive(:move_piece).with(expected_origin, expected_target)
+        castle_manager.handle_castling(piece, target, board)
+      end
+
+      it 'sends #disable_castle_rights to the piece' do
+        expect(piece).to receive(:disable_castle_rights)
+        castle_manager.handle_castling(piece, target, board)
+      end
+    end
+
+    context 'when the move being executed is not a castling move' do
+      before do
+        allow(piece).to receive(:castle_move?).and_return(false)
+        allow(piece).to receive(:disable_castle_rights)
+      end
+
+      it 'sends #castle_move? with target to the given piece' do
+        expect(piece).to receive(:castle_move?).with(target)
+        castle_manager.handle_castling(piece, target, board)
+      end
+
+      it 'sends #disable_castle_rights to the piece' do
+        expect(piece).to receive(:disable_castle_rights)
+        castle_manager.handle_castling(piece, target, board)
+      end
+
+      it 'does not send #move_piece to the board' do
+        expect(board).to_not receive(:move_piece)
+        castle_manager.handle_castling(piece, target, board)
       end
     end
   end
