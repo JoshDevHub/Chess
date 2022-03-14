@@ -11,7 +11,7 @@ class Chess
     @chess_board = Board.from_fen(fen_data: fen.piece_info, square: Square)
     @player_white = Player.new(color: 'white')
     @player_black = Player.new(color: 'black')
-    @active_player = @player_white
+    @active_player = fen.active_color == 'white' ? @player_white : @player_black
     @display = Display.new
     @move_interface = MoveInterface
     @castle_manager = CastleManager.new(castle_options: fen.castle_info)
