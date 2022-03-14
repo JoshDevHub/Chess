@@ -18,6 +18,7 @@ class Chess
   end
 
   # rubocop: disable Metrics/MethodLength
+  # rubocop: disable Metrics/AbcSize
   def game_script
     display.introduction
     loop do
@@ -27,16 +28,19 @@ class Chess
 
       display.check_message(@active_player) if @chess_board.in_check?(active_color)
       origin, target = active_player_move.values
+      moving_piece = @chess_board.access_square(origin).piece
+      @castle_manager.handle_castling(moving_piece, target, @chess_board) if piece_can_affect_castling?(moving_piece)
       @chess_board.move_piece(origin, target)
       promotion_script(target)
       toggle_turns
     end
   end
   # rubocop: enable Metrics/MethodLength
+  # rubocop: enable Metrics/AbcSize
 
   def active_player_move
+    display.initial_input_prompt(@active_player)
     loop do
-      display.initial_input_prompt(@active_player)
       input = gets.upcase.gsub(/[[:space:]]/, '')
       interface_args = { board: @chess_board, display: display, active_color: active_color,
                          user_input: input, castle_manager: @castle_manager }
@@ -83,6 +87,10 @@ class Chess
 
   def active_color
     @active_player.piece_color
+  end
+
+  def piece_can_affect_castling?(piece)
+    piece.involved_in_castling? && @castle_manager.castle_rights_for_color?(active_color)
   end
 
   def promote_piece(fen_symbol, square)
