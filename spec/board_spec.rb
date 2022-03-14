@@ -539,55 +539,214 @@ describe Board do
       end
     end
   end
+
+  describe '#stalemate?' do
+    context 'when the color to check is white' do
+      let(:color) { 'white' }
+      context 'when white is in stalemate' do
+        subject(:stalemate_board) { described_class.new(square_class) }
+        let(:piece) { instance_double(Piece, color: color) }
+        let(:king_square) do
+          instance_double(
+            Square,
+            name: 'E1',
+            piece_color: color,
+            occupied_by_king?: true,
+            piece: piece
+          )
+        end
+        let(:empty_square) do
+          instance_double(
+            Square,
+            unoccupied?: true,
+            occupied_by_king?: false,
+            piece: NullPiece,
+            piece_color: nil
+          )
+        end
+        before do
+          allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
+          allow(square_class).to receive(:new).and_return(empty_square)
+          allow(stalemate_board).to receive(:in_check?).with(color).and_return(false)
+          allow(stalemate_board).to receive(:self_check_filter).and_return([])
+        end
+
+        it 'returns true' do
+          expect(stalemate_board.stalemate?(color)).to be(true)
+        end
+      end
+
+      context 'when white is not in stalemate' do
+        context 'when white is in check' do
+          subject(:stalemate_board) { described_class.new(square_class) }
+          let(:piece) { instance_double(Piece, color: color) }
+          let(:king_square) do
+            instance_double(
+              Square,
+              name: 'E1',
+              piece_color: color,
+              occupied_by_king?: true,
+              piece: piece
+            )
+          end
+          let(:empty_square) do
+            instance_double(
+              Square,
+              unoccupied?: true,
+              occupied_by_king?: false,
+              piece: NullPiece,
+              piece_color: nil
+            )
+          end
+          before do
+            allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
+            allow(square_class).to receive(:new).and_return(empty_square)
+            allow(stalemate_board).to receive(:in_check?).with(color).and_return(true)
+            allow(stalemate_board).to receive(:self_check_filter).and_return([])
+          end
+
+          it 'returns false' do
+            expect(stalemate_board.stalemate?(color)).to be(false)
+          end
+        end
+
+        context 'when white has legal moves' do
+          subject(:stalemate_board) { described_class.new(square_class) }
+          let(:piece) { instance_double(Piece, color: color) }
+          let(:king_square) do
+            instance_double(
+              Square,
+              name: 'E1',
+              piece_color: color,
+              occupied_by_king?: true,
+              piece: piece
+            )
+          end
+          let(:empty_square) do
+            instance_double(
+              Square,
+              unoccupied?: true,
+              occupied_by_king?: false,
+              piece: NullPiece,
+              piece_color: nil
+            )
+          end
+          before do
+            allow(square_class).to receive(:new).and_return(empty_square)
+            allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
+            allow(stalemate_board).to receive(:in_check?).with(color).and_return(false)
+            allow(piece).to receive(:move_list).and_return(['E2'])
+            allow(stalemate_board).to receive(:self_check_filter).and_return(['E2'])
+          end
+
+          it 'returns false' do
+            expect(stalemate_board.stalemate?(color)).to be(false)
+          end
+        end
+      end
+    end
+    context 'when the color to check is black' do
+      let(:color) { 'black' }
+      context 'when black is in stalemate' do
+        subject(:stalemate_board) { described_class.new(square_class) }
+        let(:piece) { instance_double(Piece, color: color) }
+        let(:king_square) do
+          instance_double(
+            Square,
+            name: 'E1',
+            piece_color: color,
+            occupied_by_king?: true,
+            piece: piece
+          )
+        end
+        let(:empty_square) do
+          instance_double(
+            Square,
+            unoccupied?: true,
+            occupied_by_king?: false,
+            piece: NullPiece,
+            piece_color: nil
+          )
+        end
+        before do
+          allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
+          allow(square_class).to receive(:new).and_return(empty_square)
+          allow(stalemate_board).to receive(:in_check?).with(color).and_return(true)
+          allow(stalemate_board).to receive(:self_check_filter).and_return([])
+        end
+
+        it 'returns true' do
+          expect(stalemate_board.checkmate?(color)).to be(true)
+        end
+      end
+
+      context 'when black is not in checkmate' do
+        context 'when black is not in check' do
+          subject(:stalemate_board) { described_class.new(square_class) }
+          let(:piece) { instance_double(Piece, color: color) }
+          let(:king_square) do
+            instance_double(
+              Square,
+              name: 'E1',
+              piece_color: color,
+              occupied_by_king?: true,
+              piece: piece
+            )
+          end
+          let(:empty_square) do
+            instance_double(
+              Square,
+              unoccupied?: true,
+              occupied_by_king?: false,
+              piece: NullPiece,
+              piece_color: nil
+            )
+          end
+          before do
+            allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
+            allow(square_class).to receive(:new).and_return(empty_square)
+            allow(stalemate_board).to receive(:in_check?).with(color).and_return(false)
+            allow(stalemate_board).to receive(:self_check_filter).and_return([])
+          end
+
+          it 'returns false' do
+            expect(stalemate_board.checkmate?(color)).to be(false)
+          end
+        end
+
+        context 'when black is in check with legal moves' do
+          subject(:stalemate_board) { described_class.new(square_class) }
+          let(:piece) { instance_double(Piece, color: color) }
+          let(:king_square) do
+            instance_double(
+              Square,
+              name: 'E1',
+              piece_color: color,
+              occupied_by_king?: true,
+              piece: piece
+            )
+          end
+          let(:empty_square) do
+            instance_double(
+              Square,
+              unoccupied?: true,
+              occupied_by_king?: false,
+              piece: NullPiece,
+              piece_color: nil
+            )
+          end
+          before do
+            allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
+            allow(square_class).to receive(:new).and_return(empty_square)
+            allow(stalemate_board).to receive(:in_check?).with(color).and_return(false)
+            allow(stalemate_board).to receive(:self_check_filter).and_return(['E2'])
+          end
+
+          it 'returns false' do
+            expect(stalemate_board.checkmate?(color)).to be(false)
+          end
+        end
+      end
+    end
+  end
 end
-
-#   describe '#stalemate?' do
-#     let(:color) { 'black' }
-#     context 'when black is in stalemate' do
-#       subject(:stalemate_board) { described_class.new }
-#       let(:piece) { instance_double(Piece, color: color) }
-#       before do
-#         stalemate_board.add_piece(piece, 'A2')
-#         allow(piece).to receive(:move_list).and_return([])
-#         allow(stalemate_board).to receive(:in_check?).with(color).and_return(false)
-#         allow(stalemate_board).to receive(:self_check_filter).and_return([])
-#       end
-
-#       xit 'returns true' do
-#         expect(stalemate_board.stalemate?(color)).to be(true)
-#       end
-#     end
-
-#     context 'when black is not in stalemate' do
-#       context 'when black has legal moves' do
-#         subject(:stalemate_board) { described_class.new }
-#         let(:piece) { instance_double(Piece, color: color) }
-#         before do
-#           stalemate_board.add_piece(piece, 'A2')
-#           allow(piece).to receive(:move_list).and_return(['A1'])
-#           allow(stalemate_board).to receive(:in_check?).with(color).and_return(false)
-#           allow(stalemate_board).to receive(:self_check_filter).and_return(['A1'])
-#         end
-
-#         xit 'returns false' do
-#           expect(stalemate_board.stalemate?(color)).to be(false)
-#         end
-#       end
-
-#       context 'when black is in check' do
-#         subject(:stalemate_board) { described_class.new }
-#         let(:piece) { instance_double(Piece, color: color) }
-#         before do
-#           stalemate_board.add_piece(piece, 'A2')
-#           allow(piece).to receive(:move_list).and_return([])
-#           allow(stalemate_board).to receive(:in_check?).with(color).and_return(true)
-#           allow(stalemate_board).to receive(:self_check_filter).and_return([])
-#         end
-
-#         xit 'returns false' do
-#           expect(stalemate_board.stalemate?(color)).to be(false)
-#         end
-#       end
-#     end
-#   end
-# end
