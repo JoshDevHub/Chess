@@ -35,7 +35,7 @@ class Display
     display_list = array_to_readable_list(move_list)
     puts <<~HEREDOC
       The available moves for this piece are #{display_list}
-      Choose one >>
+      Choose one or type 'back' to exit and choose another piece >>
     HEREDOC
   end
 

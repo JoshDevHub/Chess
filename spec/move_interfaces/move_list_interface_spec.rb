@@ -64,6 +64,23 @@ describe MoveListInterface do
       end
     end
 
+    context "when the user inputs 'back'" do
+      let(:user_input) { 'E2' }
+      let(:user_target) { 'back' }
+      let(:target_list) { %w[E3 E4] }
+      before do
+        allow(move_list_interface).to receive(:valid_origin?).with(user_input).and_return(true)
+        allow(board).to receive(:move_list_from_origin).and_return(target_list)
+        allow(display).to receive(:move_choice_prompt)
+        allow(move_list_interface).to receive(:gets).and_return('back')
+      end
+      it 'sends #print to self with ansi sequence to delete 4 lines' do
+        expected_ansi_code = "\r#{"\e[A\e" * 4}\e[J"
+        expect(move_list_interface).to receive(:print).with(expected_ansi_code)
+        move_list_interface.move_selection
+      end
+    end
+
     context 'when the target input is invalid once and then valid' do
       let(:user_input) { 'E2' }
       let(:user_target) { 'E4' }

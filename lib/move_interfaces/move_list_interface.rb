@@ -18,7 +18,13 @@ class MoveListInterface < MoveInterface
     loop do
       display.move_choice_prompt(move_list)
       target_input = gets.upcase.gsub(/[[:space:]]/, '')
+      return delete_last_four_lines if target_input == 'BACK'
+
       return target_input if valid_target?(target_input, move_list)
     end
+  end
+
+  def delete_last_four_lines
+    print "\r#{"\e[A\e" * 4}\e[J"
   end
 end
