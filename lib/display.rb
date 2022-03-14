@@ -30,8 +30,11 @@ class Display
   end
 
   def move_choice_prompt(move_list)
-    puts "The available moves for this piece are #{move_list}"
-    puts 'Choose one'
+    display_list = array_to_readable_list(move_list)
+    puts <<~HEREDOC
+      The available moves for this piece are #{display_list}
+      Choose one >>
+    HEREDOC
   end
 
   def checkmate_message(loser, winner)
@@ -61,5 +64,18 @@ class Display
     }[message])
     sleep(2.5)
     print "\e[2K\r\e[A\e[2K"
+  end
+
+  private
+
+  def array_to_readable_list(array)
+    case array.size
+    when 1
+      array.join
+    when 2
+      array.join(' and ')
+    else
+      [array[0..-2].join(', '), array.last].join(', and ')
+    end
   end
 end
