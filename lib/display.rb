@@ -53,6 +53,14 @@ class Display
     HEREDOC
   end
 
+  def fifty_move_rule_message
+    puts <<~HEREDOC
+      It has been fifty moves since the last pawn advance
+      or piece capture. This activates the 'fifty move rule',
+      and the game will end in a draw.
+    HEREDOC
+  end
+
   def promotion_message(player)
     puts <<~HEREDOC
       #{player}: your pawn has reached the back rank! It can now promote to a new piece.
