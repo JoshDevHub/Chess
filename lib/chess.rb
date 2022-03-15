@@ -6,16 +6,29 @@ class Chess
 
   attr_reader :display
 
-  def initialize(fen_string = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
-    fen = FEN.new(fen_string, Piece)
-    @chess_board = Board.from_fen(fen_data: fen.piece_info, square: Square)
-    @player_white = Player.new(color: 'white')
-    @player_black = Player.new(color: 'black')
+  # rubocop: disable Metrics/ParameterLists
+  def initialize(
+    fen_parser: FEN,
+    board: Board,
+    castle_manager: CastleManager,
+    piece: Piece,
+    square: Square,
+    display: Display.new,
+    move_interface: MoveInterface,
+    player_white: Player.new(color: 'white'),
+    player_black: Player.new(color: 'black'),
+    fen_string: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+  )
+    fen = fen_parser.new(fen_string, piece)
+    @chess_board = board.from_fen(fen_data: fen.piece_info, square: square)
+    @player_white = player_white
+    @player_black = player_black
     @active_player = fen.active_color == 'white' ? @player_white : @player_black
-    @display = Display.new
-    @move_interface = MoveInterface
-    @castle_manager = CastleManager.new(castle_options: fen.castle_info)
+    @display = display
+    @move_interface = move_interface
+    @castle_manager = castle_manager.new(castle_options: fen.castle_info)
   end
+  # rubocop: enable Metrics/ParameterLists
 
   # rubocop: disable Metrics/MethodLength
   # rubocop: disable Metrics/AbcSize
