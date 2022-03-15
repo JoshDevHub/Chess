@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../lib/coordinate'
+require_relative '../lib/colorize_output'
 require_relative '../lib/square'
 require_relative '../lib/piece'
 require_relative '../lib/pieces/null_piece'
@@ -110,6 +111,54 @@ describe Square do
           expected_output = "#{purple_bg_code}#{piece_string}#{black_fg_code}"
           expect(square.to_s).to eq(expected_output)
         end
+      end
+    end
+  end
+
+  describe '#to_string_with_moves' do
+    context 'when the square name is not in the move list' do
+      subject(:square) { described_class.new(name: 'A1') }
+      let(:move_list) { %w[E1 E2 E3 A2] }
+      it 'sends #to_s to self' do
+        expect(square).to receive(:to_s)
+        square.to_string_with_moves(move_list)
+      end
+    end
+
+    context 'when the square name is in the given move list' do
+      context 'when the square is unoccupied' do
+        context 'when the square is a dark square' do
+          subject(:square) { described_class.new(name: 'A1') }
+          let(:move_list) { ['A1'] }
+          it 'returns a black bullet unicode surrounded by two spaces and a purple bg color' do
+            expected_output = "\e[48;2;136;119;183m\e[30m • \e[0m\e[0m"
+            expect(square.to_string_with_moves(move_list)).to eq(expected_output)
+          end
+        end
+
+        context 'when the square is a light square' do
+          subject(:square) { described_class.new(name: 'A1') }
+          let(:move_list) { ['A2'] }
+          it 'returns a black bullet unicode surrounded by two spaces and a gray bg color' do
+            expected_output = "\e[48;2;136;119;183m\e[30m   \e[0m\e[0m"
+            expect(square.to_string_with_moves(move_list)).to eq(expected_output)
+          end
+        end
+      end
+    end
+
+    context 'when the square is occupied' do
+      subject(:square) { described_class.new(name: 'A1', piece: piece) }
+      let(:move_list) { ['A1'] }
+      it 'sends #to_s to piece' do
+        expect(piece).to receive(:to_s)
+        square.to_string_with_moves(move_list)
+      end
+
+      it 'sends #bg_red to self with the piece string' do
+        piece_string = "\e[30mpiece\e[0m"
+        expect(square).to receive(:bg_red).with(piece_string)
+        square.to_string_with_moves(move_list)
       end
     end
   end

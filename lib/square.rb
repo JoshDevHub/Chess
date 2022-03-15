@@ -3,6 +3,7 @@
 # class for representing the cells contained on a chess board
 class Square
   include Coordinate
+  include ColorizeOutput
 
   attr_reader :name
 
@@ -16,10 +17,21 @@ class Square
     @piece ||= @null_piece
   end
 
-  def to_s
+  def to_s(_move_list = nil)
     string = piece.to_s
-    darken_string = fg_black(string)
-    bg_color(darken_string)
+    bg_color(fg_black(string))
+  end
+
+  def to_string_with_moves(move_list)
+    if move_list.none?(name)
+      to_s
+    elsif unoccupied?
+      string = " \u2022 "
+      bg_color(fg_black(string))
+    else
+      string = piece.to_s
+      bg_red(fg_black(string))
+    end
   end
 
   def unoccupied?
@@ -48,18 +60,6 @@ class Square
 
   def bg_color(string)
     x_coord, y_coord = to_xy_coordinate(name)
-    (x_coord + y_coord).even? ? bg_gray(string) : bg_magenta(string)
-  end
-
-  def fg_black(string)
-    "\e[30m#{string}\e[0m"
-  end
-
-  def bg_gray(string)
-    "\e[47m#{string}\e[0m"
-  end
-
-  def bg_magenta(string)
-    "\e[48;2;136;119;183m#{string}\e[0m"
+    (x_coord + y_coord).even? ? bg_gray(string) : bg_purple(string)
   end
 end
