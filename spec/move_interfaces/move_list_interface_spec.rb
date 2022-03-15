@@ -48,8 +48,8 @@ describe MoveListInterface do
         move_list_interface.move_selection
       end
 
-      it 'sends #move_choice_prompt to display' do
-        expect(display).to receive(:move_choice_prompt)
+      it 'sends #move_choice_prompt to display with board and move_list' do
+        expect(display).to receive(:move_choice_prompt).with(board, target_list)
         move_list_interface.move_selection
       end
 
@@ -80,10 +80,8 @@ describe MoveListInterface do
         allow(display).to receive(:delete_display_lines)
         allow(move_list_interface).to receive(:gets).and_return('back')
       end
-      it 'sends #delete_display_lines to display with the number 4' do
-        lines_to_delete = 4
-        expect(display).to receive(:delete_display_lines).with(lines_to_delete)
-        move_list_interface.move_selection
+      it 'returns nil' do
+        expect(move_list_interface.move_selection).to be(nil)
       end
     end
 
@@ -104,8 +102,8 @@ describe MoveListInterface do
         move_list_interface.move_selection
       end
 
-      it 'sends #move_choice_prompt to display' do
-        expect(display).to receive(:move_choice_prompt)
+      it 'sends #move_choice_prompt to display with board and target_list' do
+        expect(display).to receive(:move_choice_prompt).with(board, target_list)
         move_list_interface.move_selection
       end
 

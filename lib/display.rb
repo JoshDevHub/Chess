@@ -8,6 +8,7 @@ class Display
   end
 
   def print_board(board)
+    system('clear')
     puts "\n\n"
     puts board
     puts "\n"
@@ -31,7 +32,11 @@ class Display
     HEREDOC
   end
 
-  def move_choice_prompt(move_list)
+  def move_choice_prompt(board, move_list)
+    system('clear')
+    puts "\n\n"
+    puts board.to_s(:to_string_with_moves, move_list)
+    puts "\n"
     display_list = array_to_readable_list(move_list)
     puts <<~HEREDOC
       The available moves for this piece are #{display_list}

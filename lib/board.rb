@@ -33,8 +33,8 @@ class Board
     @game_board.flatten.find { |square| square_name == square.name }
   end
 
-  def to_s
-    board_array = @game_board.flatten.map(&:to_s)
+  def to_s(square_display_method = :to_s, move_list = nil)
+    board_array = @game_board.flatten.map { |square| square.send(square_display_method, move_list) }
     board_string = ''
     board_array.each_slice(WIDTH).with_index do |row, i|
       board_string += "#{RANK_NAMES[i].rjust(4)}|#{row.join}|\n"

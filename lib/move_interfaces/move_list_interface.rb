@@ -15,13 +15,11 @@ class MoveListInterface < MoveInterface
   private
 
   def user_target_input(move_list)
-    display.move_choice_prompt(move_list)
+    display.move_choice_prompt(board, move_list)
     loop do
       target_input = gets.upcase.gsub(/[[:space:]]/, '')
-      if target_input == 'BACK'
-        display.delete_display_lines(4)
-        return
-      end
+      return if target_input == 'BACK'
+
       return target_input if valid_target?(target_input, move_list)
     end
   end
