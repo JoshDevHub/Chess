@@ -33,6 +33,10 @@ class WhitePawn < Piece
     position[1] == '8'
   end
 
+  def move_resets_clock?
+    true
+  end
+
   private
 
   def double_move?

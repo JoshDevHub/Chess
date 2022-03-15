@@ -192,4 +192,11 @@ describe WhitePawn do
       end
     end
   end
+
+  describe '#move_resets_clock?' do
+    let(:square) { 'E2' }
+    it 'returns true' do
+      expect(white_pawn.move_resets_clock?).to be(true)
+    end
+  end
 end

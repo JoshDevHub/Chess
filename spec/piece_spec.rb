@@ -124,4 +124,11 @@ describe Piece do
       expect(generic_piece.disable_castle_rights(dummy_castler)).to be(nil)
     end
   end
+
+  describe '#move_resets_clock?' do
+    subject(:generic_piece) { described_class.new(color: 'white', position: 'A1') }
+    it 'returns false' do
+      expect(generic_piece.move_resets_clock?).to be(false)
+    end
+  end
 end

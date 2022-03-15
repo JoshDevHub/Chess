@@ -192,4 +192,11 @@ describe BlackPawn do
       end
     end
   end
+
+  describe '#move_resets_clock?' do
+    let(:square) { 'E7' }
+    it 'returns true' do
+      expect(black_pawn.move_resets_clock?).to be(true)
+    end
+  end
 end

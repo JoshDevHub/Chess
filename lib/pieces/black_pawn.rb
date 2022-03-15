@@ -33,6 +33,10 @@ class BlackPawn < Piece
     position[1] == '1'
   end
 
+  def move_resets_clock?
+    true
+  end
+
   private
 
   def double_move?

@@ -73,6 +73,10 @@ class Piece
     nil
   end
 
+  def move_resets_clock?
+    false
+  end
+
   def absent?
     false
   end
