@@ -17,7 +17,7 @@ class Display
   def check_message(player)
     puts <<~HEREDOC
       #{player}, your king is under attack!
-      You next move must escape check.\n\n
+      You next move must escape check.\n
     HEREDOC
   end
 
@@ -40,7 +40,7 @@ class Display
     display_list = array_to_readable_list(move_list)
     puts <<~HEREDOC
       The available moves for this piece are #{display_list}
-      Choose one or type 'back' to exit and choose another piece >>
+      Choose a move or type 'back' to exit and choose another piece >>
     HEREDOC
   end
 
