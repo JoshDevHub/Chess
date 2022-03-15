@@ -27,6 +27,8 @@ class Chess
     @display = display
     @move_interface = move_interface
     @castle_manager = castle_manager.new(castle_options: fen.castle_info)
+    @full_move_clock = fen.full_move_clock
+    @half_move_clock = fen.half_move_clock
   end
   # rubocop: enable Metrics/ParameterLists
 
@@ -43,9 +45,10 @@ class Chess
       origin, target = active_player_move.values
       moving_piece = @chess_board.access_square(origin).piece
       @castle_manager.handle_castling(moving_piece, target, @chess_board) if piece_can_affect_castling?(moving_piece)
-      @chess_board.move_piece(origin, target)
+      captured_piece = @chess_board.move_piece(origin, target)
       promotion_script(target)
       toggle_turns
+      control_clocks(moving_piece, captured_piece)
     end
   end
   # rubocop: enable Metrics/MethodLength
@@ -72,6 +75,8 @@ class Chess
       display.checkmate_message(active_color, inactive_color)
     elsif @chess_board.stalemate?(active_color)
       display.stalemate_message(active_color)
+    elsif @half_move_clock >= 50
+      display.fifty_move_rule_message
     else
       true
     end
@@ -93,6 +98,15 @@ class Chess
       return user_input if %w[Q R B N].include?(user_input)
 
       display.input_error_message(:invalid_promotion_piece)
+    end
+  end
+
+  def control_clocks(moving_piece, captured_piece)
+    @full_move_clock += 1 if active_color == 'white'
+    if moving_piece.move_resets_clock? || !captured_piece.absent?
+      @half_move_clock = 0
+    else
+      @half_move_clock += 1
     end
   end
 
