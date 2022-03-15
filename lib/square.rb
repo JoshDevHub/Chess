@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'colorize_output'
+
 # class for representing the cells contained on a chess board
 class Square
   include Coordinate
