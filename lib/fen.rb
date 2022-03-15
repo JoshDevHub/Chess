@@ -12,7 +12,7 @@ class FEN
   end
 
   def piece_info
-    info = fen_string.split(' ')[0].chars.map(&empty_expand).join('').split('/')
+    info = fen_string.split[0].chars.map(&empty_expand).join.split('/')
     info.each_with_object([]).with_index do |(rank, pieces), y_coord|
       row_info = parse_ranks(rank, y_coord)
       pieces.concat(row_info)
@@ -20,7 +20,7 @@ class FEN
   end
 
   def active_color
-    color_info = fen_string.split(' ')[1]
+    color_info = fen_string.split[1]
     color_info == 'w' ? 'white' : 'black'
   end
 
@@ -34,24 +34,24 @@ class FEN
   end
 
   def en_passant_target
-    en_passant_square = fen_string.split(' ')[3].upcase
+    en_passant_square = fen_string.split[3].upcase
     en_passant_square unless en_passant_square == '-'
   end
 
   def half_move_clock
-    clock = fen_string.split(' ')[4]
+    clock = fen_string.split[4]
     clock.to_i
   end
 
   def full_move_clock
-    clock = fen_string.split(' ')[5]
+    clock = fen_string.split[5]
     clock.to_i
   end
 
   private
 
   def castle_string
-    fen_string.split(' ')[2]
+    fen_string.split[2]
   end
 
   def parse_ranks(rank, y_coord)
