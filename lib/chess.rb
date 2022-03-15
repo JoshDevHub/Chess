@@ -46,6 +46,7 @@ class Chess
       moving_piece = @chess_board.access_square(origin).piece
       @castle_manager.handle_castling(moving_piece, target, @chess_board) if piece_can_affect_castling?(moving_piece)
       captured_piece = @chess_board.move_piece(origin, target)
+      captured_piece.disable_castle_rights(@castle_manager)
       promotion_script(target)
       toggle_turns
       control_clocks(moving_piece, captured_piece)
