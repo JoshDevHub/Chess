@@ -94,7 +94,9 @@ class Board
   def execute_move(piece, target)
     piece.move_position(target)
     target_square = access_square(target)
+    captured_piece = target_square.piece
     target_square.add_piece(piece)
+    captured_piece
   end
 
   def find_king(color)

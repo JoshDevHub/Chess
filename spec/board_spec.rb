@@ -90,6 +90,7 @@ describe Board do
 
   describe '#move_piece' do
     let(:piece) { instance_double(Piece, define_en_passant_square: nil) }
+    let(:target_piece) { instance_double(Piece) }
     subject(:game_board) { described_class.new(square_class) }
     context 'when the square is unoccupied' do
       let(:origin) { 'A1' }
@@ -109,7 +110,7 @@ describe Board do
         let(:origin) { 'A1' }
         let(:target) { 'B1' }
         let(:origin_square) { instance_double(Square, unoccupied?: false, remove_piece: piece) }
-        let(:target_square) { instance_double(Square, add_piece: nil) }
+        let(:target_square) { instance_double(Square, piece: target_piece, add_piece: nil) }
         before do
           allow(game_board).to receive(:access_square).with(origin).and_return(origin_square)
           allow(game_board).to receive(:access_square).with(target).and_return(target_square)
@@ -135,13 +136,17 @@ describe Board do
           expect(target_square).to receive(:add_piece).with(piece)
           game_board.move_piece(origin, target)
         end
+
+        it 'returns the piece at the target square' do
+          expect(game_board.move_piece(origin, target)).to be(target_piece)
+        end
       end
 
       context 'when the piece does set an en passant target square' do
         let(:origin) { 'E2' }
         let(:target) { 'E4' }
         let(:origin_square) { instance_double(Square, unoccupied?: false, remove_piece: piece) }
-        let(:target_square) { instance_double(Square, add_piece: nil) }
+        let(:target_square) { instance_double(Square, piece: target_piece, add_piece: nil) }
         before do
           allow(game_board).to receive(:access_square).with(origin).and_return(origin_square)
           allow(game_board).to receive(:access_square).with(target).and_return(target_square)
@@ -173,6 +178,10 @@ describe Board do
           expect(target_square).to receive(:add_piece).with(piece)
           game_board.move_piece(origin, target)
         end
+
+        it 'returns the piece at the target square' do
+          expect(game_board.move_piece(origin, target)).to be(target_piece)
+        end
       end
 
       context 'when the piece takes an opponent piece with en passant' do
@@ -181,7 +190,7 @@ describe Board do
         let(:capture_square) { 'D4' }
         let(:piece) { instance_double(Piece, color: 'black') }
         let(:origin_square) { instance_double(Square, unoccupied?: false, remove_piece: piece) }
-        let(:target_square) { instance_double(Square, add_piece: nil) }
+        let(:target_square) { instance_double(Square, piece: target_piece, add_piece: nil) }
         let(:capture_square) { instance_double(Square, name: 'D4', remove_piece: nil) }
         before do
           allow(game_board).to receive(:access_square).with(origin).and_return(origin_square)
@@ -216,6 +225,10 @@ describe Board do
         it 'sends #remove_piece to the capture square' do
           expect(capture_square).to receive(:remove_piece)
           game_board.move_piece(origin, target)
+        end
+
+        it 'returns the piece at the target square' do
+          expect(game_board.move_piece(origin, target)).to be(target_piece)
         end
       end
     end
