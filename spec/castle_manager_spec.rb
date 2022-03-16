@@ -476,4 +476,67 @@ describe CastleManager do
       end
     end
   end
+
+  describe '#to_fen' do
+    subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
+    context 'when all castling options are possible' do
+      let(:castle_opts) do
+        {
+          white_king_side: true,
+          white_queen_side: true,
+          black_king_side: true,
+          black_queen_side: true
+        }
+      end
+      it "returns the string 'KQkq'" do
+        expected_string = 'KQkq'
+        expect(castle_manager.to_fen).to eq(expected_string)
+      end
+    end
+
+    context 'when black cannot castle at all' do
+      let(:castle_opts) do
+        {
+          white_king_side: true,
+          white_queen_side: true,
+          black_king_side: false,
+          black_queen_side: false
+        }
+      end
+      it "returns the string 'KQ'" do
+        expected_string = 'KQ'
+        expect(castle_manager.to_fen).to eq(expected_string)
+      end
+    end
+
+    context 'when neither color can castle queen side' do
+      let(:castle_opts) do
+        {
+          white_king_side: true,
+          white_queen_side: false,
+          black_king_side: true,
+          black_queen_side: false
+        }
+      end
+      it "returns the string 'Kk'" do
+        expected_string = 'Kk'
+        expect(castle_manager.to_fen).to eq(expected_string)
+      end
+    end
+
+    context 'when no castling is possible' do
+      let(:castle_opts) do
+        {
+          white_king_side: false,
+          white_queen_side: false,
+          black_king_side: false,
+          black_queen_side: false
+        }
+      end
+      it "returns the string '-'" do
+        expected_string = '-'
+        expect(castle_manager.to_fen).to eq(expected_string)
+      end
+    end
+  end
 end

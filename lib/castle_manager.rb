@@ -38,6 +38,19 @@ class CastleManager
     piece.disable_castle_rights(self)
   end
 
+  def to_fen
+    return '-' if @castle_options.values.none?
+
+    fen_string = ''
+    {
+      white_king_side: 'K',
+      white_queen_side: 'Q',
+      black_king_side: 'k',
+      black_queen_side: 'q'
+    }.each_pair { |key, value| fen_string += value if @castle_options[key] }
+    fen_string
+  end
+
   private
 
   def rook_castle_move_map
