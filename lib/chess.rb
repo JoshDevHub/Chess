@@ -41,7 +41,7 @@ class Chess
       display.print_board(@chess_board)
       break unless continue_game?
 
-      display.check_message(@active_player) if @chess_board.in_check?(active_color)
+      turn_prompt
       origin, target = active_player_move.values
       moving_piece = @chess_board.access_square(origin).piece
       @castle_manager.handle_castling(moving_piece, target, @chess_board) if piece_can_affect_castling?(moving_piece)
@@ -55,6 +55,11 @@ class Chess
   # rubocop: enable Metrics/MethodLength
   # rubocop: enable Metrics/AbcSize
 
+  def turn_prompt
+    display.check_message(@active_player) if @chess_board.in_check?(active_color)
+    display.initial_input_prompt(@active_player)
+  end
+
   def active_player_move
     display.initial_input_prompt(@active_player)
     loop do
@@ -63,6 +68,9 @@ class Chess
                          user_input: input, castle_manager: @castle_manager }
       move = @move_interface.for_input(**interface_args).move_selection
       return move if move
+
+      display.print_board(@chess_board)
+      turn_prompt
     end
   end
 
