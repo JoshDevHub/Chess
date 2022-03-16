@@ -44,6 +44,7 @@ class Board
   end
 
   # rubocop: disable Metrics/MethodLength
+  # rubocop: disable Metrics/AbcSize
   def to_fen
     @game_board.reduce('') do |fen_string, rank|
       empty_counter = 0
@@ -53,6 +54,7 @@ class Board
           empty_counter += 1
         else
           fen_string += empty_counter.to_s if empty_counter.positive?
+          empty_counter = 0
           fen_string += fen_for_piece
         end
       end
@@ -61,6 +63,7 @@ class Board
     end[0..-2]
   end
   # rubocop: enable Metrics/MethodLength
+  # rubocop: enable Metrics/AbcSize
 
   def move_list_from_origin(origin, castle_manager)
     square = access_square(origin)
