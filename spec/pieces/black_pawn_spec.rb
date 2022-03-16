@@ -199,4 +199,12 @@ describe BlackPawn do
       expect(black_pawn.move_resets_clock?).to be(true)
     end
   end
+
+  describe '#to_fen' do
+    let(:square) { 'A7' }
+    it "it returns the string 'p'" do
+      expected_string = 'p'
+      expect(black_pawn.to_fen).to eq(expected_string)
+    end
+  end
 end

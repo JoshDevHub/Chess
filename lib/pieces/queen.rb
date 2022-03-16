@@ -7,9 +7,7 @@ class Queen < Piece
     @name = 'queen'
   end
 
-  def self.handles_notation?(char)
-    %w[Q q].include?(char)
-  end
+  FEN_CHARS = { white: 'Q', black: 'q' }.freeze
 
   def moves
     [DiagonalLineMove, CardinalLineMove]

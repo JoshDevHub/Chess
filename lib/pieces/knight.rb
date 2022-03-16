@@ -7,9 +7,7 @@ class Knight < Piece
     @name = 'knight'
   end
 
-  def self.handles_notation?(char)
-    %w[N n].include?(char)
-  end
+  FEN_CHARS = { white: 'N', black: 'n' }.freeze
 
   def moves
     [KnightMoves]

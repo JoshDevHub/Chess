@@ -8,10 +8,10 @@ require_relative '../../lib/move'
 require_relative '../../lib/moves/diagonal_line_move'
 
 describe Bishop do
-  subject(:bishop) { described_class.new(color: 'white', position: square) }
-  let(:board) { instance_double(Board) }
-  let(:diagonal_move_instance) { instance_double(DiagonalLineMove) }
   describe '#move_list' do
+    subject(:bishop) { described_class.new(color: 'white', position: square) }
+    let(:board) { instance_double(Board) }
+    let(:diagonal_move_instance) { instance_double(DiagonalLineMove) }
     let(:square) { 'C8' }
     before do
       allow(DiagonalLineMove).to receive(:new).and_return(diagonal_move_instance)
@@ -26,6 +26,25 @@ describe Bishop do
     it 'sends #generate_moves to the DiagonalLineMove instance' do
       expect(diagonal_move_instance).to receive(:generate_moves)
       bishop.move_list(board)
+    end
+  end
+
+  describe '#to_fen' do
+    let(:square) { 'A1' }
+    context 'when the bishop is white' do
+      subject(:bishop) { described_class.new(color: 'white', position: square) }
+      it "returns the string 'B'" do
+        expected_string = 'B'
+        expect(bishop.to_fen).to eq(expected_string)
+      end
+    end
+
+    context 'when the bishop is black' do
+      subject(:bishop) { described_class.new(color: 'black', position: square) }
+      it "returns the string 'b'" do
+        expected_string = 'b'
+        expect(bishop.to_fen).to eq(expected_string)
+      end
     end
   end
 end

@@ -7,9 +7,7 @@ class Bishop < Piece
     @name = 'bishop'
   end
 
-  def self.handles_notation?(char)
-    %w[B b].include?(char)
-  end
+  FEN_CHARS = { white: 'B', black: 'b' }.freeze
 
   def moves
     [DiagonalLineMove]

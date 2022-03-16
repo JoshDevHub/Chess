@@ -16,6 +16,11 @@ class Piece
   end
 
   COLORS = %w[white black].freeze
+  FEN_CHARS = {}.freeze
+
+  def self.handles_notation?(char)
+    self::FEN_CHARS.values.include?(char)
+  end
 
   def moves
     []
@@ -79,6 +84,10 @@ class Piece
 
   def absent?
     false
+  end
+
+  def to_fen
+    self.class::FEN_CHARS[color.to_sym]
   end
 
   private

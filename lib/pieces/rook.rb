@@ -7,9 +7,7 @@ class Rook < Piece
     @name = 'rook'
   end
 
-  def self.handles_notation?(char)
-    %w[R r].include?(char)
-  end
+  FEN_CHARS = { white: 'R', black: 'r' }.freeze
 
   def moves
     [CardinalLineMove]

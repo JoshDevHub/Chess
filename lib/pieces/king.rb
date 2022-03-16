@@ -7,9 +7,7 @@ class King < Piece
     @name = 'king'
   end
 
-  def self.handles_notation?(char)
-    %w[K k].include?(char)
-  end
+  FEN_CHARS = { white: 'K', black: 'k' }.freeze
 
   def moves
     [KingMove, KingSideCastle, QueenSideCastle]

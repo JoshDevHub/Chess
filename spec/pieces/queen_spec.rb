@@ -9,11 +9,11 @@ require_relative '../../lib/moves/diagonal_line_move'
 require_relative '../../lib/moves/cardinal_line_move'
 
 describe Queen do
-  subject(:queen) { described_class.new(color: 'white', position: square) }
-  let(:board) { instance_double(Board) }
-  let(:diagonal_move_instance) { instance_double(DiagonalLineMove) }
-  let(:cardinal_move_instance) { instance_double(CardinalLineMove) }
   describe '#move_list' do
+    subject(:queen) { described_class.new(color: 'white', position: square) }
+    let(:board) { instance_double(Board) }
+    let(:diagonal_move_instance) { instance_double(DiagonalLineMove) }
+    let(:cardinal_move_instance) { instance_double(CardinalLineMove) }
     let(:square) { 'D1' }
     before do
       allow(DiagonalLineMove).to receive(:new).and_return(diagonal_move_instance)
@@ -41,6 +41,25 @@ describe Queen do
     it 'sends #generate_moves to the CardinalLineMove instance' do
       expect(cardinal_move_instance).to receive(:generate_moves)
       queen.move_list(board)
+    end
+  end
+
+  describe '#to_fen' do
+    subject(:queen) { described_class.new(color: color, position: 'E4') }
+    context 'when the queen is white' do
+      let(:color) { 'white' }
+      it "returns the string 'Q'" do
+        expected_string = 'Q'
+        expect(queen.to_fen).to eq(expected_string)
+      end
+    end
+
+    context 'when the queen is black' do
+      let(:color) { 'black' }
+      it "returns the string 'q'" do
+        expected_string = 'q'
+        expect(queen.to_fen).to eq(expected_string)
+      end
     end
   end
 end

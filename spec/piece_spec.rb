@@ -131,4 +131,11 @@ describe Piece do
       expect(generic_piece.move_resets_clock?).to be(false)
     end
   end
+
+  describe '#to_fen' do
+    subject(:generic_piece) { described_class.new(color: 'white', position: 'A1') }
+    it 'returns nil' do
+      expect(generic_piece.to_fen).to be(nil)
+    end
+  end
 end

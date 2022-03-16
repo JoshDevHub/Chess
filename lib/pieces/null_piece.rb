@@ -38,4 +38,8 @@ class NullPiece < Piece
   def absent?
     true
   end
+
+  def to_fen
+    nil
+  end
 end

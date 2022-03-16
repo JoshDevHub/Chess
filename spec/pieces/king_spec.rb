@@ -213,4 +213,22 @@ describe King do
       end
     end
   end
+
+  describe '#to_fen' do
+    context 'when the king is white' do
+      subject(:white_king) { described_class.new(color: 'white', position: 'E1') }
+      it "returns the string 'K'" do
+        expected_string = 'K'
+        expect(white_king.to_fen).to eq(expected_string)
+      end
+    end
+
+    context 'when the king is black' do
+      subject(:white_king) { described_class.new(color: 'black', position: 'E1') }
+      it "returns the string 'k'" do
+        expected_string = 'k'
+        expect(white_king.to_fen).to eq(expected_string)
+      end
+    end
+  end
 end

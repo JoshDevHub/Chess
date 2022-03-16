@@ -199,4 +199,12 @@ describe WhitePawn do
       expect(white_pawn.move_resets_clock?).to be(true)
     end
   end
+
+  describe '#to_fen' do
+    let(:square) { 'E2' }
+    it "returns the string 'P'" do
+      expected_string = 'P'
+      expect(white_pawn.to_fen).to eq(expected_string)
+    end
+  end
 end

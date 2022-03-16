@@ -7,9 +7,7 @@ class BlackPawn < Piece
     @name = 'pawn'
   end
 
-  def self.handles_notation?(char)
-    char == 'p'
-  end
+  FEN_CHARS = { black: 'p' }.freeze
 
   def moves
     list = [BlackPawnAdvance, BlackPawnCapture]

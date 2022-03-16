@@ -170,4 +170,23 @@ describe Rook do
       end
     end
   end
+
+  describe '#to_fen' do
+    subject(:rook) { described_class.new(color: color, position: 'E4') }
+    context 'when the rook is white' do
+      let(:color) { 'white' }
+      it "returns the string 'R'" do
+        expected_string = 'R'
+        expect(rook.to_fen).to eq(expected_string)
+      end
+    end
+
+    context 'when the rook is black' do
+      let(:color) { 'black' }
+      it "returns the string 'r'" do
+        expected_string = 'r'
+        expect(rook.to_fen).to eq(expected_string)
+      end
+    end
+  end
 end

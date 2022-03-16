@@ -63,4 +63,10 @@ describe NullPiece do
       expect(null_piece.absent?).to be(true)
     end
   end
+
+  describe '#to_fen' do
+    it 'returns nil' do
+      expect(null_piece.to_fen).to be(nil)
+    end
+  end
 end
