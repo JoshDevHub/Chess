@@ -43,6 +43,25 @@ class Board
     board_string
   end
 
+  # rubocop: disable Metrics/MethodLength
+  def to_fen
+    @game_board.reduce('') do |fen_string, rank|
+      empty_counter = 0
+      rank.each do |square|
+        fen_for_piece = square.piece.to_fen
+        if fen_for_piece.nil?
+          empty_counter += 1
+        else
+          fen_string += empty_counter.to_s if empty_counter.positive?
+          fen_string += fen_for_piece
+        end
+      end
+      fen_string += empty_counter.to_s if empty_counter.positive?
+      fen_string += '/'
+    end[0..-2]
+  end
+  # rubocop: enable Metrics/MethodLength
+
   def move_list_from_origin(origin, castle_manager)
     square = access_square(origin)
     piece_to_move = square.piece

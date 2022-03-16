@@ -64,6 +64,16 @@ describe Board do
     end
   end
 
+  describe '#to_fen' do
+    context 'when the board is empty' do
+      subject(:game_board) { described_class.new(Square) }
+      it "returns the string '8/8/8/8/8/8/8/8'" do
+        expected_output = '8/8/8/8/8/8/8/8'
+        expect(game_board.to_fen).to eq(expected_output)
+      end
+    end
+  end
+
   describe '#move_list_from_origin' do
     subject(:game_board) { described_class.new(Square) }
     let(:origin_square) { instance_double(Square) }
