@@ -91,10 +91,4 @@ class Piece
   def to_fen
     self.class::FEN_CHARS[color.to_sym]
   end
-
-  private
-
-  def double_move?
-    false
-  end
 end
