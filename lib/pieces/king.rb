@@ -8,13 +8,10 @@ class King < Piece
   end
 
   FEN_CHARS = { white: 'K', black: 'k' }.freeze
+  UNICODES = { white: "\u2654", black: "\u265A" }.freeze
 
   def moves
     [KingMove, KingSideCastle, QueenSideCastle]
-  end
-
-  def to_s
-    color == 'white' ? " \u2654 " : " \u265A "
   end
 
   def involved_in_castling?

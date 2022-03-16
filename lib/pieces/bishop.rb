@@ -8,12 +8,9 @@ class Bishop < Piece
   end
 
   FEN_CHARS = { white: 'B', black: 'b' }.freeze
+  UNICODES = { white: "\u2657", black: "\u265D" }.freeze
 
   def moves
     [DiagonalLineMove]
-  end
-
-  def to_s
-    color == 'white' ? " \u2657 " : " \u265D "
   end
 end

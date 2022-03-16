@@ -8,12 +8,9 @@ class Knight < Piece
   end
 
   FEN_CHARS = { white: 'N', black: 'n' }.freeze
+  UNICODES = { white: "\u2658", black: "\u265E" }.freeze
 
   def moves
     [KnightMoves]
-  end
-
-  def to_s
-    color == 'white' ? " \u2658 " : " \u265E "
   end
 end

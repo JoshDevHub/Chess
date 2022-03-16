@@ -17,6 +17,7 @@ class Piece
 
   COLORS = %w[white black].freeze
   FEN_CHARS = {}.freeze
+  UNICODES = {}.freeze
 
   def self.handles_notation?(char)
     self::FEN_CHARS.values.include?(char)
@@ -34,7 +35,8 @@ class Piece
   end
 
   def to_s
-    "#{color} #{name}"
+    unicode_char = self.class::UNICODES[color.to_sym]
+    " #{unicode_char} "
   end
 
   def opponent_color

@@ -8,6 +8,7 @@ class Rook < Piece
   end
 
   FEN_CHARS = { white: 'R', black: 'r' }.freeze
+  UNICODES = { white: "\u2656", black: "\u265C" }.freeze
 
   def moves
     [CardinalLineMove]

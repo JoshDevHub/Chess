@@ -8,15 +8,12 @@ class WhitePawn < Piece
   end
 
   FEN_CHARS = { white: 'P' }.freeze
+  UNICODES = { white: "\u2659" }.freeze
 
   def moves
     list = [WhitePawnAdvance, WhitePawnCapture]
     list << WhitePawnDoubleAdvance if double_move?
     list
-  end
-
-  def to_s
-    " \u2659 "
   end
 
   def define_en_passant_square(move)

@@ -8,12 +8,9 @@ class Queen < Piece
   end
 
   FEN_CHARS = { white: 'Q', black: 'q' }.freeze
+  UNICODES = { white: "\u2655", black: "\u265B" }.freeze
 
   def moves
     [DiagonalLineMove, CardinalLineMove]
-  end
-
-  def to_s
-    color == 'white' ? " \u2655 " : " \u265B "
   end
 end

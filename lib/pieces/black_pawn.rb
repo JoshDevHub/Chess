@@ -8,15 +8,12 @@ class BlackPawn < Piece
   end
 
   FEN_CHARS = { black: 'p' }.freeze
+  UNICODES = { black: "\u265F" }.freeze
 
   def moves
     list = [BlackPawnAdvance, BlackPawnCapture]
     list << BlackPawnDoubleAdvance if double_move?
     list
-  end
-
-  def to_s
-    " \u265F "
   end
 
   def define_en_passant_square(move)

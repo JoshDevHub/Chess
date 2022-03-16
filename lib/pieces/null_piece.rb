@@ -11,6 +11,9 @@ class NullPiece < Piece
   end
   # rubocop: enable Lint/MissingSuper
 
+  FEN_CHARS = {}.freeze
+  UNICODES = {}.freeze
+
   def self.handles_notation?(char)
     char == '.'
   end
