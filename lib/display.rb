@@ -2,6 +2,8 @@
 
 # class for managing command-line output/visuals
 class Display
+  include ColorizeOutput
+
   def introduction
     system('clear')
     puts <<~HEREDOC
@@ -71,7 +73,7 @@ class Display
     puts "\n"
     display_list = array_to_readable_list(move_list)
     puts <<~HEREDOC
-      The available moves for this piece are #{display_list}
+      The available moves for this piece are #{fg_yellow(display_list)}
       Choose a move or type 'back' to exit and choose another piece >>
     HEREDOC
   end
@@ -86,7 +88,7 @@ class Display
   def stalemate_message(player)
     puts <<~HEREDOC
       #{player} has no legal moves but is not in check.
-      This is a stalemat, and the game ends in a draw.
+      This is a stalemate, and the game ends in a draw.
     HEREDOC
   end
 

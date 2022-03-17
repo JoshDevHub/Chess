@@ -19,4 +19,8 @@ module ColorizeOutput
   def fg_black(string)
     "\e[30m#{string}\e[0m"
   end
+
+  def fg_yellow(string)
+    "\e[38;2;241;250;140m#{string}\e[0m"
+  end
 end
