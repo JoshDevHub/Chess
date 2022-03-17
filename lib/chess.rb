@@ -24,7 +24,7 @@ class Chess
     @chess_board = board.from_fen(fen_data: fen.piece_info, square: square)
     @player_white = player_white
     @player_black = player_black
-    @active_player = fen.active_color == 'white' ? @player_white : @player_black
+    @active_color = fen.active_color
     @display = display
     @move_interface = move_interface
     @castle_manager = castle_manager.new(castle_options: fen.castle_info)
@@ -57,15 +57,15 @@ class Chess
   # rubocop: enable Metrics/AbcSize
 
   def turn_prompt
-    display.check_message(@active_player) if @chess_board.in_check?(active_color)
-    display.initial_input_prompt(@active_player)
+    display.check_message(active_player) if @chess_board.in_check?(@active_color)
+    display.initial_input_prompt(active_player)
   end
 
   def active_player_move
     loop do
       input = gets.upcase.gsub(/[[:space:]]/, '')
       handle_save_input if input == 'SAVE'
-      interface_args = { board: @chess_board, display: display, active_color: active_color,
+      interface_args = { board: @chess_board, display: display, active_color: @active_color,
                          user_input: input, castle_manager: @castle_manager }
       move = @move_interface.for_input(**interface_args).move_selection
       return move if move
@@ -76,15 +76,14 @@ class Chess
   end
 
   def toggle_turns
-    @active_player =
-      @active_player == @player_white ? @player_black : @player_white
+    @active_color = @active_color == 'white' ? 'black' : 'white'
   end
 
   def continue_game?
-    if @chess_board.checkmate?(active_color)
-      display.checkmate_message(active_color, inactive_color)
-    elsif @chess_board.stalemate?(active_color)
-      display.stalemate_message(active_color)
+    if @chess_board.checkmate?(@active_color)
+      display.checkmate_message(@active_color, inactive_color)
+    elsif @chess_board.stalemate?(@active_color)
+      display.stalemate_message(@active_color)
     elsif @half_move_clock >= 50
       display.fifty_move_rule_message
     else
@@ -97,7 +96,7 @@ class Chess
     piece = square.piece
     return unless piece.can_promote?
 
-    display.promotion_message(@active_player)
+    display.promotion_message(active_player)
     user_selection = take_user_promotion_input
     promote_piece(user_selection, square)
   end
@@ -112,7 +111,7 @@ class Chess
   end
 
   def control_clocks(moving_piece, captured_piece)
-    @full_move_clock += 1 if active_color == 'white'
+    @full_move_clock += 1 if @active_color == 'white'
     if moving_piece.move_resets_clock? || !captured_piece.absent?
       @half_move_clock = 0
     else
@@ -128,21 +127,21 @@ class Chess
     exit
   end
 
-  def active_color
-    @active_player.piece_color
+  def active_player
+    { white: @player_white, black: @player_black }[@active_color.to_sym]
   end
 
   def piece_can_affect_castling?(piece)
-    piece.involved_in_castling? && @castle_manager.castle_rights_for_color?(active_color)
+    piece.involved_in_castling? && @castle_manager.castle_rights_for_color?(@active_color)
   end
 
   def promote_piece(fen_symbol, square)
-    piece_fen = active_color == 'white' ? fen_symbol : fen_symbol.downcase
+    piece_fen = @active_color == 'white' ? fen_symbol : fen_symbol.downcase
     new_piece = Piece.from_fen(piece_fen, square.name)
     square.add_piece(new_piece)
   end
 
   def inactive_color
-    active_color == 'white' ? 'black' : 'white'
+    @active_color == 'white' ? 'black' : 'white'
   end
 end
