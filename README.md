@@ -80,3 +80,27 @@ A single cell on the game board. There are 64 squares in total on a traditional 
 
 #### **Stalemate**
 Stalemate is a game state where a player is not currently in Check but they begin their turn with no legal moves. When this happens, the game ends in a draw.
+
+## Features
+
+My Chess program makes use of the following feature set:
+
+1. Every piece along with their unique movesets
+    - includes castling and en passant capture
+    - correctly filters out illegal move options, such as moves that would place own king in check
+2. Two options for entering moves into the CLI.
+    - option#1: enter an origin square and a target square together in one line (eg. e2e4)
+    - option#2: enter an origin square followed by Enter/Return to get a list of moves to choose from for the piece at the origin square. The user can then enter the target square to execute their desired move.
+3. Ability to save a game in progress and load it back later
+4. Implementation of most win and draw states
+    - exception being draw by Insufficient Material
+
+
+## Improvements
+
+1. General refactoring for readability and improved object orientation
+2. Occasionally I had a disorganized work flow during the production of this. One thing that'd really help is making better use of git branches, something I intend to do for all future projects.
+3. Possible Features
+    - tracking move history
+    - tracking material points
+    - implementing draw by insufficient material
