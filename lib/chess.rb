@@ -33,10 +33,36 @@ class Chess
   end
   # rubocop: enable Metrics/ParameterLists
 
+  def play
+    introduce_game
+    case intro_input
+    when '1'
+      setup_players
+      game_script
+    when '2'
+      load_script
+    when '3'
+      exit
+    end
+  end
+
+  def introduce_game
+    display.introduction
+    display.intro_game_prompt
+  end
+
+  def intro_input
+    loop do
+      user_input = gets.chomp
+      return user_input if ('1'..'3').include?(user_input)
+
+      display.input_error_message(:invalid_intro_input)
+    end
+  end
+
   # rubocop: disable Metrics/MethodLength
   # rubocop: disable Metrics/AbcSize
   def game_script
-    display.introduction
     loop do
       system('clear')
       display.print_board(@chess_board)
@@ -125,6 +151,10 @@ class Chess
     save_game
     display.save_game_message
     exit
+  end
+
+  def setup_players
+    [@player_white, @player_black].each(&:create_user_name)
   end
 
   def active_player
