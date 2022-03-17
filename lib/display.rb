@@ -3,8 +3,32 @@
 # class for managing command-line output/visuals
 class Display
   def introduction
-    puts 'Welcome to Chess! Press any key to begin playing > '
+    system('clear')
+    puts <<~HEREDOC
+      Welcome to Chess!
+
+      Press any key to continue >>
+    HEREDOC
     gets
+  end
+
+  def intro_game_prompt
+    system('clear')
+    puts <<~HEREDOC
+      Press [1] to start a new game.
+      Press [2] to load a saved game.
+      Press [3] to exit.
+    HEREDOC
+  end
+
+  def load_game_prompt(save_list)
+    system('clear')
+    puts "\nSave Games:\n\n"
+    save_list.sort.each { |save_file| puts "#{save_file[0..-6].gsub('_', ' ')}\n" }
+    puts <<~HEREDOC
+
+      Enter the number of the game you wish to resume
+    HEREDOC
   end
 
   def print_board(board)
@@ -90,10 +114,12 @@ class Display
     print({
       empty_square: 'That square is empty. Please choose an occupied square.',
       invalid_initial_input: 'Unable to parse that input. Please use one of the two valid formats',
+      invalid_intro_input: 'Please only use numbers 1, 2, or 3 to make your choice.',
       invalid_promotion_piece: "That doesn't represent a piece you can use. Input Q, R, B, or N please.",
       invalid_square: 'This square is not on the board. Use letters A-H and numbers 1-8 for your selection!',
       invalid_move: "This is an invalid move. Only choose from among this piece's legal moves",
       no_moves: "This piece doesn't have any legal moves! Please choose a different piece",
+      save_number: 'That input does not correspond to any of the save files. Choose again.',
       wrong_color: 'That is not your piece. Only choose among pieces of your color.'
     }[message])
     sleep(2.5)
