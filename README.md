@@ -20,7 +20,7 @@ You can also clone this repo and run it locally by simply typing `$ruby main.rb`
 
 ## The Rules of Chess
 
-Chess is an abstract strategy board game. Two players, one controlling the white pieces and the other with the black pieces, compete against each other to see who can checkmate the other player's king. I've written up a brief glossary for people unfamiliar with the rules of the game, as understanding a lot of these rules will be important for following my decisions with developing the game:
+Chess is an abstract strategy board game. Two players, one controlling the white pieces and the other with the black pieces, compete against each other to see who can checkmate the other player's king. I've written up a brief glossary for people unfamiliar with the rules of the game, as understanding a lot of these rules will be important for following my development decisions:
 
 #### **Bishop**
 Each player is given two Bishop pieces to start the game. These pieces can move diagonally any number of uninterrupted squares.
@@ -49,9 +49,9 @@ A Draw is when neither player wins the match. This can emerge from a Stalemate, 
 This is a drawn game state that gets declared when the exact same board position has been reached a certain number of times. The required number repetitions for envoking this rule is typically either 3 or 5, depending on the governing body for the competition. My game uses the 3-fold rule.
 
 #### **En Passant Capture**
-When a pawn makes a double move, it can vulnerable to something called En Passant Capture during the opponent's following turn. If the opponent has a pawn directly adjacent to the left or right of a pawn that just made a double move, they can capture the pawn during this turn with a normal diagonal pawn capture move. This move can be confusing since unlike any other capture, the capturing piece and the captured piece aren't using the same square.
+When a pawn makes a double move, it can be vulnerable to something called En Passant Capture during the opponent's following turn. If the opponent has a pawn directly adjacent to the left or right of a pawn that just made a double move, they can capture the pawn during this turn with a normal diagonal pawn capture move. This move can be confusing since unlike any other capture, the capturing piece and the captured piece aren't using the same square.
 
-#### **Fifty-Move-Rule
+#### **Fifty-Move-Rule**
 The fifty move rule is a rule where if the players get through fifty turns without a pawn advance or a piece capture, the game ends in a draw.
 
 #### **King**
@@ -65,6 +65,9 @@ Players take turns executing moves of their pieces. Each piece has a specific mo
 
 #### **Pawn**
 Each player is given 8 Pawn pieces to the start the game. To the untrained eye, they seem like a simple piece, but their behavior varies more considerably than any other piece on the board. Pawns may move one square forward unless they are in their initial positions, where they can optionally move two squares forward. Pawns cannot capture enemy pieces directly in front of them, but they can capture on the two squares diagonally in front of them. They're also the only pieces involved in En-Passant capture and in the Promotion mechanic.
+
+#### **Promotion**
+If a pawn reaches the back rank on the opponent's side of the board, the player gets the option to 'promote' the pawn to a different piece. The player can choose a Queen, Rook, Bishop, or Knight.
 
 #### **Queen**
 Each player is given one Queen piece to begin the game. It is the most powerful piece in the game of Chess, and it is capable of moving any number of uninterrupted squares in all directions (vertically, horizontally, and diagonally).
