@@ -32,6 +32,14 @@ class Display
     HEREDOC
   end
 
+  def save_game_message
+    puts <<~HEREDOC
+
+      Your game has been saved.
+      Thanks for playing!
+    HEREDOC
+  end
+
   def move_choice_prompt(board, move_list)
     system('clear')
     puts "\n\n"

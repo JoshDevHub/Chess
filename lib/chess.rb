@@ -3,6 +3,7 @@
 # class that runs the game of Chess
 class Chess
   include Coordinate
+  include FENSerializer
 
   attr_reader :display
 
@@ -61,9 +62,9 @@ class Chess
   end
 
   def active_player_move
-    display.initial_input_prompt(@active_player)
     loop do
       input = gets.upcase.gsub(/[[:space:]]/, '')
+      handle_save_input if input == 'SAVE'
       interface_args = { board: @chess_board, display: display, active_color: active_color,
                          user_input: input, castle_manager: @castle_manager }
       move = @move_interface.for_input(**interface_args).move_selection
@@ -120,6 +121,12 @@ class Chess
   end
 
   private
+
+  def handle_save_input
+    save_game
+    display.save_game_message
+    exit
+  end
 
   def active_color
     @active_player.piece_color
