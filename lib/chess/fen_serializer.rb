@@ -35,5 +35,14 @@ class Chess
       filename = "saved_games/#{game_number}_#{white_player}_vs_#{black_player}.yaml"
       File.open(filename, 'w') { |file| file.puts yaml_string }
     end
+
+    def load_from_yaml(file_path)
+      data = YAML.load File.read(file_path)
+      self.class.new(
+        player_white: data[:player_white],
+        player_black: data[:player_black],
+        fen_string: data[:fen_string]
+      )
+    end
   end
 end
