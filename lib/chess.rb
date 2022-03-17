@@ -30,6 +30,7 @@ class Chess
     @castle_manager = castle_manager.new(castle_options: fen.castle_info)
     @full_move_clock = fen.full_move_clock
     @half_move_clock = fen.half_move_clock
+    @board_history_registry = []
   end
   # rubocop: enable Metrics/ParameterLists
 
@@ -76,6 +77,7 @@ class Chess
       captured_piece.disable_castle_rights(@castle_manager)
       promotion_script(target)
       toggle_turns
+      add_to_registry
       control_clocks(moving_piece, captured_piece)
     end
   end
@@ -105,6 +107,7 @@ class Chess
     @active_color = @active_color == 'white' ? 'black' : 'white'
   end
 
+  # rubocop: disable Metrics/MethodLength
   def continue_game?
     if @chess_board.checkmate?(@active_color)
       display.checkmate_message(@active_color, inactive_color)
@@ -112,10 +115,13 @@ class Chess
       display.stalemate_message(@active_color)
     elsif @half_move_clock >= 50
       display.fifty_move_rule_message
+    elsif threefold_repetition?
+      display.draw_by_repetition_message
     else
       true
     end
   end
+  # rubocop: enable Metrics/MethodLength
 
   def promotion_script(position)
     square = @chess_board.access_square(position)
@@ -169,6 +175,14 @@ class Chess
     piece_fen = @active_color == 'white' ? fen_symbol : fen_symbol.downcase
     new_piece = Piece.from_fen(piece_fen, square.name)
     square.add_piece(new_piece)
+  end
+
+  def add_to_registry
+    @board_history_registry << @chess_board.to_fen
+  end
+
+  def threefold_repetition?
+    @board_history_registry.size - @board_history_registry.uniq.size >= 3
   end
 
   def inactive_color

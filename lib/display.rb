@@ -98,6 +98,13 @@ class Display
     HEREDOC
   end
 
+  def draw_by_repetition_message
+    puts <<~HEREDOC
+      This board position has been repeated three times.
+      The game ends in a draw by three-fold repetition.
+    HEREDOC
+  end
+
   def promotion_message(player)
     puts <<~HEREDOC
       #{player}: your pawn has reached the back rank! It can now promote to a new piece.
