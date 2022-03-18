@@ -20,7 +20,7 @@ You can also clone this repo and run it locally by simply typing `$ruby main.rb`
 
 ## The Rules of Chess
 
-Chess is an abstract strategy board game. Two players, one controlling the white pieces and the other with the black pieces, compete against each other to see who can checkmate the other player's king. I've written up a brief glossary for people unfamiliar with the rules of the game, as understanding a lot of these rules will be important for following my development decisions:
+Chess is an abstract strategy board game. Two players, one controlling the white pieces and the other with the black pieces, compete against each other to see who can checkmate the other player's king. I've written up a brief glossary for people unfamiliar with the rules of the game, as understanding a lot of these rules will be important for understanding the features and playing the game as a user of this project:
 
 #### **Bishop**
 Each player is given two Bishop pieces to start the game. These pieces can move diagonally any number of uninterrupted squares.
@@ -83,16 +83,24 @@ Stalemate is a game state where a player is not currently in Check but they begi
 
 ## Features
 
-My Chess program makes use of the following feature set:
+### Dual Move Interface
 
+I included two options for users to choose from when it comes to moving their pieces:
+1. The user can enter an origin square and a target square together in one line (eg. e2e4)
+2. The user can enter an origin square followed by Enter/Return to get a list of moves to choose from for the piece at the origin square. The user can then enter the target square to execute their desired move.
+
+So why did I do it this way? I did some light research with other Odin students' Chess projects (not looking at code, just playing and getting a feel for their UI/UX on the command line) and noticed that the 2nd option I listed above was the way just about everyone did it. I knew I wanted to build this interface for a couple of reasons:
+1. It's friendly for users who don't know the ins and outs of Chess and how all the pieces move. It'll additionally be familiar to any Odin students who want to review my project and its code.
+2. It presents a nice design challenge, particularly the aspect where I reprint the board with the move possibilities and captures highlighted to aide the user in visualizing their moves.
+
+However, I am an experienced Chess player and have been playing the game since I was a kid. Anyone very familiar with the game and how the pieces move will find this interface clunky. So I also developed the move interface where you can just enter a move in one line, skipping the second step entirely to make for a smooth, uninterrupted user experience.
+
+### Temp Outline
 1. Every piece along with their unique movesets
     - includes castling and en passant capture
     - correctly filters out illegal move options, such as moves that would place own king in check
-2. Two options for entering moves into the CLI.
-    - option#1: enter an origin square and a target square together in one line (eg. e2e4)
-    - option#2: enter an origin square followed by Enter/Return to get a list of moves to choose from for the piece at the origin square. The user can then enter the target square to execute their desired move.
-3. Ability to save a game in progress and load it back later
-4. Implementation of most win and draw states
+2. Ability to save a game in progress and load it back later
+3. Implementation of most win and draw states
     - exception being draw by Insufficient Material
 
 
