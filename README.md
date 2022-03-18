@@ -20,69 +20,7 @@ You can also clone this repo and run it locally by simply typing `$ruby main.rb`
 
 ## The Rules of Chess
 
-Chess is an abstract strategy board game. Two players, one controlling the white pieces and the other with the black pieces, compete against each other to see who can checkmate the other player's king. I've written up a brief glossary for people unfamiliar with the rules of the game, as understanding a lot of these rules will be important for understanding the features and playing the game as a user of this project:
-
-#### **Bishop**
-Each player is given two Bishop pieces to start the game. These pieces can move diagonally any number of uninterrupted squares.
-
-#### **Capture**
-Capturing is when a piece moves onto a square occupied by one of the opponent's pieces. When this occurs, the opponent's piece is said to be 'captured' or 'taken', and is removed from the board. There is a special case of capturing called En Passant Capture that doesn't involve two pieces of opposite colors on the same square.
-
-#### **Castling**
-Castling is a special move involving the King and one of the two Rooks. Three conditions must be met for this move to be possible:
-1. The King and the participating Rook must not have moved off their initial squares at any point.
-2. The squares between the King and the participating Rook must be empty.
-3. The squares that the King travels through on the move, as well as the square the King currently stands on, must not be under attack by any enemy pieces.
-
-If these conditions are met, then the player can employ a Castling move. This involves moving the King two squares in the direction of the participating Rook and moving the Rook to the square on the other side of the King from the Rook's perspective.
-
-#### **Check**
-A state of play where one's king is under attack. If you begin a turn in check, you must use this turn to escape it. Further, *any* move that would leave your king in check is considered illegal. If you have no move that would escape check, then you are considered to be Checkmated, and the game is over. If you are not currently in check but have no moves that would avoid it, then the game will end in a Stalemate.
-
-#### **Checkmate**
-Checkmate is the ultimate goal of the game, and it emerges from two conditions being fulfilled: a player's king is under attack (also known as being in 'Check') and the player has no way to escape this attack. When this happens, the game ends and the player delivering Checkmate is declared the winner.
-
-#### **Draw**
-A Draw is when neither player wins the match. This can emerge from a Stalemate, the Fifty-Move-Rule, Insufficient Material, or Repetitions.
-
-#### **Draw-by-Repetition**
-This is a drawn game state that gets declared when the exact same board position has been reached a certain number of times. The required number repetitions for envoking this rule is typically either 3 or 5, depending on the governing body for the competition. My game uses the 3-fold rule.
-
-#### **En Passant Capture**
-When a pawn makes a double move, it can be vulnerable to something called En Passant Capture during the opponent's following turn. If the opponent has a pawn directly adjacent to the left or right of a pawn that just made a double move, they can capture the pawn during this turn with a normal diagonal pawn capture move. This move can be confusing since unlike any other capture, the capturing piece and the captured piece aren't using the same square.
-
-#### **Fifty-Move-Rule**
-The fifty move rule is a rule where if the players get through fifty turns without a pawn advance or a piece capture, the game ends in a draw.
-
-#### **Insufficient Material**
-A drawn game state where neither player has enough pieces to checkmate the opposing King. An example of such a situation is King vs. King endgame, where it is impossible for either side to deliver checkmate. When games reach these positions, a draw is declared.
-
-#### **King**
-Each player is given one King, and it is the most important piece on the board. Checkmating the King is the key goal of the game, so its safety from the enemy pieces is vital to success. The King can move one square in any direction. Under certain circumstances, a King may also participate with a Rook in a Castling move.
-
-#### **Knight**
-Each player is given two Knight pieces to start the game. Despite their name, knights are traditionally depicted as horses. They have an unusual movement technique where they move two squares in a cardinal direction followed by a 90 degree turn and step to another square. This is often said to make a pattern like a capital 'L.' They are also the only piece that can 'jump' over pieces in their path while moving.
-
-#### **Move**
-Players take turns executing moves of their pieces. Each piece has a specific moveset that must be adhered to.
-
-#### **Pawn**
-Each player is given 8 Pawn pieces to the start the game. To the untrained eye, they seem like a simple piece, but their behavior varies more considerably than any other piece on the board. Pawns may move one square forward unless they are in their initial positions, where they can optionally move two squares forward. Pawns cannot capture enemy pieces directly in front of them, but they can capture on the two squares diagonally in front of them. They're also the only pieces involved in En-Passant capture and in the Promotion mechanic.
-
-#### **Promotion**
-If a pawn reaches the back rank on the opponent's side of the board, the player gets the option to 'promote' the pawn to a different piece. The player can choose a Queen, Rook, Bishop, or Knight.
-
-#### **Queen**
-Each player is given one Queen piece to begin the game. It is the most powerful piece in the game of Chess, and it is capable of moving any number of uninterrupted squares in all directions (vertically, horizontally, and diagonally).
-
-#### **Rook**
-Each player is given two Rooks (the castle shaped pieces) to start the game. They're considered very powerful pieces, capable of moving any number of continous, unblocked squares both vertically and horizontally along the board. Under certain cirumstances, they can also collaborate with the King in a move called 'Castling'.
-
-#### **Square**
-A single cell on the game board. There are 64 squares in total on a traditional chess board, and each of then is named according to their file(horizontal position) and rank(vertical position). A file is notated by the letters A-H and rank by numbers 1-8.
-
-#### **Stalemate**
-Stalemate is a game state where a player is not currently in Check but they begin their turn with no legal moves. When this happens, the game ends in a draw.
+Chess is an abstract strategy board game. Two players, one controlling the white pieces and the other with the black pieces, compete against each other to see who can checkmate the other player's king. If you are unfamiliar with the rules of Chess, I recommend reading [Rules section of Chess's Wikipedia page](https://en.wikipedia.org/wiki/Chess#Rules). My Feature and Improvement section will assume some familiarity with many of the game's rules, such as the general flow of the game loop, each piece type and their move options, castling, en passant capture, pawn promotion, check, and various ways the game can end.
 
 ## Features
 
@@ -119,7 +57,7 @@ Players are alerted at the beginning of a turn if their King has been placed in 
 
 When a pawn double moves and ends on a square directly adjacent to an enemy pawn, the opponent can capture that pawn 'en passant' (in passing) for the next move. To execute this in my game, just move the attacking pawn to the square directly behind the pawn to be captured. The captured pawn will be removed from the board.
 
-This capture has a slight UI difference compared to other capture moves. Usually capture squares are highlighted red, but this appears as a normal move. This is partially due to my implementation of capture squares making this highlighting difficult in this context, but there's also ambiguity here for which square should be highlighted. Should it be the square the captured pawn is on, or the square the attacking pawn is moving to? Hard to say, and the biggest chess sites -- [chess.com](https://chess.com) and [lichess.com](https://lichess.com) -- also highlight this as a 'normal' move in their UIs.
+This capture has a slight UI difference compared to other capture moves. Usually capture squares are highlighted red, but this appears as a normal move. This is partially due to my implementation of capture squares making this highlighting difficult in this context, but there's also ambiguity here for which square should be highlighted. Should it be the square the captured pawn is on, or the square the attacking pawn is moving to? Hard to say, and the biggest chess sites -- [chess.com](https://chess.com) and [lichess.org](https://lichess.org) -- also highlight this as a 'normal' move in their UIs.
 #### **Pawn Double Move**
 
 ![image of pawn double move option](https://raw.githubusercontent.com/JoshDevHub/Chess/main/media/double_pawn_move.png)
@@ -147,9 +85,45 @@ The one draw state my game does not include is Insufficient Material. I would li
 
 ## Improvements
 
-1. General refactoring for readability and improved object orientation
-2. Occasionally I had a disorganized work flow during the production of this. One thing that'd really help is making better use of git branches, something I intend to do for all future projects.
-3. Possible Features
-    - tracking move history
-    - tracking material points
-    - implementing draw by insufficient material
+There are definitely several improvements I want to make in the future, especially if I'm to include this in a portfolio. My main focus will be moving on in the Odin curriculum, where studying Rails awaits me. However, I do plan to schedule some time every week to review this project's codebase alongside other resources and ideate ways to accomplish some of the improvements listed here. When I have a good attack plan, I'll revisit the project to try implementing some of these changes.
+
+### General Refactoring
+
+I'd like to refactor certain sections of the code to be more elegant, readable, and object-oriented. Numerous aspects of my design could be improved, and my plan now is to review other Chess projects and study different patterns that I could possibly incorporate into my own project. Not only will this cleanup my codebase, but I think it'll be excellent practice with refactoring and design patterns. Hopefully I can also guide these refactorings in a way that makes adding the features in the Features to Add section more comfortable.
+
+### Test Coverage
+
+Although I do have around 400 total unit tests in this project, some components lack proper coverage. The big one is my `Chess` class, which integrates all of the project's classes together in service of running the game. Because this class is mostly about running scripts that query and command other classes, I feel that it would work better with integration testing, something I've yet to study. When I do get experience with integration testing, I'd like to come back and properly test this class.
+
+### Work Flow
+
+This is more of a lesson learned than something I can improve, but sometimes I suffered from a disorganized work flow during the production of this. Something I feel I could definitely make better use of is git branching. I mostly kept to just using the `main` branch for the development of this project, and it's more clear to me now the advantages of building on `dev` and `feature` branches. I intend to make better use of branches in my future projects and in this one should I return to it.
+
+### Features to Add
+
+A non-exhaustive list of features that could be fun to add in.
+
+#### **Simple Computer Player**
+
+Currently my game only works with humans controlling both players. A good potential feature would be to allow a human player to go against a simple computer AI. Now as I've said earlier, I'm pretty familiar with chess, so I know how deep the rabbit hole goes on developing chess engines. The best engines are capable of beating the best human players in the world, and they're products of vast amounts of work and research. Any AI I build would be very simple in comparison, possibly as simple as just getting the computer to pick randomly from among its legal moves. But even this would give a single user playing my game more entertainment than just playing against themselves.
+#### **Tracking Material**
+
+One component of the UIs on the two big Chess sites -- [chess.com](https://chess.com) and [lichess.org](https://lichess.org) -- is a 'material scoreboard' of sorts. In chess, each piece is considered to have a 'value' relative to the other pieces. A pawn is worth 1 point of material, a knight or biship is worth 3, a rook is worth 5, and a queen is worth 9. Any time you capture an opponent's piece, you gain that piece's points. The UI can track which player is ahead in material and by how much. Because of the importance of material, this feedback is useful for analyzing which side is currently winning the match (although of course, it's not the only factor in determining this). I think this would be a great feature to add, and it would have a nice side effect of making the following feature easier to incorporate as well.
+
+#### **Draw By Insufficient Material**
+This is the one endgame state I did not initially implement. Draws by insufficient material emerge when neither side has enough pieces to checkmate the opposing King. Although the game will eventually end to the fifty-move-rule, certain piece combos are known to give no checkmate chances and the game can just be declared a draw on the spot. This is definitely a nice quality of life improvement for users, as they can avoid playing out the useless fifty moves to draw. It's also just in the rules for most competitions, so it'd be good to feature this.
+
+#### **Highlighting Last Move**
+
+Many Chess UIs will highlight the origin and target squares of the last move. An example can be seen from this lichess screenshot where the square the pawn started on and the square it ended on are both highlighted.
+
+![image of highlighting the last move on a board](https://raw.githubusercontent.com/JoshDevHub/Chess/main/media/square_highlight_example.png)
+
+ This offers a pleasant user experience as you may not be paying close attention to the board when the opponent moves their piece, and you therefore might waste time trying to figure out how the board has changed.
+#### **Move History**
+
+A complete move history is also a common feature of Chess UIs. Even when playing over the board in official competitions, players will log by hand every move made in the game. These are useful for players to look back and study/analyze their play. But even for more casual play, I think it's fun to look back and see the history of the game. This would probably be one of the more complex features to add in.
+
+#### **Load from FEN**
+
+Another feature that could be nice for players is to have an option to load a new game directly from a [FEN string](https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation). On one hand, this wouldn't be too complicated to implement, since my existing serialization with saves and loads already uses FEN strings under the hood. But if I allow a user to input any FEN string of their choosing, I'd probably need to do at least some validating to make sure it's a string that won't immediately crash the game.
