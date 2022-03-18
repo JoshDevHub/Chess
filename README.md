@@ -2,7 +2,9 @@
 
 A command line game of Chess built with Ruby
 
-![Animated Chess Gif](https://raw.githubusercontent.com/JoshDevHub/Chess/main/media/example.gif)
+![Screenshot of the word 'chess' in ascii text](https://raw.githubusercontent.com/JoshDevHub/Chess/main/media/intro_screenshot.png)
+
+![Screenshot of the game board with pieces in starting positions](https://raw.githubusercontent.com/JoshDevHub/Chess/main/media/starting_board_image.png)
 
 ## Description
 
@@ -55,7 +57,7 @@ Assuming the necessary criteria exist for a player to execute a castling move, p
 
 ![image of a white king in check](https://raw.githubusercontent.com/JoshDevHub/Chess/main/media/check_image.png)
 
-Players are alerted at the beginning of a turn if their King has been placed in check. The player doesn't have the option of using moves that do not escape the check, as this is considered an illegal move in Chess. Additionally, even if the player does not begin a turn in check, there can be situations where moving a piece could open up an attack on their King from an opponent piece. In accordance with the rules, these moves are also prevented by my game.
+Players are alerted at the beginning of a turn if their King has been placed in check. The player doesn't have the option of using moves that do not escape the check, as these are considered illegal moves in Chess. Additionally, even if the player does not begin a turn in check, there can be situations where moving a piece could open up an attack on their King from an opponent piece. In accordance with the rules, these moves are also prevented by my game.
 #### **En Passant Capture**
 
 ![gif demonstrating en passant](https://raw.githubusercontent.com/JoshDevHub/Chess/main/media/en_passant_demo.gif)
@@ -132,3 +134,14 @@ A complete move history is also a common feature of Chess UIs. Even when playing
 #### **Load from FEN**
 
 Another feature that could be nice for players is to have an option to load a new game directly from a [FEN string](https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation). On one hand, this wouldn't be too complicated to implement, since my existing serialization with saves and loads already uses FEN strings under the hood. But if I allow a user to input any FEN string of their choosing, I'd probably need to do at least some validating to make sure it's a string that won't immediately crash the game.
+
+
+## Acknowledgements
+
+### The Odin Project
+[The Odin Project](https://theodinproject.com) is an open source curriculum for learning web development. This project was done as part of the said curriculum, and the Odin community has taught me, or given me the tools to learn, virtually everything I know about programming.
+
+### TextKool
+[TextKool](https://textkool.com/en/ascii-art-generator?hl=default&vl=default&font=Red%20Phoenix&text=Your%20text%20here%20) was used to generate the ascii text of the project.
+### Lichess
+[Lichess](https://lichess.org) is an open source platform for playing Chess. It's Study section, where you can create custom game situations and extract a FEN from them, proved pretty valuable for me testing various aspects of my game's functionality.
