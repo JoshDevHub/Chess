@@ -104,19 +104,31 @@ I've implemented every piece along with their unique movesets. This includes som
 
 #### **Castling**
 
+![demonstration of castling](https://raw.githubusercontent.com/JoshDevHub/Chess/main/media/castle_demo.gif)
+
 Assuming the necessary criteria exist for a player to execute a castling move, players have the option of entering a castling square for their King to move to. If this move is chosen, the game will automatically move the participating Rook to the correct square.
 
 #### **Check**
 
+![image of a white king in check](https://raw.githubusercontent.com/JoshDevHub/Chess/main/media/check_image.png)
+
 Players are alerted at the beginning of a turn if their King has been placed in check. The player doesn't have the option of using moves that do not escape the check, as this is considered an illegal move in Chess. Additionally, even if the player does not begin a turn in check, there can be situations where moving a piece could open up an attack on their King from an opponent piece. In accordance with the rules, these moves are also prevented by my game.
 #### **En Passant Capture**
 
+![gif demonstrating en passant](https://raw.githubusercontent.com/JoshDevHub/Chess/main/media/en_passant_demo.gif)
+
 When a pawn double moves and ends on a square directly adjacent to an enemy pawn, the opponent can capture that pawn 'en passant' (in passing) for the next move. To execute this in my game, just move the attacking pawn to the square directly behind the pawn to be captured. The captured pawn will be removed from the board.
+
+This capture has a slight UI difference compared to other capture moves. Usually capture squares are highlighted red, but this appears as a normal move. This is partially due to my implementation of capture squares making this highlighting difficult in this context, but there's also ambiguity here for which square should be highlighted. Should it be the square the captured pawn is on, or the square the attacking pawn is moving to? Hard to say, and the biggest chess sites -- [chess.com](https://chess.com) and [lichess.com](https://lichess.com) -- also highlight this as a 'normal' move in their UIs.
 #### **Pawn Double Move**
+
+![image of pawn double move option](https://raw.githubusercontent.com/JoshDevHub/Chess/main/media/double_pawn_move.png)
 
 A pawn in its initial position can move two squares forward instead of one, assuming these squares are unobstructed by other pieces. My game will give players this option when the pawns are in their starting positions.
 
 #### **Pawn Promotion**
+
+![gif demonstrating pawn promotion](https://raw.githubusercontent.com/JoshDevHub/Chess/main/media/promotion_demo.gif)
 
 When a pawn reaches the opponent's back rank, they'll get a message explaining promotion and a menu of pieces to choose from. After selecting one of these pieces, the pawn will be replaced by the chosen piece.
 
