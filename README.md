@@ -12,11 +12,16 @@ The rules of Chess can be read about [here](https://en.wikipedia.org/wiki/Chess)
 
 I learned a ton through the production of this. This is the first project where I used a factory pattern, a null object pattern, inheritance at a larger scale, ANSI escape sequences for coloring and manipulating terminal output, and too many subtleties to name regarding both the Ruby language and the RSpec testing framework.
 
-## How to Play
+## How to Use or Install
+### How to Play
 
 The easiest way to play is to visit my REPL of this project on [replit](https://replit.com/@jmsmith1018/Chess#main.rb). Just press the RUN button and the script will start up.
 
-You can also clone this repo and run it locally by simply typing `$ruby main.rb` from the project's root directory.
+If you have Ruby installed, you can also clone this repo and run it locally by simply typing `$ ruby main.rb` from the project's root directory.
+
+### How to Run the Tests
+
+You must clone the repo to run the tests, as I do not have replit setup to use RSpec 3.11. After cloning, `cd` into the root folder and run `$ bundle install` to install the project's dependencies. Then type `$ bundle exec rspec` to run the project's tests.
 
 ## The Rules of Chess
 
@@ -108,7 +113,7 @@ A non-exhaustive list of features that could be fun to add in.
 Currently my game only works with humans controlling both players. A good potential feature would be to allow a human player to go against a simple computer AI. Now as I've said earlier, I'm pretty familiar with chess, so I know how deep the rabbit hole goes on developing chess engines. The best engines are capable of beating the best human players in the world, and they're products of vast amounts of work and research. Any AI I build would be very simple in comparison, possibly as simple as just getting the computer to pick randomly from among its legal moves. But even this would give a single user playing my game more entertainment than just playing against themselves.
 #### **Tracking Material**
 
-One component of the UIs on the two big Chess sites -- [chess.com](https://chess.com) and [lichess.org](https://lichess.org) -- is a 'material scoreboard' of sorts. In chess, each piece is considered to have a 'value' relative to the other pieces. A pawn is worth 1 point of material, a knight or biship is worth 3, a rook is worth 5, and a queen is worth 9. Any time you capture an opponent's piece, you gain that piece's points. The UI can track which player is ahead in material and by how much. Because of the importance of material, this feedback is useful for analyzing which side is currently winning the match (although of course, it's not the only factor in determining this). I think this would be a great feature to add, and it would have a nice side effect of making the following feature easier to incorporate as well.
+One component of the UIs on the two big Chess sites -- [chess.com](https://chess.com) and [lichess.org](https://lichess.org) -- is a 'material scoreboard' of sorts. In chess, each piece is considered to have a 'value' relative to the other pieces. A pawn is worth 1 point of material, a knight or bishop is worth 3, a rook is worth 5, and a queen is worth 9. Any time you capture an opponent's piece, you gain that piece's points. The UI can track which player is ahead in material and by how much. Because of the importance of material, this feedback is useful for analyzing which side is currently winning the match (although of course, it's not the only factor in determining this). I think this would be a great feature to add, and it would have a nice side effect of making the following feature easier to incorporate as well.
 
 #### **Draw By Insufficient Material**
 This is the one endgame state I did not initially implement. Draws by insufficient material emerge when neither side has enough pieces to checkmate the opposing King. Although the game will eventually end to the fifty-move-rule, certain piece combos are known to give no checkmate chances and the game can just be declared a draw on the spot. This is definitely a nice quality of life improvement for users, as they can avoid playing out the useless fifty moves to draw. It's also just in the rules for most competitions, so it'd be good to feature this.
