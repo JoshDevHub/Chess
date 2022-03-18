@@ -23,4 +23,12 @@ module ColorizeOutput
   def fg_yellow(string)
     "\e[38;2;241;250;140m#{string}\e[0m"
   end
+
+  def fg_cyan(string)
+    "\e[38;2;139;233;253m#{string}\e[0m"
+  end
+
+  def fg_red(string)
+    "\e[38;2;255;85;85m#{string}\e[0m"
+  end
 end

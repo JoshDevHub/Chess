@@ -17,9 +17,10 @@ class Display
   def intro_game_prompt
     system('clear')
     puts <<~HEREDOC
-      Press [1] to start a new game.
-      Press [2] to load a saved game.
-      Press [3] to exit.
+      Press #{fg_cyan('[1]')} to start a new game.
+      Press #{fg_cyan('[2]')} to load a saved game.
+      Press #{fg_cyan('[3]')} to exit.
+
     HEREDOC
   end
 
@@ -42,7 +43,7 @@ class Display
 
   def check_message(player)
     puts <<~HEREDOC
-      #{player}, your king is under attack!
+      #{player}, your #{fg_red('king is under attack!')}
       You next move must escape check.\n
     HEREDOC
   end
@@ -74,7 +75,10 @@ class Display
     display_list = array_to_readable_list(move_list)
     puts <<~HEREDOC
       The available moves for this piece are #{fg_yellow(display_list)}
-      Choose a move or type 'back' to exit and choose another piece >>
+
+      Choose one of these moves.
+      Or type #{fg_cyan('back')} to exit and choose a different piece.
+
     HEREDOC
   end
 
@@ -112,15 +116,15 @@ class Display
       #{player}: your pawn has reached the back rank! It can now promote to a new piece.
 
       Enter the piece you wish to promote to using its chess notation:
-        Q for Queen
-        R for Rook
-        B for Bishop
-        N for Knight
+        #{fg_yellow('Q')} for Queen
+        #{fg_yellow('R')} for Rook
+        #{fg_yellow('B')} for Bishop
+        #{fg_yellow('N')} for Knight
     HEREDOC
   end
 
   def input_error_message(message)
-    print({
+    print(fg_red({
       empty_square: 'That square is empty. Please choose an occupied square.',
       invalid_initial_input: 'Unable to parse that input. Please use one of the two valid formats',
       invalid_intro_input: 'Please only use numbers 1, 2, or 3 to make your choice.',
@@ -130,7 +134,7 @@ class Display
       no_moves: "This piece doesn't have any legal moves! Please choose a different piece",
       save_number: 'That input does not correspond to any of the save files. Choose again.',
       wrong_color: 'That is not your piece. Only choose among pieces of your color.'
-    }[message])
+    }[message]))
     sleep(2.5)
     delete_display_lines(1)
   end
