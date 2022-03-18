@@ -54,6 +54,9 @@ When a pawn makes a double move, it can be vulnerable to something called En Pas
 #### **Fifty-Move-Rule**
 The fifty move rule is a rule where if the players get through fifty turns without a pawn advance or a piece capture, the game ends in a draw.
 
+#### **Insufficient Material**
+A drawn game state where neither player has enough pieces to checkmate the opposing King. An example of such a situation is King vs. King endgame, where it is impossible for either side to deliver checkmate. When games reach these positions, a draw is declared.
+
 #### **King**
 Each player is given one King, and it is the most important piece on the board. Checkmating the King is the key goal of the game, so its safety from the enemy pieces is vital to success. The King can move one square in any direction. Under certain circumstances, a King may also participate with a Rook in a Castling move.
 
@@ -95,13 +98,39 @@ So why did I do it this way? I did some light research with other Odin students'
 
 However, I am an experienced Chess player and have been playing the game since I was a kid. Anyone very familiar with the game and how the pieces move will find this interface clunky. So I also developed the move interface where you can just enter a move in one line, skipping the second step entirely to make for a smooth, uninterrupted user experience.
 
-### Temp Outline
-1. Every piece along with their unique movesets
-    - includes castling and en passant capture
-    - correctly filters out illegal move options, such as moves that would place own king in check
-2. Ability to save a game in progress and load it back later
-3. Implementation of most win and draw states
-    - exception being draw by Insufficient Material
+### Every Piece and Move
+
+I've implemented every piece along with their unique movesets. This includes some of the more complicated and obscure moves, such as the pawn double move, en passant capture, castling, and pawn promotion. The game also accurately checks for move legality, preventing the players from doing things like moving a piece in a way that would leave their own King in check.
+
+#### **Castling**
+
+Assuming the necessary criteria exist for a player to execute a castling move, players have the option of entering a castling square for their King to move to. If this move is chosen, the game will automatically move the participating Rook to the correct square.
+
+#### **Check**
+
+Players are alerted at the beginning of a turn if their King has been placed in check. The player doesn't have the option of using moves that do not escape the check, as this is considered an illegal move in Chess. Additionally, even if the player does not begin a turn in check, there can be situations where moving a piece could open up an attack on their King from an opponent piece. In accordance with the rules, these moves are also prevented by my game.
+#### **En Passant Capture**
+
+When a pawn double moves and ends on a square directly adjacent to an enemy pawn, the opponent can capture that pawn 'en passant' (in passing) for the next move. To execute this in my game, just move the attacking pawn to the square directly behind the pawn to be captured. The captured pawn will be removed from the board.
+#### **Pawn Double Move**
+
+A pawn in its initial position can move two squares forward instead of one, assuming these squares are unobstructed by other pieces. My game will give players this option when the pawns are in their starting positions.
+
+#### **Pawn Promotion**
+
+When a pawn reaches the opponent's back rank, they'll get a message explaining promotion and a menu of pieces to choose from. After selecting one of these pieces, the pawn will be replaced by the chosen piece.
+
+### Saving/Loading
+
+While in the move selection interface, players have the option of typing `save` to save their game and resume it at a later time. The game is saved to one of five save slots in the `/saved_games` directory, and the save file will include the names of the participating players.
+
+To load a previously saved game, a players just need to respond with `2` in the game's opening prompt. They will then get a list of saves to choose from and can select a game to resume.
+
+### Win and Draw States
+
+Most win and draw states have been implemented in my game. Checkmate, Stalemate, Fifty-Move Draws, and the Threefold-Repetition draw are all checked for. The game will end when one of these states is reached and a message will be sent to the player regarding which one has triggered the end of the game. If the game has ended in Checkmate, the display will also name the winner of the game.
+
+The one draw state my game does not include is Insufficient Material. I would like to add this in eventually (see Improvements section).
 
 
 ## Improvements
