@@ -6,6 +6,13 @@ A command line game of Chess built with Ruby
 
 ![Screenshot of the game board with pieces in starting positions](https://raw.githubusercontent.com/JoshDevHub/Chess/main/media/starting_board_image.png)
 
+## Table of Contents
+* [Description](#description)
+* [Getting Started and Installing](#getting-started-and-installing)
+* [Features](#features)
+* [Improvements](#improvements)
+* [Acknowledgements](#acknowledgements)
+
 ## Description
 
 This is a CLI program that allows two players to participate in a game of Chess. This was done as part of the curriculum at [TheOdinProject](https://theodinproject.com), an open source curriculum for learning web development. This project specifically is the final project in the Ruby curriculum and is meant to demonstrate the learner's proficiency with the language and various programming fundamentals.
@@ -14,7 +21,7 @@ The rules of Chess can be read about [here](https://en.wikipedia.org/wiki/Chess)
 
 I learned a ton through the production of this. This is the first project where I used a factory pattern, a null object pattern, inheritance at a larger scale, ANSI escape sequences for coloring and manipulating terminal output, and too many subtleties to name regarding both the Ruby language and the RSpec testing framework.
 
-## How to Use or Install
+## Getting Started and Installing
 ### How to Play
 
 The easiest way to play is to visit my REPL of this project on [replit](https://replit.com/@jmsmith1018/Chess#main.rb). Just press the RUN button and the script will start up.
@@ -25,7 +32,7 @@ If you have Ruby installed, you can also clone this repo and run it locally by s
 
 You must clone the repo to run the tests, as I do not have replit setup to use RSpec 3.11. After cloning, `cd` into the root folder and run `$ bundle install` to install the project's dependencies. Then type `$ bundle exec rspec` to run the project's tests.
 
-## The Rules of Chess
+### The Rules of Chess
 
 Chess is an abstract strategy board game. Two players, one controlling the white pieces and the other with the black pieces, compete against each other to see who can checkmate the other player's king. If you are unfamiliar with the rules of Chess, I recommend reading [Rules section of Chess's Wikipedia page](https://en.wikipedia.org/wiki/Chess#Rules). My Feature and Improvement section will assume some familiarity with many of the game's rules, such as the general flow of the game loop, each piece type and their move options, castling, en passant capture, pawn promotion, check, and various ways the game can end.
 
