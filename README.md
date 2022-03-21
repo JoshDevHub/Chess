@@ -12,6 +12,7 @@ A command line game of Chess built with Ruby
 * [Features](#features)
 * [Potential Improvements](#potential-improvements)
 * [Acknowledgements](#acknowledgements)
+* [Contact](#contact)
 
 ## Description
 
@@ -26,7 +27,7 @@ I learned a ton through the production of this. This is the first project where 
 
 The easiest way to play is to visit my REPL of this project on [replit](https://replit.com/@jmsmith1018/Chess#main.rb). Just press the RUN button and the script will start up.
 
-If you have Ruby installed, you can also clone this repo and run it locally by simply typing `$ ruby main.rb` from the project's root directory.
+If you want to run the game locally, you can clone this repo and type `$ bundle install` in the project's root directory to install the project's dependencies. Then simply type `$ ruby main.rb` to run the game.
 
 ### How to Run the Tests
 
@@ -142,7 +143,7 @@ A complete move history is also a common feature of Chess UIs. Even when playing
 
 #### **Load from FEN**
 
-Another feature that could be nice for players is to have an option to load a new game directly from a [FEN string](https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation). On one hand, this wouldn't be too complicated to implement, since my existing serialization with saves and loads already uses FEN strings under the hood. But if I allow a user to input any FEN string of their choosing, I'd probably need to do at least some validating to make sure it won't immediately crash my game.
+Another feature that could be nice for players is to have an option to load a new game directly from a [FEN string](https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation). On one hand, this wouldn't be too complicated to implement, since my existing serialization with saves and loads already uses FEN strings under the hood. But if I allow a user to input any FEN string of their choosing, that opens the potential for users to load strings reflecting invalid or impossible board positions. I'd probably need to do at least some input validating to make sure it won't immediately crash my game.
 
 
 ## Acknowledgements
@@ -158,3 +159,7 @@ Another feature that could be nice for players is to have an option to load a ne
 
 ### Lichess
 [Lichess](https://lichess.org) is an open source platform for playing Chess. Its Study section, where you can create custom game situations and extract a FEN from them, proved pretty valuable for me testing various aspects of my game's functionality.
+
+## Contact
+
+If you have any questions or issues, feel free to email me at jmsmith1018@gmail.com
