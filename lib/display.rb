@@ -52,6 +52,8 @@ class Display
     puts "\n\n"
     puts board
     puts "\n"
+    puts "   #{fg_red('quit')} to quit | #{fg_cyan('save')} to save"
+    puts "\n"
   end
 
   def check_message(player)
@@ -77,6 +79,13 @@ class Display
 
       Your game has been saved.
       Thanks for playing!
+    HEREDOC
+  end
+
+  def quit_message
+    puts <<~HEREDOC
+
+      Thank you for playing #{fg_red('<3')}
     HEREDOC
   end
 

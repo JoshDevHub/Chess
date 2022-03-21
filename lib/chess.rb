@@ -93,6 +93,7 @@ class Chess
     loop do
       input = gets.upcase.gsub(/[[:space:]]/, '')
       handle_save_input if input == 'SAVE'
+      quit if input == 'QUIT'
       interface_args = { board: @chess_board, display: display, active_color: @active_color,
                          user_input: input, castle_manager: @castle_manager }
       move = @move_interface.for_input(**interface_args).move_selection
@@ -156,6 +157,11 @@ class Chess
   def handle_save_input
     save_game
     display.save_game_message
+    exit
+  end
+
+  def quit
+    display.quit_message
     exit
   end
 
