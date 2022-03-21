@@ -97,7 +97,7 @@ Most win and draw states have been implemented in my game. Checkmate, Stalemate,
 The one draw state my game does not include is Insufficient Material. I would like to add this in eventually (see Improvements section).
 
 
-## Improvements
+## Potential Improvements
 
 There are definitely several improvements I want to make in the future, especially if I'm to include this in a portfolio. My main focus will be moving on in the Odin curriculum, where studying Rails awaits me. However, I do plan to schedule some time every week to review this project's codebase alongside other resources and ideate ways to accomplish some of the improvements listed here. When I have a good attack plan, I'll revisit the project to try implementing some of these changes.
 
@@ -125,7 +125,7 @@ Currently my game only works with humans controlling both players. A good potent
 One component of the UIs on the two big Chess sites -- [chess.com](https://chess.com) and [lichess.org](https://lichess.org) -- is a 'material scoreboard' of sorts. In chess, each piece is considered to have a 'value' relative to the other pieces. A pawn is worth 1 point of material, a knight or bishop is worth 3, a rook is worth 5, and a queen is worth 9. Any time you capture an opponent's piece, you gain that piece's points. The UI can track which player is ahead in material and by how much. Because of the importance of material, this feedback is useful for analyzing which side is currently winning the match (although of course, it's not the only factor in determining this). I think this would be a great feature to add, and it would have a nice side effect of making the following feature easier to incorporate as well.
 
 #### **Draw By Insufficient Material**
-This is the one endgame state I did not initially implement. Draws by insufficient material emerge when neither side has enough pieces to checkmate the opposing King. Although the game will eventually end to the fifty-move-rule, certain piece combos are known to give no checkmate chances and the game can just be declared a draw on the spot. This is definitely a nice quality of life improvement for users, as they can avoid playing out the useless fifty moves to draw. It's also just in the rules for most competitions, so it'd be good to feature this.
+This is the one endgame state I did not initially implement. Draws by insufficient material emerge when neither side has enough pieces to checkmate the opposing King. Although the game will eventually end to the fifty-move-rule or repetitions, certain piece combos are known to give no checkmate chances and the game can just be declared a draw on the spot. This is definitely a nice quality of life improvement for users, as they can avoid playing out the useless moves to draw. It's also just in the rules for most competitions, so it'd be good to feature this.
 
 #### **Highlighting Last Move**
 
@@ -140,15 +140,19 @@ A complete move history is also a common feature of Chess UIs. Even when playing
 
 #### **Load from FEN**
 
-Another feature that could be nice for players is to have an option to load a new game directly from a [FEN string](https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation). On one hand, this wouldn't be too complicated to implement, since my existing serialization with saves and loads already uses FEN strings under the hood. But if I allow a user to input any FEN string of their choosing, I'd probably need to do at least some validating to make sure it's a string that won't immediately crash the game.
+Another feature that could be nice for players is to have an option to load a new game directly from a [FEN string](https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation). On one hand, this wouldn't be too complicated to implement, since my existing serialization with saves and loads already uses FEN strings under the hood. But if I allow a user to input any FEN string of their choosing, I'd probably need to do at least some validating to make sure it won't immediately crash my game.
 
 
 ## Acknowledgements
 
 ### The Odin Project
-[The Odin Project](https://theodinproject.com) is an open source curriculum for learning web development. This project was done as part of the said curriculum, and the Odin community has taught me, or given me the tools to learn, virtually everything I know about programming.
+[The Odin Project](https://theodinproject.com) is an open source curriculum for learning web development. This project was done as part of the said curriculum, and the Odin community has taught me, or given me the tools to learn, virtually everything I know about programming. I also want to specifically acknowledge everyone in the Ruby channels of the Odin Project discord :heart:
 
 ### TextKool
 [TextKool](https://textkool.com/en/ascii-art-generator?hl=default&vl=default&font=Red%20Phoenix&text=Your%20text%20here%20) was used to generate the ascii text of the project.
+
+### Chess.com
+[Chess](https://chess.com) is a platform for playing Chess and is typically where I play. My board's color scheme is inspired by one of the board themes on their site.
+
 ### Lichess
-[Lichess](https://lichess.org) is an open source platform for playing Chess. It's Study section, where you can create custom game situations and extract a FEN from them, proved pretty valuable for me testing various aspects of my game's functionality.
+[Lichess](https://lichess.org) is an open source platform for playing Chess. Its Study section, where you can create custom game situations and extract a FEN from them, proved pretty valuable for me testing various aspects of my game's functionality.
