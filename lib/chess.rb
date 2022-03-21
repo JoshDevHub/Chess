@@ -110,7 +110,7 @@ class Chess
   # rubocop: disable Metrics/MethodLength
   def continue_game?
     if @chess_board.checkmate?(@active_color)
-      display.checkmate_message(@active_color, inactive_color)
+      display.checkmate_message(active_player, inactive_player)
     elsif @chess_board.stalemate?(@active_color)
       display.stalemate_message(@active_color)
     elsif @half_move_clock >= 50
@@ -165,6 +165,10 @@ class Chess
 
   def active_player
     { white: @player_white, black: @player_black }[@active_color.to_sym]
+  end
+
+  def inactive_player
+    active_player == @player_white ? @player_black : @player_white
   end
 
   def piece_can_affect_castling?(piece)
