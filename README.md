@@ -16,7 +16,7 @@ A command line game of Chess built with Ruby
 
 ## Description
 
-This is a CLI program that allows two players to participate in a game of Chess. This was done as part of the curriculum at [TheOdinProject](https://theodinproject.com), an open source curriculum for learning web development. This project specifically is the final project in the Ruby curriculum and is meant to demonstrate the learner's proficiency with the language and various programming fundamentals.
+This is a CLI program that allows two players to participate in a game of Chess. This was done as part of the curriculum at [The Odin Project](https://theodinproject.com), an open source curriculum for learning web development. This project specifically is the final project in the Ruby curriculum and is meant to demonstrate the learner's proficiency with the language and various programming fundamentals.
 
 The rules of Chess can be read about [here](https://en.wikipedia.org/wiki/Chess). Most of them have been implemented in my project, though not all (more on this in the Improvements section).
 
@@ -41,14 +41,17 @@ Chess is an abstract strategy board game. Two players, one controlling the white
 
 ### Dual Move Interface
 
-I included two options for users to choose from when it comes to moving their pieces:
-1. The user can enter an origin square followed by Enter/Return to get a list of moves to choose from for the piece at the origin square. The user can then enter the target square to execute their desired move. The board is also reprinted with a black dot on empty squares the piece can move to, and red highlighting on squares where a piece can be captured. Users can type 'back' to be taken back to the origin selection menu in the event that they change their mind while looking through a piece's possible moves.
-![gif of list interface](https://raw.githubusercontent.com/JoshDevHub/Chess/main/media/move_list_demo.gif)
-2. The user can enter an origin square and a target square together in one line. For example, the move done above using the move list interface can instead be done by just typing `d5g2`
+I included two options for users to choose from when it comes to moving their pieces:  
+
+**1** - The user can enter an origin square followed by Enter/Return to get a list of moves to choose from for the piece at the origin square. The user can then enter the target square to execute their desired move. The board is also reprinted with a black dot on empty squares the chosen piece can move to, and red highlighting on squares where a piece can be captured. Users can type 'back' to be taken back to the origin selection menu in the event that they change their mind while looking through a piece's possible moves.
+![gif of list interface](https://raw.githubusercontent.com/JoshDevHub/Chess/main/media/move_list_demo.gif)  
+
+**2** - The user can enter an origin square and a target square together in one line. For example, the move done above using the move list interface can instead be done by just typing `d5g2`  
+
 ![gif of inline interface](https://raw.githubusercontent.com/JoshDevHub/Chess/main/media/move_inline_demo.gif)
 
 So why did I do it this way? I did some light research with other Odin students' Chess projects (not looking at code, just playing and getting a feel for their UI/UX on the command line) and noticed that the 1st option I listed above was the way just about everyone did it. I knew I wanted to build this interface for a couple of reasons:
-1. It's friendly for users who don't know the ins and outs of Chess and how all the pieces move. It'll additionally be familiar to any Odin students who want to review my project and its code.
+1. It's friendly for users who don't know the ins and outs of Chess and how all the pieces move. It'll additionally be familiar to any other Odin students looking at my project.
 2. It presents a nice design challenge, particularly the aspect where I reprint the board with the move possibilities and captures highlighted to aide the user in visualizing their moves.
 
 However, I am an experienced Chess player and have been playing the game since I was a kid. Anyone very familiar with the game and how the pieces move will find this interface clunky. So I also developed the move interface where you can just enter a move in one line, skipping the second step entirely to make for a smooth, uninterrupted user experience.
