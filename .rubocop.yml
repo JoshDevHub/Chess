@@ -1,0 +1,32 @@
+require:
+  - rubocop-rspec
+  - rubocop-performance
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - spec/spec_helper.rb
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+
+Lint/AmbiguousBlockAssociation:
+  IgnoredMethods: [change]
+
+Metrics/ClassLength:
+  Exclude:
+    - lib/board.rb
+    - lib/chess.rb
+    - lib/display.rb
+
+Security/YAMLLoad:
+  Exclude:
+    - lib/chess/**
+
+Metrics/MethodLength:
+  CountAsOne: ['hash', 'heredoc']
+
+Layout/HeredocIndentation:
+  Exclude:
+    - lib/display.rb
