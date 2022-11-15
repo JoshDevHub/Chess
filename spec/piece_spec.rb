@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/coordinate'
-require_relative '../lib/piece'
-Dir[File.join(__dir__, '../lib/pieces', '*.rb')].sort.each { |file| require file }
-
-describe Piece do
+RSpec.describe Piece do
   describe '#self.from_fen' do
     context 'when the piece is a white king' do
       it 'creates a King subclass' do

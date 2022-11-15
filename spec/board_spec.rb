@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/coordinate'
-require_relative '../lib/square'
-require_relative '../lib/board'
-require_relative '../lib/piece'
-require_relative '../lib/pieces/null_piece'
-
-describe Board do
+RSpec.describe Board do
   let(:square_class) { class_double(Square, new: nil) }
   describe '#initialize' do
     before do

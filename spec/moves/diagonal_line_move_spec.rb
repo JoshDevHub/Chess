@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../lib/coordinate'
-require_relative '../../lib/square'
-require_relative '../../lib/board'
-require_relative '../../lib/move'
-require_relative '../../lib/moves/diagonal_line_move'
-
-describe DiagonalLineMove do
+RSpec.describe DiagonalLineMove do
   describe '#generate_moves' do
     let(:board) { instance_double(Board, access_square: square) }
     let(:square) { instance_double(Square, unoccupied?: true, piece_color: nil) }

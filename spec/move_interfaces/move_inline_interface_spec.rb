@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../lib/coordinate'
-require_relative '../../lib/board'
-require_relative '../../lib/move_interface'
-require_relative '../../lib/move_interfaces/move_inline_interface'
-
-describe MoveInlineInterface do
+RSpec.describe MoveInlineInterface do
   describe '#move_selection' do
     let(:board) { instance_double(Board) }
     let(:active_color) { 'white' }

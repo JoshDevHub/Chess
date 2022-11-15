@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/coordinate'
-require_relative '../lib/castle_manager'
-require_relative '../lib/board'
-require_relative '../lib/piece'
-
-describe CastleManager do
+RSpec.describe CastleManager do
   describe '#can_castle?' do
     context 'when the manager is initialized with default options' do
       subject(:castle_manager) { described_class.new }

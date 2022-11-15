@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../lib/coordinate'
-require_relative '../../lib/square'
-require_relative '../../lib/board'
-require_relative '../../lib/move'
-require_relative '../../lib/moves/black_pawn_advance'
-
-describe BlackPawnAdvance do
+RSpec.describe BlackPawnAdvance do
   let(:board) { instance_double(Board, access_square: square) }
   let(:square) { instance_double(Square, unoccupied?: true) }
   subject(:down_move) { described_class.new(color: 'black', origin: origin, board: board) }

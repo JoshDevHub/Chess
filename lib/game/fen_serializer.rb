@@ -2,8 +2,8 @@
 
 require 'yaml'
 
-# written as an extension of Chess -- can't exist outside this context
-class Chess
+# written as an extension of Game -- can't exist outside this context
+class Game
   # handles serialization to and from FEN strings
   module FENSerializer
     def game_to_fen
@@ -13,7 +13,7 @@ class Chess
       castle_fen = instance_variable_get(:@castle_manager).to_fen
       half_move_fen = instance_variable_get(:@half_move_clock)
       full_move_fen = instance_variable_get(:@full_move_clock)
-      "#{board_fen} #{active_color} #{castle_fen} #{en_passant_square} #{half_move_fen} "\
+      "#{board_fen} #{active_color} #{castle_fen} #{en_passant_square} #{half_move_fen} " \
         "#{full_move_fen}"
     end
 
@@ -27,7 +27,7 @@ class Chess
 
     def save_game
       yaml_string = game_to_yaml
-      Dir.mkdir('../saved_games') unless Dir.exist?('../saved_games')
+      FileUtils.mkdir_p('../saved_games')
       save_numbers = Dir.each_child('saved_games/').to_a.map(&:chr)
       game_number = ('1'..'5').find { |number| save_numbers.none?(number) } || '1'
       manage_save_files(game_number)
@@ -43,7 +43,7 @@ class Chess
     end
 
     def delete_save(file_path)
-      File.delete(file_path) if File.exist?(file_path)
+      FileUtils.rm_f(file_path)
     end
 
     def load_script

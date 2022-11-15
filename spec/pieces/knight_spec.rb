@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../lib/coordinate'
-require_relative '../../lib/board'
-require_relative '../../lib/piece'
-require_relative '../../lib/pieces/knight'
-require_relative '../../lib/move'
-require_relative '../../lib/moves/knight_moves'
-
-describe Knight do
+RSpec.describe Knight do
   describe '#move_list' do
     subject(:knight) { described_class.new(color: 'black', position: square) }
     let(:board) { instance_double(Board) }

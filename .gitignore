@@ -2,3 +2,4 @@ TODO
 .vscode
 /saved_games/**
 /coverage/
+/spec/examples.txt

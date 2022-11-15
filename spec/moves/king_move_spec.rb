@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../lib/coordinate'
-require_relative '../../lib/square'
-require_relative '../../lib/board'
-require_relative '../../lib/move'
-require_relative '../../lib/moves/king_move'
-
-describe KingMove do
+RSpec.describe KingMove do
   subject(:king_move) { described_class.new(color: 'black', origin: origin, board: board) }
   describe '#generate_moves' do
     let(:board) { instance_double(Board, access_square: square) }

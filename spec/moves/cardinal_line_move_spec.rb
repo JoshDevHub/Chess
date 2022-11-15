@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../lib/coordinate'
-require_relative '../../lib/square'
-require_relative '../../lib/board'
-require_relative '../../lib/move'
-require_relative '../../lib/moves/cardinal_line_move'
-
-describe CardinalLineMove do
+RSpec.describe CardinalLineMove do
   subject(:cardinal_line) { described_class.new(color: 'black', origin: origin, board: board) }
   let(:board) { instance_double(Board, access_square: square) }
   let(:square) { instance_double(Square, unoccupied?: true, piece_color: nil) }

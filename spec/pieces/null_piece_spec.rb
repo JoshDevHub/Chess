@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../lib/coordinate'
-require_relative '../../lib/piece'
-require_relative '../../lib/pieces/null_piece'
-
-describe NullPiece do
+RSpec.describe NullPiece do
   subject(:null_piece) { described_class.new(color: 'red', position: 'A1') }
   describe '#name' do
     it 'returns nil' do

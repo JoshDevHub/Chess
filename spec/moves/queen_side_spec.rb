@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../lib/coordinate'
-require_relative '../../lib/square'
-require_relative '../../lib/board'
-require_relative '../../lib/castle_manager'
-require_relative '../../lib/move'
-require_relative '../../lib/moves/queen_side_castle'
-
-describe QueenSideCastle do
+RSpec.describe QueenSideCastle do
   let(:board) { instance_double(Board, access_square: empty_square, square_under_attack_from_color?: false) }
   let(:empty_square) { instance_double(Square, unoccupied?: true, piece_color: nil) }
   let(:occupied_square) { instance_double(Square, unoccupied?: false, piece_color: 'white') }

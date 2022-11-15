@@ -1,16 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../lib/coordinate'
-require_relative '../../lib/board'
-require_relative '../../lib/piece'
-require_relative '../../lib/pieces/king'
-require_relative '../../lib/move'
-require_relative '../../lib/moves/king_move'
-require_relative '../../lib/moves/king_side_castle'
-require_relative '../../lib/moves/queen_side_castle'
-require_relative '../../lib/castle_manager'
-
-describe King do
+RSpec.describe King do
   subject(:king) { described_class.new(color: 'white', position: square) }
   let(:board) { instance_double(Board) }
   let(:king_move_instance) { instance_double(KingMove) }

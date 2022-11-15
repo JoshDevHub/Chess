@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/coordinate'
-require_relative '../lib/board'
-require_relative '../lib/move'
-
-describe Move do
+RSpec.describe Move do
   let(:origin) { 'A1' }
   let(:board) { instance_double(Board) }
   let(:color) { 'white' }

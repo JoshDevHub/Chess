@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/coordinate'
-require_relative '../lib/piece'
-require_relative '../lib/fen'
-
-describe FEN do
+RSpec.describe FEN do
   let(:piece) { class_double(Piece) }
   describe '#piece_info' do
     context 'when the board is the starting board' do

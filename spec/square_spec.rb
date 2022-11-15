@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/coordinate'
-require_relative '../lib/colorize_output'
-require_relative '../lib/square'
-require_relative '../lib/piece'
-require_relative '../lib/pieces/null_piece'
-
-describe Square do
+RSpec.describe Square do
   let(:piece) { instance_double(Piece, to_s: 'piece', absent?: false) }
   describe '#unoccupied?' do
     context 'when the square is empty' do

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/coordinate'
-
-describe Coordinate do
+RSpec.describe Coordinate do
   subject(:coordinate_includer) { Class.new { extend Coordinate } }
   describe '#to_square_notation' do
     context 'when the x,y coordinate is [0, 0]' do

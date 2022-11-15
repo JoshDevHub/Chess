@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/player'
-
-describe Player do
+RSpec.describe Player do
   describe '#create_user_name' do
     let(:color) { 'white' }
     subject(:player_one) { described_class.new(color: color) }

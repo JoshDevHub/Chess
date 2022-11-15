@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../lib/coordinate'
-require_relative '../../lib/square'
-require_relative '../../lib/board'
-require_relative '../../lib/move'
-require_relative '../../lib/moves/white_pawn_capture'
-
-describe WhitePawnCapture do
+RSpec.describe WhitePawnCapture do
   let(:board) { instance_double(Board, access_square: square, en_passant_target: nil) }
   let(:enemy_color) { 'black' }
   let(:square) { instance_double(Square, piece_color: nil) }
