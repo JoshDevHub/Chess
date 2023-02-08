@@ -5,7 +5,7 @@ require_relative 'colorize_output'
 # class for representing the cells contained on a chess board
 class Square
   include Coordinate
-  include ColorizeOutput
+  using ColorableStrings
 
   attr_reader :name
 
@@ -21,7 +21,8 @@ class Square
 
   def to_s(_move_list = nil)
     string = piece.to_s
-    bg_color(fg_black(string))
+    string.fg_color(:black).bg_color(bg_color_name)
+    # bg_color(fg_black(string))
   end
 
   def to_string_with_moves(move_list)
@@ -29,10 +30,12 @@ class Square
       to_s
     elsif unoccupied?
       string = " \u2022 "
-      bg_color(fg_black(string))
+      string.fg_color(:black).bg_color(bg_color_name)
+      # bg_color(fg_black(string))
     else
       string = piece.to_s
-      bg_red(fg_black(string))
+      # bg_red(fg_black(string))
+      string.fg_color(:black).bg_color(:red)
     end
   end
 
@@ -60,8 +63,8 @@ class Square
 
   private
 
-  def bg_color(string)
+  def bg_color_name
     x_coord, y_coord = to_xy_coordinate(name)
-    (x_coord + y_coord).even? ? bg_gray(string) : bg_purple(string)
+    (x_coord + y_coord).even? ? :gray : :purple
   end
 end

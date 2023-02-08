@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # modules
-require_relative 'colorize_output'
+require_relative 'colorable_strings'
 require_relative 'coordinate'
 require_relative 'game/fen_serializer'
 
