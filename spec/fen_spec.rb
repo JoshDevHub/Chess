@@ -14,23 +14,23 @@ RSpec.describe FEN do
       end
 
       it 'sends Piece #from_fen exactly 32 times' do
-        expect(piece).to receive(:from_fen).exactly(32).times
         starting_board.piece_info
+        expect(piece).to have_received(:from_fen).exactly(32).times
       end
 
       it 'sends Piece #from_fen with r and A8' do
-        expect(piece).to receive(:from_fen).with('r', 'A8')
         starting_board.piece_info
+        expect(piece).to have_received(:from_fen).with('r', 'A8')
       end
 
       it 'sends Piece #from_fen with K and D1' do
-        expect(piece).to receive(:from_fen).with('K', 'E1')
         starting_board.piece_info
+        expect(piece).to have_received(:from_fen).with('K', 'E1')
       end
 
       it 'does not send Piece #from_fen with p and G4' do
-        expect(piece).not_to receive(:from_fen).with('p', 'G4')
         starting_board.piece_info
+        expect(piece).not_to have_received(:from_fen).with('p', 'G4')
       end
     end
 
@@ -44,13 +44,13 @@ RSpec.describe FEN do
       end
 
       it 'sends Piece #from_fen exactly 16 times' do
-        expect(piece).to receive(:from_fen).exactly(16).times
         fen_data.piece_info
+        expect(piece).to have_received(:from_fen).exactly(16).times
       end
 
       it 'sends Piece #from_fen with R and C1' do
-        expect(piece).to receive(:from_fen).with('R', 'C1')
         fen_data.piece_info
+        expect(piece).to have_received(:from_fen).with('R', 'C1')
       end
     end
   end
@@ -160,7 +160,7 @@ RSpec.describe FEN do
         expect(castle_fen.castle_info[:white_king_side]).to be(true)
       end
 
-      it 'returns a hash with the key:value of white_king_side: true' do
+      it 'returns a hash with the key:value of white_queen_side: true' do
         expect(castle_fen.castle_info[:white_queen_side]).to be(true)
       end
 
@@ -180,7 +180,7 @@ RSpec.describe FEN do
         expect(castle_fen.castle_info[:white_king_side]).to be(false)
       end
 
-      it 'returns a hash with the key:value of white_king_side: false' do
+      it 'returns a hash with the key:value of white_queen_side: false' do
         expect(castle_fen.castle_info[:white_queen_side]).to be(false)
       end
 
@@ -200,7 +200,7 @@ RSpec.describe FEN do
         expect(castle_fen.castle_info[:white_king_side]).to be(false)
       end
 
-      it 'returns a hash with the key:value of white_king_side: false' do
+      it 'returns a hash with the key:value of white_queen_side: false' do
         expect(castle_fen.castle_info[:white_queen_side]).to be(true)
       end
 

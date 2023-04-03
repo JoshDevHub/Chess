@@ -470,8 +470,8 @@ RSpec.describe CastleManager do
       end
 
       it 'sends #castle_move? with target to the given piece' do
-        expect(piece).to receive(:castle_move?).with(target)
         castle_manager.handle_castling(piece, target, board)
+        expect(piece).to have_received(:castle_move?).with(target)
       end
 
       it 'sends #move_piece to the board with the coordinates of a rook to move' do
@@ -482,8 +482,8 @@ RSpec.describe CastleManager do
       end
 
       it 'sends #disable_castle_rights to the piece' do
-        expect(piece).to receive(:disable_castle_rights)
         castle_manager.handle_castling(piece, target, board)
+        expect(piece).to have_received(:disable_castle_rights)
       end
     end
 
@@ -494,13 +494,13 @@ RSpec.describe CastleManager do
       end
 
       it 'sends #castle_move? with target to the given piece' do
-        expect(piece).to receive(:castle_move?).with(target)
         castle_manager.handle_castling(piece, target, board)
+        expect(piece).to have_received(:castle_move?).with(target)
       end
 
       it 'sends #disable_castle_rights to the piece' do
-        expect(piece).to receive(:disable_castle_rights)
         castle_manager.handle_castling(piece, target, board)
+        expect(piece).to have_received(:disable_castle_rights)
       end
 
       it 'does not send #move_piece to the board' do

@@ -6,8 +6,8 @@ RSpec.describe MoveInlineInterface do
 
     let(:board) { instance_double(Board) }
     let(:active_color) { 'white' }
-    let(:display) { double('display') }
-    let(:castle_manager) { double('castle') }
+    let(:display) { instance_double(Display) }
+    let(:castle_manager) { instance_double(CastleManager) }
     let(:interface_arguments) do
       {
         board: board,
@@ -39,8 +39,8 @@ RSpec.describe MoveInlineInterface do
 
       it 'sends #move_list_from_origin message to board with origin and castle_manager' do
         origin = user_input[0..1]
-        expect(board).to receive(:move_list_from_origin).with(origin, castle_manager)
         move_inline_interface.move_selection
+        expect(board).to have_received(:move_list_from_origin).with(origin, castle_manager)
       end
     end
 
@@ -71,8 +71,8 @@ RSpec.describe MoveInlineInterface do
 
       it 'sends #move_list_from_origin to board with origin and castle_manager' do
         origin = user_input[0..1]
-        expect(board).to receive(:move_list_from_origin).with(origin, castle_manager)
         move_inline_interface.move_selection
+        expect(board).to have_received(:move_list_from_origin).with(origin, castle_manager)
       end
     end
   end

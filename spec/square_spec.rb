@@ -26,7 +26,7 @@ RSpec.describe Square do
       subject(:square) { described_class.new(name: 'A1') }
 
       it 'changes @piece to the given piece' do
-        expect { square.add_piece(piece) }.to change { square.piece }.to(piece)
+        expect { square.add_piece(piece) }.to change(square, :piece).to(piece)
       end
     end
 
@@ -36,7 +36,7 @@ RSpec.describe Square do
       let(:new_piece) { instance_double(Piece) }
 
       it 'changes @piece from the current piece to the given piece' do
-        expect { square.add_piece(new_piece) }.to change { square.piece }.from(piece).to(new_piece)
+        expect { square.add_piece(new_piece) }.to change(square, :piece).to(new_piece)
       end
     end
   end
@@ -50,7 +50,7 @@ RSpec.describe Square do
       end
 
       it 'does not change the value held at @piece' do
-        expect { square.remove_piece }.not_to change { square.piece }
+        expect { square.remove_piece }.not_to change(square, :piece)
         square.remove_piece
       end
     end
@@ -63,7 +63,7 @@ RSpec.describe Square do
       end
 
       it 'changes @piece from piece to a NullPiece' do
-        expect { square.remove_piece }.to change { square.piece }.from(piece).to(NullPiece)
+        expect { square.remove_piece }.to change(square, :piece).from(piece).to(NullPiece)
       end
     end
   end

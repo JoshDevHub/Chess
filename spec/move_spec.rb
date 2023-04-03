@@ -7,12 +7,6 @@ RSpec.describe Move do
   let(:board) { instance_double(Board) }
   let(:color) { 'white' }
 
-  describe '#move_set' do
-    it 'returns an empty array' do
-      expect(move_super.generate_moves).to be_empty
-    end
-  end
-
   describe '#generate_moves' do
     it 'returns an empty array' do
       expect(move_super.generate_moves).to be_empty

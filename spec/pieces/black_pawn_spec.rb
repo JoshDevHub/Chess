@@ -22,23 +22,23 @@ RSpec.describe BlackPawn do
       end
 
       it 'instantiates an instance of BlackPawnAdvance' do
-        expect(BlackPawnAdvance).to receive(:new)
         black_pawn.move_list(board)
+        expect(BlackPawnAdvance).to have_received(:new)
       end
 
       it 'sends #generate_moves to the BlackPawnAdvance instance' do
-        expect(one_down).to receive(:generate_moves)
         black_pawn.move_list(board)
+        expect(one_down).to have_received(:generate_moves)
       end
 
       it 'instantiates an instance of BlackPawnCapture' do
-        expect(BlackPawnCapture).to receive(:new)
         black_pawn.move_list(board)
+        expect(BlackPawnCapture).to have_received(:new)
       end
 
       it 'sends #generate_moves to the BlackPawnCapture instance' do
-        expect(diagonal_capture).to receive(:generate_moves).and_return([])
         black_pawn.move_list(board)
+        expect(diagonal_capture).to have_received(:generate_moves)
       end
 
       it 'does not instantiate an instance of BlackPawnDoubleAdvance' do
@@ -61,33 +61,33 @@ RSpec.describe BlackPawn do
       end
 
       it 'instantiates an instance of BlackPawnAdvance' do
-        expect(BlackPawnAdvance).to receive(:new)
         black_pawn.move_list(board)
+        expect(BlackPawnAdvance).to have_received(:new)
       end
 
       it 'sends #generate_moves to the BlackPawnAdvance instance' do
-        expect(one_down).to receive(:generate_moves)
         black_pawn.move_list(board)
+        expect(one_down).to have_received(:generate_moves)
       end
 
       it 'instantiates an instance of BlackPawnCapture' do
-        expect(BlackPawnCapture).to receive(:new)
         black_pawn.move_list(board)
+        expect(BlackPawnCapture).to have_received(:new)
       end
 
       it 'sends #generate_moves to the BlackPawnCapture instance' do
-        expect(diagonal_capture).to receive(:generate_moves).and_return([])
         black_pawn.move_list(board)
+        expect(diagonal_capture).to have_received(:generate_moves)
       end
 
       it 'instantiates an instance of BlackPawnDoubleAdvance' do
-        expect(BlackPawnDoubleAdvance).to receive(:new)
         black_pawn.move_list(board)
+        expect(BlackPawnDoubleAdvance).to have_received(:new)
       end
 
       it 'sends #generate_moves to the BlackPawnDoubleAdvance instance' do
-        expect(double_down_instance).to receive(:generate_moves)
         black_pawn.move_list(board)
+        expect(double_down_instance).to have_received(:generate_moves)
       end
     end
   end
@@ -135,8 +135,6 @@ RSpec.describe BlackPawn do
       end
 
       context 'when the square is not nil' do
-        let(:given_square) { 'B2' }
-        let(:given_square) { 'B1' }
         let(:given_square) { 'B1' }
 
         it 'returns nil or false' do
@@ -150,8 +148,6 @@ RSpec.describe BlackPawn do
     end
 
     context 'when the given square is an en passant square for white' do
-      let(:given_square) { 'C3' }
-      let(:given_square) { 'A3' }
       let(:given_square) { 'A3' }
 
       it 'returns true' do

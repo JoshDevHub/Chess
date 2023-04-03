@@ -18,23 +18,23 @@ RSpec.describe Queen do
     end
 
     it 'instantiates an instance of DiagonalLineMove' do
-      expect(DiagonalLineMove).to receive(:new)
       queen.move_list(board)
+      expect(DiagonalLineMove).to have_received(:new)
     end
 
     it 'sends #generate_moves to the DiagonalLineMove instance' do
-      expect(diagonal_move_instance).to receive(:generate_moves)
       queen.move_list(board)
+      expect(diagonal_move_instance).to have_received(:generate_moves)
     end
 
     it 'instantiates an instance of CardinalLineMove' do
-      expect(CardinalLineMove).to receive(:new)
       queen.move_list(board)
+      expect(CardinalLineMove).to have_received(:new)
     end
 
     it 'sends #generate_moves to the CardinalLineMove instance' do
-      expect(cardinal_move_instance).to receive(:generate_moves)
       queen.move_list(board)
+      expect(cardinal_move_instance).to have_received(:generate_moves)
     end
   end
 

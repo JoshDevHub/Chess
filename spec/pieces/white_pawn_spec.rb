@@ -22,23 +22,23 @@ RSpec.describe WhitePawn do
       end
 
       it 'instantiates an instance of WhitePawnAdvance' do
-        expect(WhitePawnAdvance).to receive(:new)
         white_pawn.move_list(board)
+        expect(WhitePawnAdvance).to have_received(:new)
       end
 
       it 'sends #generate_moves to the WhitePawnAdvance instance' do
-        expect(one_up).to receive(:generate_moves)
         white_pawn.move_list(board)
+        expect(one_up).to have_received(:generate_moves)
       end
 
       it 'instantiates an instance of WhitePawnCapture' do
-        expect(WhitePawnCapture).to receive(:new)
         white_pawn.move_list(board)
+        expect(WhitePawnCapture).to have_received(:new)
       end
 
       it 'sends #generate_moves to the WhitePawnCapture instance' do
-        expect(diagonal_capture).to receive(:generate_moves).and_return([])
         white_pawn.move_list(board)
+        expect(diagonal_capture).to have_received(:generate_moves)
       end
 
       it 'does not instantiate an instance of WhitePawnDoubleAdvance' do
@@ -61,33 +61,33 @@ RSpec.describe WhitePawn do
       end
 
       it 'instantiates an instance of WhitePawnAdvance' do
-        expect(WhitePawnAdvance).to receive(:new)
         white_pawn.move_list(board)
+        expect(WhitePawnAdvance).to have_received(:new)
       end
 
       it 'sends #generate_moves to the WhitePawnAdvance instance' do
-        expect(one_up).to receive(:generate_moves)
         white_pawn.move_list(board)
+        expect(one_up).to have_received(:generate_moves)
       end
 
       it 'instantiates an instance of WhitePawnCapture' do
-        expect(WhitePawnCapture).to receive(:new)
         white_pawn.move_list(board)
+        expect(WhitePawnCapture).to have_received(:new)
       end
 
       it 'sends #generate_moves to the WhitePawnCapture instance' do
-        expect(diagonal_capture).to receive(:generate_moves).and_return([])
         white_pawn.move_list(board)
+        expect(diagonal_capture).to have_received(:generate_moves)
       end
 
       it 'instantiates an instance of WhitePawnDoubleAdvance' do
-        expect(WhitePawnDoubleAdvance).to receive(:new)
         white_pawn.move_list(board)
+        expect(WhitePawnDoubleAdvance).to have_received(:new)
       end
 
       it 'sends #generate_moves to the WhitePawnDoubleAdvance instance' do
-        expect(double_up_instance).to receive(:generate_moves)
         white_pawn.move_list(board)
+        expect(double_up_instance).to have_received(:generate_moves)
       end
     end
   end
@@ -150,13 +150,7 @@ RSpec.describe WhitePawn do
     end
 
     context 'when the given square is an en passant square for white' do
-      let(:given_square) { 'C6' }
       let(:given_square) { 'A6' }
-      let(:given_square) { 'A6' }
-
-      it 'returns true' do
-        expect(white_pawn.capture_en_passant?(given_square)).to be(true)
-      end
 
       it 'returns true' do
         expect(white_pawn.capture_en_passant?(given_square)).to be(true)

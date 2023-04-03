@@ -14,13 +14,13 @@ RSpec.describe Knight do
     end
 
     it 'instantiates an instance of KnightMoves' do
-      expect(KnightMoves).to receive(:new)
       knight.move_list(board)
+      expect(KnightMoves).to have_received(:new)
     end
 
     it 'sends #generate_moves to the KnightMoves instance' do
-      expect(knight_move_instance).to receive(:generate_moves)
       knight.move_list(board)
+      expect(knight_move_instance).to have_received(:generate_moves)
     end
   end
 

@@ -15,13 +15,13 @@ RSpec.describe Rook do
     end
 
     it 'instantiates an instance of CardinalLineMove' do
-      expect(CardinalLineMove).to receive(:new)
       rook.move_list(board)
+      expect(CardinalLineMove).to have_received(:new)
     end
 
     it 'sends #generate_moves to the CardinalMoves instance' do
-      expect(cardinal_move_instance).to receive(:generate_moves)
       rook.move_list(board)
+      expect(cardinal_move_instance).to have_received(:generate_moves)
     end
   end
 
@@ -112,30 +112,42 @@ RSpec.describe Rook do
       context 'when the rook is on the A file' do
         let(:position) { 'A1' }
 
+        before do
+          allow(castle_manager).to receive(:remove_castle_option)
+        end
+
         it 'sends #remove_castle_option to the given castle_manager with :queen and color' do
           side = :queen
-          expect(castle_manager).to receive(:remove_castle_option).with(color, side)
           rook.disable_castle_rights(castle_manager)
+          expect(castle_manager).to have_received(:remove_castle_option).with(color, side)
         end
       end
 
       context 'when the rook is on the H file' do
         let(:position) { 'H1' }
 
+        before do
+          allow(castle_manager).to receive(:remove_castle_option)
+        end
+
         it 'send #remove_castle_option to the given castle_manager with :king and color' do
           side = :king
-          expect(castle_manager).to receive(:remove_castle_option).with(color, side)
           rook.disable_castle_rights(castle_manager)
+          expect(castle_manager).to have_received(:remove_castle_option).with(color, side)
         end
       end
 
       context 'when the rook is on the A file' do
         let(:position) { 'A1' }
 
+        before do
+          allow(castle_manager).to receive(:remove_castle_option)
+        end
+
         it 'send #remove_castle_option to the given castle_manager with :king and color' do
           side = :queen
-          expect(castle_manager).to receive(:remove_castle_option).with(color, side)
           rook.disable_castle_rights(castle_manager)
+          expect(castle_manager).to have_received(:remove_castle_option).with(color, side)
         end
       end
 
@@ -158,20 +170,28 @@ RSpec.describe Rook do
       context 'when the rook is on the A file' do
         let(:position) { 'A8' }
 
+        before do
+          allow(castle_manager).to receive(:remove_castle_option)
+        end
+
         it 'sends #remove_castle_option to the given castle_manager with :queen and color' do
           side = :queen
-          expect(castle_manager).to receive(:remove_castle_option).with(color, side)
           rook.disable_castle_rights(castle_manager)
+          expect(castle_manager).to have_received(:remove_castle_option).with(color, side)
         end
       end
 
       context 'when the rook is on the H file' do
         let(:position) { 'H8' }
 
+        before do
+          allow(castle_manager).to receive(:remove_castle_option)
+        end
+
         it 'send #remove_castle_option to the given castle_manager with :king and color' do
           side = :king
-          expect(castle_manager).to receive(:remove_castle_option).with(color, side)
           rook.disable_castle_rights(castle_manager)
+          expect(castle_manager).to have_received(:remove_castle_option).with(color, side)
         end
       end
 

@@ -6,8 +6,8 @@ RSpec.describe MoveListInterface do
 
     let(:board) { instance_double(Board) }
     let(:active_color) { 'white' }
-    let(:display) { double(Display) }
-    let(:castle_manager) { double('castle') }
+    let(:display) { instance_double(Display) }
+    let(:castle_manager) { instance_double(CastleManager) }
     let(:interface_arguments) do
       {
         board: board,
@@ -44,13 +44,13 @@ RSpec.describe MoveListInterface do
       end
 
       it 'sends #move_list_from_origin to board with user_input and castle_manager' do
-        expect(board).to receive(:move_list_from_origin).with(user_input, castle_manager)
         move_list_interface.move_selection
+        expect(board).to have_received(:move_list_from_origin).with(user_input, castle_manager)
       end
 
       it 'sends #move_choice_prompt to display with board and move_list' do
-        expect(display).to receive(:move_choice_prompt).with(board, target_list)
         move_list_interface.move_selection
+        expect(display).to have_received(:move_choice_prompt).with(board, target_list)
       end
 
       it 'calls #gets once' do
@@ -102,18 +102,18 @@ RSpec.describe MoveListInterface do
       end
 
       it 'sends #move_list_from_origin to board with user_input and castle_manager' do
-        expect(board).to receive(:move_list_from_origin).with(user_input, castle_manager)
         move_list_interface.move_selection
+        expect(board).to have_received(:move_list_from_origin).with(user_input, castle_manager)
       end
 
       it 'sends #move_choice_prompt to display with board and target_list' do
-        expect(display).to receive(:move_choice_prompt).with(board, target_list)
         move_list_interface.move_selection
+        expect(display).to have_received(:move_choice_prompt).with(board, target_list)
       end
 
       it 'calls #gets twice' do
-        expect(move_list_interface).to receive(:gets).twice
         move_list_interface.move_selection
+        expect(move_list_interface).to have_received(:gets).twice
       end
 
       it 'returns a hash with the key: origin set to user_input' do

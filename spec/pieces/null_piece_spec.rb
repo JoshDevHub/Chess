@@ -29,8 +29,8 @@ RSpec.describe NullPiece do
 
   describe '#move_list' do
     # not verifying doubles because they are unusued in the method definition
-    let(:board) { double('board') }
-    let(:castle_manager) { double('castle_manager') }
+    let(:board) { instance_double(Board) }
+    let(:castle_manager) { instance_double(CastleManager) }
 
     it 'returns an empty array' do
       expect(null_piece.move_list(board, castle_manager)).to be_empty

@@ -21,33 +21,33 @@ RSpec.describe King do
     end
 
     it 'instantiates an instance of KingMove' do
-      expect(KingMove).to receive(:new)
       king.move_list(board)
+      expect(KingMove).to have_received(:new)
     end
 
     it 'sends #generate_moves to the KingMove instance' do
-      expect(king_move_instance).to receive(:generate_moves)
       king.move_list(board)
+      expect(king_move_instance).to have_received(:generate_moves)
     end
 
     it 'instantiates an instance of WhiteKingSideCastle' do
-      expect(KingSideCastle).to receive(:new)
       king.move_list(board)
+      expect(KingSideCastle).to have_received(:new)
     end
 
     it 'sends #generate_moves to the WhiteKingSideCastle instance' do
-      expect(king_castle_move).to receive(:generate_moves)
       king.move_list(board)
+      expect(king_castle_move).to have_received(:generate_moves)
     end
 
     it 'instantiates an instance of WhiteQueenSideCastle' do
-      expect(QueenSideCastle).to receive(:new)
       king.move_list(board)
+      expect(QueenSideCastle).to have_received(:new)
     end
 
     it 'sends #generate_moves to the WhiteQueenSideCastle instance' do
-      expect(queen_castle_move).to receive(:generate_moves)
       king.move_list(board)
+      expect(queen_castle_move).to have_received(:generate_moves)
     end
   end
 
@@ -217,18 +217,26 @@ RSpec.describe King do
     context 'when the king is white' do
       let(:color) { 'white' }
 
+      before do
+        allow(castle_manager).to receive(:remove_all_castles_for_color)
+      end
+
       it 'sends #remove_all_castles_for_color to the given castle_manager with color' do
-        expect(castle_manager).to receive(:remove_all_castles_for_color).with(color)
         king.disable_castle_rights(castle_manager)
+        expect(castle_manager).to have_received(:remove_all_castles_for_color).with(color)
       end
     end
 
     context 'when the king is black' do
       let(:color) { 'black' }
 
+      before do
+        allow(castle_manager).to receive(:remove_all_castles_for_color)
+      end
+
       it 'sends #remove_all_castles_for_color to the given castle_manager with color' do
-        expect(castle_manager).to receive(:remove_all_castles_for_color).with(color)
         king.disable_castle_rights(castle_manager)
+        expect(castle_manager).to have_received(:remove_all_castles_for_color).with(color)
       end
     end
   end

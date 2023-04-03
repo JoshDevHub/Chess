@@ -9,8 +9,8 @@ RSpec.describe Board do
     end
 
     it 'creates 64 square objects' do
-      expect(square_class).to receive(:new).exactly(64).times
       described_class.new(square_class)
+      expect(square_class).to have_received(:new).exactly(64).times
     end
   end
 
@@ -32,17 +32,17 @@ RSpec.describe Board do
 
     it 'returns a board object' do
       board_instance = described_class.from_fen(fen_data: fen_data, square: square_class)
-      expect(board_instance).to be_a(Board)
+      expect(board_instance).to be_a(described_class)
     end
 
     it 'sends #add_piece to E2 Square with E2 Pawn' do
-      expect(e2_square).to receive(:add_piece).with(e2_pawn)
       described_class.from_fen(fen_data: fen_data, square: square_class)
+      expect(e2_square).to have_received(:add_piece).with(e2_pawn)
     end
 
     it 'sends #add_piece to E1 Square with E1 King' do
-      expect(e1_square).to receive(:add_piece).with(e1_king)
       described_class.from_fen(fen_data: fen_data, square: square_class)
+      expect(e1_square).to have_received(:add_piece).with(e1_king)
     end
   end
 
@@ -78,8 +78,8 @@ RSpec.describe Board do
 
     let(:origin_square) { instance_double(Square) }
     let(:piece) { instance_double(Piece) }
-    let(:castle_manager) { double('castle_manager') }
-    let(:move_list) { double('move_list') }
+    let(:castle_manager) { instance_double(CastleManager) }
+    let(:move_list) { [] }
     let(:origin) { 'A1' }
 
     before do
@@ -90,13 +90,13 @@ RSpec.describe Board do
     end
 
     it 'sends a #piece to the origin square' do
-      expect(origin_square).to receive(:piece)
       game_board.move_list_from_origin(origin, castle_manager)
+      expect(origin_square).to have_received(:piece)
     end
 
     it 'sends #move_list to the piece' do
-      expect(piece).to receive(:move_list).with(game_board, castle_manager)
       game_board.move_list_from_origin(origin, castle_manager)
+      expect(piece).to have_received(:move_list).with(game_board, castle_manager)
     end
   end
 
@@ -134,23 +134,23 @@ RSpec.describe Board do
         end
 
         it 'sends #remove_piece message to origin square' do
-          expect(origin_square).to receive(:remove_piece)
           game_board.move_piece(origin, target)
+          expect(origin_square).to have_received(:remove_piece)
         end
 
         it 'sends #define_en_passant_square to the moving piece with the target' do
-          expect(piece).to receive(:define_en_passant_square).with(target)
           game_board.move_piece(origin, target)
+          expect(piece).to have_received(:define_en_passant_square).with(target)
         end
 
         it 'sends #move_position to the moving piece with the target square name' do
-          expect(piece).to receive(:move_position).with(target)
           game_board.move_piece(origin, target)
+          expect(piece).to have_received(:move_position).with(target)
         end
 
         it 'sends #add_piece with the moving piece to the target square' do
-          expect(target_square).to receive(:add_piece).with(piece)
           game_board.move_piece(origin, target)
+          expect(target_square).to have_received(:add_piece).with(piece)
         end
 
         it 'returns the piece at the target square' do
@@ -172,28 +172,29 @@ RSpec.describe Board do
         end
 
         it 'sends #remove_piece message to origin square' do
-          expect(origin_square).to receive(:remove_piece)
           game_board.move_piece(origin, target)
+          expect(origin_square).to have_received(:remove_piece)
         end
 
         it 'sends #define_en_passant_square to the moving piece with the target' do
-          expect(piece).to receive(:define_en_passant_square).with(target)
           game_board.move_piece(origin, target)
+          expect(piece).to have_received(:define_en_passant_square).with(target)
         end
 
         it 'changes @en_passant_target to the return given by define_en_passant_square' do
           return_square = piece.define_en_passant_square(target)
-          expect { game_board.move_piece(origin, target) }.to change { game_board.en_passant_target }.to(return_square)
+          expect { game_board.move_piece(origin, target) }
+            .to change(game_board, :en_passant_target).to(return_square)
         end
 
         it 'sends #move_position to the moving piece with the target square name' do
-          expect(piece).to receive(:move_position).with(target)
           game_board.move_piece(origin, target)
+          expect(piece).to have_received(:move_position).with(target)
         end
 
         it 'sends #add_piece with the moving piece to the target square' do
-          expect(target_square).to receive(:add_piece).with(piece)
           game_board.move_piece(origin, target)
+          expect(target_square).to have_received(:add_piece).with(piece)
         end
 
         it 'returns the piece at the target square' do
@@ -204,7 +205,6 @@ RSpec.describe Board do
       context 'when the piece takes an opponent piece with en passant' do
         let(:origin) { 'E4' }
         let(:target) { 'D3' }
-        let(:capture_square) { 'D4' }
         let(:piece) { instance_double(Piece, color: 'black') }
         let(:origin_square) { instance_double(Square, unoccupied?: false, remove_piece: piece) }
         let(:target_square) { instance_double(Square, piece: target_piece, add_piece: nil) }
@@ -221,28 +221,28 @@ RSpec.describe Board do
         end
 
         it 'sends #remove_piece to the origin square' do
-          expect(origin_square).to receive(:remove_piece)
           game_board.move_piece(origin, target)
+          expect(origin_square).to have_received(:remove_piece)
         end
 
         it 'sends #define_en_passant_square to the moving piece with the target' do
-          expect(piece).to receive(:define_en_passant_square).with(target)
           game_board.move_piece(origin, target)
+          expect(piece).to have_received(:define_en_passant_square).with(target)
         end
 
         it 'sends #move_position to the moving piece with the target square name' do
-          expect(piece).to receive(:move_position).with(target)
           game_board.move_piece(origin, target)
+          expect(piece).to have_received(:move_position).with(target)
         end
 
         it 'sends #add_piece with the moving piece to the target square' do
-          expect(target_square).to receive(:add_piece).with(piece)
           game_board.move_piece(origin, target)
+          expect(target_square).to have_received(:add_piece).with(piece)
         end
 
         it 'sends #remove_piece to the capture square' do
-          expect(capture_square).to receive(:remove_piece)
           game_board.move_piece(origin, target)
+          expect(capture_square).to have_received(:remove_piece)
         end
 
         it 'returns the piece at the target square' do

@@ -56,7 +56,7 @@ RSpec.describe MoveInterface do
       end
 
       it 'returns an instance of MoveInlineInterface' do
-        expect(move_interface.for_input(**arguments)).to be_a(MoveInterface)
+        expect(move_interface.for_input(**arguments)).to be_a(described_class)
       end
     end
 
@@ -73,7 +73,7 @@ RSpec.describe MoveInterface do
       end
 
       it 'returns an instance of MoveInlineInterface' do
-        expect(move_interface.for_input(**arguments)).to be_a(MoveInterface)
+        expect(move_interface.for_input(**arguments)).to be_a(described_class)
       end
     end
   end
@@ -100,8 +100,8 @@ RSpec.describe MoveInterface do
     end
 
     it 'sends #input_error_message to display with :invalid_initial_input' do
-      expect(display).to receive(:input_error_message).with(:invalid_initial_input)
       default_move_interface.move_selection
+      expect(display).to have_received(:input_error_message).with(:invalid_initial_input)
     end
   end
 
@@ -146,12 +146,12 @@ RSpec.describe MoveInterface do
         end
 
         it 'returns falsey' do
-          expect(move_interface.valid_origin?(origin)).to be_falsey
+          expect(move_interface).not_to be_valid_origin(origin)
         end
 
         it 'sends display #input_error_message with :invalid_square' do
-          expect(display).to receive(:input_error_message).with(:invalid_square)
           move_interface.valid_origin?(origin)
+          expect(display).to have_received(:input_error_message).with(:invalid_square)
         end
       end
 
@@ -166,12 +166,12 @@ RSpec.describe MoveInterface do
         end
 
         it 'returns falsey' do
-          expect(move_interface.valid_origin?(origin)).to be_falsey
+          expect(move_interface).not_to be_valid_origin(origin)
         end
 
         it 'sends display #input_error_message with :empty_square' do
-          expect(display).to receive(:input_error_message).with(:empty_square)
           move_interface.valid_origin?(origin)
+          expect(display).to have_received(:input_error_message).with(:empty_square)
         end
       end
 
@@ -187,12 +187,12 @@ RSpec.describe MoveInterface do
         end
 
         it 'returns falsey' do
-          expect(move_interface.valid_origin?(origin)).to be_falsey
+          expect(move_interface).not_to be_valid_origin(origin)
         end
 
         it 'sends display #input_error_message with :wrong_color' do
-          expect(display).to receive(:input_error_message).with(:wrong_color)
           move_interface.valid_origin?(origin)
+          expect(display).to have_received(:input_error_message).with(:wrong_color)
         end
       end
 
@@ -215,8 +215,8 @@ RSpec.describe MoveInterface do
         end
 
         it 'sends display #input_error_message with :no_moves' do
-          expect(display).to receive(:input_error_message).with(:no_moves)
           move_interface.valid_origin?(origin)
+          expect(display).to have_received(:input_error_message).with(:no_moves)
         end
       end
     end
@@ -249,8 +249,8 @@ RSpec.describe MoveInterface do
       it 'does not send #input_error_message to display' do
         target_list = %w[E2 E3]
         target = 'E2'
-        expect(display).not_to receive(:input_error_message)
         move_interface.valid_target?(target, target_list)
+        expect(display).not_to have_received(:input_error_message)
       end
     end
 
@@ -268,8 +268,8 @@ RSpec.describe MoveInterface do
       it 'sends #input_error_message to display with :invalid_move' do
         target_list = %w[E2 E3]
         target = 'E4'
-        expect(display).to receive(:input_error_message).with(:invalid_move)
         move_interface.valid_target?(target, target_list)
+        expect(display).to have_received(:input_error_message).with(:invalid_move)
       end
     end
   end
