@@ -2,21 +2,22 @@
 
 RSpec.describe NullPiece do
   subject(:null_piece) { described_class.new(color: 'red', position: 'A1') }
+
   describe '#name' do
     it 'returns nil' do
-      expect(null_piece.name).to be(nil)
+      expect(null_piece.name).to be_nil
     end
   end
 
   describe '#color' do
     it 'returns nil' do
-      expect(null_piece.color).to be(nil)
+      expect(null_piece.color).to be_nil
     end
   end
 
   describe '#en_passant_target' do
     it 'returns nil' do
-      expect(null_piece.en_passant_target).to be(nil)
+      expect(null_piece.en_passant_target).to be_nil
     end
   end
 
@@ -30,6 +31,7 @@ RSpec.describe NullPiece do
     # not verifying doubles because they are unusued in the method definition
     let(:board) { double('board') }
     let(:castle_manager) { double('castle_manager') }
+
     it 'returns an empty array' do
       expect(null_piece.move_list(board, castle_manager)).to be_empty
     end
@@ -44,13 +46,13 @@ RSpec.describe NullPiece do
 
   describe '#opponent_color' do
     it 'returns nil' do
-      expect(null_piece.opponent_color).to be(nil)
+      expect(null_piece.opponent_color).to be_nil
     end
   end
 
   describe '#move_position' do
     it 'returns nil' do
-      expect(null_piece.position).to be(nil)
+      expect(null_piece.position).to be_nil
     end
   end
 
@@ -62,7 +64,7 @@ RSpec.describe NullPiece do
 
   describe '#to_fen' do
     it 'returns nil' do
-      expect(null_piece.to_fen).to be(nil)
+      expect(null_piece.to_fen).to be_nil
     end
   end
 end

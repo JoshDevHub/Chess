@@ -2,6 +2,8 @@
 
 RSpec.describe MoveInlineInterface do
   describe '#move_selection' do
+    subject(:move_inline_interface) { described_class.new(**interface_arguments) }
+
     let(:board) { instance_double(Board) }
     let(:active_color) { 'white' }
     let(:display) { double('display') }
@@ -15,14 +17,16 @@ RSpec.describe MoveInlineInterface do
         user_input: user_input
       }
     end
-    subject(:move_inline_interface) { described_class.new(**interface_arguments) }
+
     context 'when the origin and targets are valid' do
       let(:user_input) { 'E2E4' }
+
       before do
         allow(move_inline_interface).to receive(:valid_origin?).and_return(true)
         allow(move_inline_interface).to receive(:valid_target?).and_return(true)
         allow(board).to receive(:move_list_from_origin)
       end
+
       it 'returns a hash with the origin key as the first two characters of user_input' do
         output_hash = move_inline_interface.move_selection
         expect(output_hash[:origin]).to eq(user_input[0..1])
@@ -42,17 +46,19 @@ RSpec.describe MoveInlineInterface do
 
     context 'when the origin is invalid' do
       let(:user_input) { 'E2E4' }
+
       before do
         allow(move_inline_interface).to receive(:valid_origin?).and_return(false)
       end
 
       it 'returns nil' do
-        expect(move_inline_interface.move_selection).to be(nil)
+        expect(move_inline_interface.move_selection).to be_nil
       end
     end
 
     context 'when the target is invalid' do
       let(:user_input) { 'E2E4' }
+
       before do
         allow(move_inline_interface).to receive(:valid_origin?).and_return(true)
         allow(board).to receive(:move_list_from_origin)
@@ -60,7 +66,7 @@ RSpec.describe MoveInlineInterface do
       end
 
       it 'returns nil' do
-        expect(move_inline_interface.move_selection).to be(nil)
+        expect(move_inline_interface.move_selection).to be_nil
       end
 
       it 'sends #move_list_from_origin to board with origin and castle_manager' do

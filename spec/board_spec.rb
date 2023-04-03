@@ -2,6 +2,7 @@
 
 RSpec.describe Board do
   let(:square_class) { class_double(Square, new: nil) }
+
   describe '#initialize' do
     before do
       allow(square_class).to receive(:new)
@@ -20,6 +21,7 @@ RSpec.describe Board do
     let(:generic_square) { instance_double(Square, name: 'square') }
     let(:e2_square) { instance_double(Square, name: 'E2') }
     let(:e1_square) { instance_double(Square, name: 'E1') }
+
     before do
       allow(square_class).to receive(:new).and_return(generic_square)
       allow(square_class).to receive(:new).with(name: 'E2').and_return(e2_square)
@@ -27,6 +29,7 @@ RSpec.describe Board do
       allow(e1_square).to receive(:add_piece)
       allow(e2_square).to receive(:add_piece)
     end
+
     it 'returns a board object' do
       board_instance = described_class.from_fen(fen_data: fen_data, square: square_class)
       expect(board_instance).to be_a(Board)
@@ -45,6 +48,7 @@ RSpec.describe Board do
 
   describe '#access_square' do
     subject(:game_board) { described_class.new(Square) }
+
     it 'returns the square with the given name A1' do
       square_name = 'A1'
       square = game_board.access_square(square_name)
@@ -61,6 +65,7 @@ RSpec.describe Board do
   describe '#to_fen' do
     context 'when the board is empty' do
       subject(:game_board) { described_class.new(Square) }
+
       it "returns the string '8/8/8/8/8/8/8/8'" do
         expected_output = '8/8/8/8/8/8/8/8'
         expect(game_board.to_fen).to eq(expected_output)
@@ -70,17 +75,20 @@ RSpec.describe Board do
 
   describe '#move_list_from_origin' do
     subject(:game_board) { described_class.new(Square) }
+
     let(:origin_square) { instance_double(Square) }
     let(:piece) { instance_double(Piece) }
     let(:castle_manager) { double('castle_manager') }
     let(:move_list) { double('move_list') }
     let(:origin) { 'A1' }
+
     before do
       allow(game_board).to receive(:access_square).with('A1').and_return(origin_square)
       allow(origin_square).to receive(:piece).and_return(piece)
       allow(piece).to receive(:move_list).with(game_board, castle_manager).and_return(move_list)
       allow(game_board).to receive(:self_check_filter).with(piece, move_list)
     end
+
     it 'sends a #piece to the origin square' do
       expect(origin_square).to receive(:piece)
       game_board.move_list_from_origin(origin, castle_manager)
@@ -93,19 +101,22 @@ RSpec.describe Board do
   end
 
   describe '#move_piece' do
+    subject(:game_board) { described_class.new(square_class) }
+
     let(:piece) { instance_double(Piece, define_en_passant_square: nil) }
     let(:target_piece) { instance_double(Piece) }
-    subject(:game_board) { described_class.new(square_class) }
+
     context 'when the square is unoccupied' do
       let(:origin) { 'A1' }
       let(:target) { 'B1' }
       let(:empty_square) { instance_double(Square, unoccupied?: true) }
+
       before do
         allow(game_board).to receive(:access_square).with(origin).and_return(empty_square)
       end
 
       it 'returns nil' do
-        expect(game_board.move_piece(origin, target)).to be(nil)
+        expect(game_board.move_piece(origin, target)).to be_nil
       end
     end
 
@@ -115,6 +126,7 @@ RSpec.describe Board do
         let(:target) { 'B1' }
         let(:origin_square) { instance_double(Square, unoccupied?: false, remove_piece: piece) }
         let(:target_square) { instance_double(Square, piece: target_piece, add_piece: nil) }
+
         before do
           allow(game_board).to receive(:access_square).with(origin).and_return(origin_square)
           allow(game_board).to receive(:access_square).with(target).and_return(target_square)
@@ -151,6 +163,7 @@ RSpec.describe Board do
         let(:target) { 'E4' }
         let(:origin_square) { instance_double(Square, unoccupied?: false, remove_piece: piece) }
         let(:target_square) { instance_double(Square, piece: target_piece, add_piece: nil) }
+
         before do
           allow(game_board).to receive(:access_square).with(origin).and_return(origin_square)
           allow(game_board).to receive(:access_square).with(target).and_return(target_square)
@@ -196,6 +209,7 @@ RSpec.describe Board do
         let(:origin_square) { instance_double(Square, unoccupied?: false, remove_piece: piece) }
         let(:target_square) { instance_double(Square, piece: target_piece, add_piece: nil) }
         let(:capture_square) { instance_double(Square, name: 'D4', remove_piece: nil) }
+
         before do
           allow(game_board).to receive(:access_square).with(origin).and_return(origin_square)
           allow(game_board).to receive(:access_square).with(target).and_return(target_square)
@@ -240,12 +254,14 @@ RSpec.describe Board do
 
   describe '#in_check' do
     subject(:game_board) { described_class.new(square_class) }
+
     context 'when a white king is in check to a black piece' do
       let(:color) { 'white' }
       let(:empty_squares) { instance_double(Square, occupied_by_king?: false, piece_color: nil) }
       let(:king_square) { instance_double(Square, name: 'E1', piece_color: 'white', occupied_by_king?: true) }
       let(:attacker_square) { instance_double(Square, piece_color: 'black', occupied_by_king?: false, piece: attacker) }
       let(:attacker) { instance_double(Piece, move_list: ['E1']) }
+
       before do
         allow(square_class).to receive(:new).and_return(empty_squares)
         allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
@@ -263,6 +279,7 @@ RSpec.describe Board do
       let(:king_square) { instance_double(Square, name: 'E1', piece_color: 'white', occupied_by_king?: true) }
       let(:attacker_square) { instance_double(Square, piece_color: 'black', occupied_by_king?: false, piece: attacker) }
       let(:attacker) { instance_double(Piece, move_list: ['E3']) }
+
       before do
         allow(square_class).to receive(:new).and_return(empty_squares)
         allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
@@ -280,6 +297,7 @@ RSpec.describe Board do
       let(:king_square) { instance_double(Square, name: 'E8', piece_color: color, occupied_by_king?: true) }
       let(:attacker_square) { instance_double(Square, piece_color: 'white', occupied_by_king?: false, piece: attacker) }
       let(:attacker) { instance_double(Piece, move_list: ['E8']) }
+
       before do
         allow(square_class).to receive(:new).and_return(empty_squares)
         allow(square_class).to receive(:new).with(name: 'E8').and_return(king_square)
@@ -297,6 +315,7 @@ RSpec.describe Board do
       let(:king_square) { instance_double(Square, name: 'E8', piece_color: 'black', occupied_by_king?: true) }
       let(:attacker_square) { instance_double(Square, piece_color: 'white', occupied_by_king?: false, piece: attacker) }
       let(:attacker) { instance_double(Piece, move_list: ['E6']) }
+
       before do
         allow(square_class).to receive(:new).and_return(empty_squares)
         allow(square_class).to receive(:new).with(name: 'E8').and_return(king_square)
@@ -311,11 +330,13 @@ RSpec.describe Board do
 
   describe '#self_check_filter' do
     subject(:game_board) { described_class.new(square_class) }
+
     context 'when all of the moves in a target list would result in check' do
       let(:origin) { 'B2' }
       let(:moving_piece) { instance_double(Piece, position: origin, color: 'white') }
       let(:target_list) { %w[A1 A2 A3] }
       let(:in_check_board) { described_class.new(square_class) }
+
       before do
         allow(Marshal).to receive(:load).and_return(in_check_board)
         allow(Marshal).to receive(:dump)
@@ -324,6 +345,7 @@ RSpec.describe Board do
         allow(in_check_board).to receive(:move_piece).with(origin, 'A2')
         allow(in_check_board).to receive(:move_piece).with(origin, 'A3')
       end
+
       it 'returns an empty array' do
         expect(game_board.self_check_filter(moving_piece, target_list)).to be_empty
       end
@@ -334,6 +356,7 @@ RSpec.describe Board do
       let(:moving_piece) { instance_double(Piece, position: origin, color: 'white') }
       let(:target_list) { %w[A1 A2 A3] }
       let(:in_check_board) { described_class.new(square_class) }
+
       before do
         allow(Marshal).to receive(:load).and_return(in_check_board)
         allow(Marshal).to receive(:dump)
@@ -342,6 +365,7 @@ RSpec.describe Board do
         allow(in_check_board).to receive(:move_piece).with(origin, 'A2')
         allow(in_check_board).to receive(:move_piece).with(origin, 'A3')
       end
+
       it 'returns an empty array' do
         expect(game_board.self_check_filter(moving_piece, target_list)).to eq(target_list)
       end
@@ -351,8 +375,10 @@ RSpec.describe Board do
   describe '#checkmate?' do
     context 'when the color to check is white' do
       let(:color) { 'white' }
+
       context 'when white is in checkmate' do
         subject(:checkmate_board) { described_class.new(square_class) }
+
         let(:piece) { instance_double(Piece, color: color) }
         let(:king_square) do
           instance_double(
@@ -372,6 +398,7 @@ RSpec.describe Board do
             piece_color: nil
           )
         end
+
         before do
           allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
           allow(square_class).to receive(:new).and_return(empty_square)
@@ -387,6 +414,7 @@ RSpec.describe Board do
       context 'when white is not in checkmate' do
         context 'when white is not in check' do
           subject(:checkmate_board) { described_class.new(square_class) }
+
           let(:piece) { instance_double(Piece, color: color) }
           let(:king_square) do
             instance_double(
@@ -406,6 +434,7 @@ RSpec.describe Board do
               piece_color: nil
             )
           end
+
           before do
             allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
             allow(square_class).to receive(:new).and_return(empty_square)
@@ -420,6 +449,7 @@ RSpec.describe Board do
 
         context 'when white is in check with legal moves' do
           subject(:checkmate_board) { described_class.new(square_class) }
+
           let(:piece) { instance_double(Piece, color: color) }
           let(:king_square) do
             instance_double(
@@ -439,6 +469,7 @@ RSpec.describe Board do
               piece_color: nil
             )
           end
+
           before do
             allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
             allow(square_class).to receive(:new).and_return(empty_square)
@@ -452,10 +483,13 @@ RSpec.describe Board do
         end
       end
     end
+
     context 'when the color to check is black' do
       let(:color) { 'black' }
+
       context 'when white is in checkmate' do
         subject(:checkmate_board) { described_class.new(square_class) }
+
         let(:piece) { instance_double(Piece, color: color) }
         let(:king_square) do
           instance_double(
@@ -475,6 +509,7 @@ RSpec.describe Board do
             piece_color: nil
           )
         end
+
         before do
           allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
           allow(square_class).to receive(:new).and_return(empty_square)
@@ -490,6 +525,7 @@ RSpec.describe Board do
       context 'when white is not in checkmate' do
         context 'when white is not in check' do
           subject(:checkmate_board) { described_class.new(square_class) }
+
           let(:piece) { instance_double(Piece, color: color) }
           let(:king_square) do
             instance_double(
@@ -509,6 +545,7 @@ RSpec.describe Board do
               piece_color: nil
             )
           end
+
           before do
             allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
             allow(square_class).to receive(:new).and_return(empty_square)
@@ -523,6 +560,7 @@ RSpec.describe Board do
 
         context 'when white is in check with legal moves' do
           subject(:checkmate_board) { described_class.new(square_class) }
+
           let(:piece) { instance_double(Piece, color: color) }
           let(:king_square) do
             instance_double(
@@ -542,6 +580,7 @@ RSpec.describe Board do
               piece_color: nil
             )
           end
+
           before do
             allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
             allow(square_class).to receive(:new).and_return(empty_square)
@@ -560,8 +599,10 @@ RSpec.describe Board do
   describe '#stalemate?' do
     context 'when the color to check is white' do
       let(:color) { 'white' }
+
       context 'when white is in stalemate' do
         subject(:stalemate_board) { described_class.new(square_class) }
+
         let(:piece) { instance_double(Piece, color: color) }
         let(:king_square) do
           instance_double(
@@ -581,6 +622,7 @@ RSpec.describe Board do
             piece_color: nil
           )
         end
+
         before do
           allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
           allow(square_class).to receive(:new).and_return(empty_square)
@@ -596,6 +638,7 @@ RSpec.describe Board do
       context 'when white is not in stalemate' do
         context 'when white is in check' do
           subject(:stalemate_board) { described_class.new(square_class) }
+
           let(:piece) { instance_double(Piece, color: color) }
           let(:king_square) do
             instance_double(
@@ -615,6 +658,7 @@ RSpec.describe Board do
               piece_color: nil
             )
           end
+
           before do
             allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
             allow(square_class).to receive(:new).and_return(empty_square)
@@ -629,6 +673,7 @@ RSpec.describe Board do
 
         context 'when white has legal moves' do
           subject(:stalemate_board) { described_class.new(square_class) }
+
           let(:piece) { instance_double(Piece, color: color) }
           let(:king_square) do
             instance_double(
@@ -648,6 +693,7 @@ RSpec.describe Board do
               piece_color: nil
             )
           end
+
           before do
             allow(square_class).to receive(:new).and_return(empty_square)
             allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
@@ -662,10 +708,13 @@ RSpec.describe Board do
         end
       end
     end
+
     context 'when the color to check is black' do
       let(:color) { 'black' }
+
       context 'when black is in stalemate' do
         subject(:stalemate_board) { described_class.new(square_class) }
+
         let(:piece) { instance_double(Piece, color: color) }
         let(:king_square) do
           instance_double(
@@ -685,6 +734,7 @@ RSpec.describe Board do
             piece_color: nil
           )
         end
+
         before do
           allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
           allow(square_class).to receive(:new).and_return(empty_square)
@@ -700,6 +750,7 @@ RSpec.describe Board do
       context 'when black is not in checkmate' do
         context 'when black is not in check' do
           subject(:stalemate_board) { described_class.new(square_class) }
+
           let(:piece) { instance_double(Piece, color: color) }
           let(:king_square) do
             instance_double(
@@ -719,6 +770,7 @@ RSpec.describe Board do
               piece_color: nil
             )
           end
+
           before do
             allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
             allow(square_class).to receive(:new).and_return(empty_square)
@@ -733,6 +785,7 @@ RSpec.describe Board do
 
         context 'when black is in check with legal moves' do
           subject(:stalemate_board) { described_class.new(square_class) }
+
           let(:piece) { instance_double(Piece, color: color) }
           let(:king_square) do
             instance_double(
@@ -752,6 +805,7 @@ RSpec.describe Board do
               piece_color: nil
             )
           end
+
           before do
             allow(square_class).to receive(:new).with(name: 'E1').and_return(king_square)
             allow(square_class).to receive(:new).and_return(empty_square)

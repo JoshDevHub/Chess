@@ -52,7 +52,7 @@ class Display
   def load_game_prompt(save_list)
     system('clear')
     puts "\nSave Games:\n\n"
-    save_list.sort.each { |save_file| puts "#{save_file[0..-6].gsub('_', ' ')}\n" }
+    save_list.sort.each { |save_file| puts "#{save_file[0..-6].tr('_', ' ')}\n" }
     puts <<~HEREDOC
 
       Enter the number of the game you wish to resume

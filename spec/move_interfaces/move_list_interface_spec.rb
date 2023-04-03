@@ -2,6 +2,8 @@
 
 RSpec.describe MoveListInterface do
   describe '#move_selection' do
+    subject(:move_list_interface) { described_class.new(**interface_arguments) }
+
     let(:board) { instance_double(Board) }
     let(:active_color) { 'white' }
     let(:display) { double(Display) }
@@ -15,14 +17,16 @@ RSpec.describe MoveListInterface do
         user_input: user_input
       }
     end
-    subject(:move_list_interface) { described_class.new(**interface_arguments) }
+
     context 'when the user input is invalid' do
       let(:user_input) { 'E2' }
+
       before do
         allow(move_list_interface).to receive(:valid_origin?).with(user_input).and_return(false)
       end
+
       it 'returns nil' do
-        expect(move_list_interface.move_selection).to be(nil)
+        expect(move_list_interface.move_selection).to be_nil
       end
     end
 
@@ -30,6 +34,7 @@ RSpec.describe MoveListInterface do
       let(:user_input) { 'E2' }
       let(:user_target) { 'E4' }
       let(:target_list) { %w[E3 E4] }
+
       before do
         allow(move_list_interface).to receive(:valid_origin?).with(user_input).and_return(true)
         allow(board).to receive(:move_list_from_origin).and_return(target_list)
@@ -37,6 +42,7 @@ RSpec.describe MoveListInterface do
         allow(display).to receive(:input_error_message)
         allow(move_list_interface).to receive(:gets).and_return('E4')
       end
+
       it 'sends #move_list_from_origin to board with user_input and castle_manager' do
         expect(board).to receive(:move_list_from_origin).with(user_input, castle_manager)
         move_list_interface.move_selection
@@ -67,6 +73,7 @@ RSpec.describe MoveListInterface do
       let(:user_input) { 'E2' }
       let(:user_target) { 'back' }
       let(:target_list) { %w[E3 E4] }
+
       before do
         allow(move_list_interface).to receive(:valid_origin?).with(user_input).and_return(true)
         allow(board).to receive(:move_list_from_origin).and_return(target_list)
@@ -74,8 +81,9 @@ RSpec.describe MoveListInterface do
         allow(display).to receive(:delete_display_lines)
         allow(move_list_interface).to receive(:gets).and_return('back')
       end
+
       it 'returns nil' do
-        expect(move_list_interface.move_selection).to be(nil)
+        expect(move_list_interface.move_selection).to be_nil
       end
     end
 
@@ -84,6 +92,7 @@ RSpec.describe MoveListInterface do
       let(:user_target) { 'E4' }
       let(:target_list) { %w[E3 E4] }
       let(:bad_input) { 'D4' }
+
       before do
         allow(move_list_interface).to receive(:valid_origin?).with(user_input).and_return(true)
         allow(board).to receive(:move_list_from_origin).and_return(target_list)
@@ -91,6 +100,7 @@ RSpec.describe MoveListInterface do
         allow(display).to receive(:input_error_message)
         allow(move_list_interface).to receive(:gets).and_return('D4', 'E4')
       end
+
       it 'sends #move_list_from_origin to board with user_input and castle_manager' do
         expect(board).to receive(:move_list_from_origin).with(user_input, castle_manager)
         move_list_interface.move_selection

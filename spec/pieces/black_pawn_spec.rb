@@ -1,14 +1,18 @@
 # frozen_string_literal: true
 
 RSpec.describe BlackPawn do
-  let(:board) { instance_double(Board) }
   subject(:black_pawn) { described_class.new(color: 'black', position: square) }
+
+  let(:board) { instance_double(Board) }
+
   describe '#move_list' do
     let(:double_down_instance) { instance_double(BlackPawnDoubleAdvance) }
     let(:diagonal_capture) { instance_double(BlackPawnCapture) }
     let(:one_down) { instance_double(BlackPawnAdvance) }
+
     context 'when the piece is off the 7th rank' do
       let(:square) { 'B5' }
+
       before do
         allow(BlackPawnAdvance).to receive(:new).and_return(one_down)
         allow(BlackPawnCapture).to receive(:new).and_return(diagonal_capture)
@@ -45,6 +49,7 @@ RSpec.describe BlackPawn do
 
     context 'when the piece is on the 7th rank' do
       let(:square) { 'E7' }
+
       before do
         allow(BlackPawnAdvance).to receive(:new).and_return(one_down)
         allow(BlackPawnCapture).to receive(:new).and_return(diagonal_capture)
@@ -91,16 +96,18 @@ RSpec.describe BlackPawn do
     context 'when the passed in move indicates a normal pawn move' do
       let(:square) { 'F7' }
       let(:target) { 'F6' }
+
       it 'returns nil' do
-        expect(black_pawn.define_en_passant_square(target)).to be(nil)
+        expect(black_pawn.define_en_passant_square(target)).to be_nil
       end
     end
 
     context 'when the passed in move indicates a capture move' do
       let(:square) { 'E7' }
       let(:target) { 'D6' }
+
       it 'returns nil' do
-        expect(black_pawn.define_en_passant_square(target)).to be(nil)
+        expect(black_pawn.define_en_passant_square(target)).to be_nil
       end
     end
 
@@ -108,6 +115,7 @@ RSpec.describe BlackPawn do
       let(:square) { 'B7' }
       let(:target) { 'B5' }
       let(:en_passant) { 'B6' }
+
       it 'returns the position above the origin' do
         expect(black_pawn.define_en_passant_square(target)).to eq(en_passant)
       end
@@ -116,9 +124,11 @@ RSpec.describe BlackPawn do
 
   describe '#capture_en_passant?' do
     let(:square) { 'B4' }
+
     context 'when the given square is not an en passant square for white' do
       context 'when the given square is nil' do
         let(:given_square) { nil }
+
         it 'returns nil or false' do
           expect(black_pawn.capture_en_passant?(given_square)).to be_falsey
         end
@@ -126,11 +136,13 @@ RSpec.describe BlackPawn do
 
       context 'when the square is not nil' do
         let(:given_square) { 'B2' }
+        let(:given_square) { 'B1' }
+        let(:given_square) { 'B1' }
+
         it 'returns nil or false' do
           expect(black_pawn.capture_en_passant?(given_square)).to be_falsey
         end
 
-        let(:given_square) { 'B1' }
         it 'returns nil or false' do
           expect(black_pawn.capture_en_passant?(given_square)).to be_falsey
         end
@@ -139,11 +151,13 @@ RSpec.describe BlackPawn do
 
     context 'when the given square is an en passant square for white' do
       let(:given_square) { 'C3' }
+      let(:given_square) { 'A3' }
+      let(:given_square) { 'A3' }
+
       it 'returns true' do
         expect(black_pawn.capture_en_passant?(given_square)).to be(true)
       end
 
-      let(:given_square) { 'A3' }
       it 'returns true' do
         expect(black_pawn.capture_en_passant?(given_square)).to be(true)
       end
@@ -154,6 +168,7 @@ RSpec.describe BlackPawn do
     context 'when the pawn cannot promote' do
       context 'when the black pawn is on C4' do
         let(:square) { 'C4' }
+
         it 'returns false' do
           expect(black_pawn.can_promote?).to be(false)
         end
@@ -161,6 +176,7 @@ RSpec.describe BlackPawn do
 
       context 'when the pawn is on F2' do
         let(:square) { 'F2' }
+
         it 'returns false' do
           expect(black_pawn.can_promote?).to be(false)
         end
@@ -170,6 +186,7 @@ RSpec.describe BlackPawn do
     context 'when the pawn can promote' do
       context 'when the white pawn is on C1' do
         let(:square) { 'C1' }
+
         it 'returns true' do
           expect(black_pawn.can_promote?).to be(true)
         end
@@ -177,6 +194,7 @@ RSpec.describe BlackPawn do
 
       context 'when teh pawn is on F1' do
         let(:square) { 'F1' }
+
         it 'returns true' do
           expect(black_pawn.can_promote?).to be(true)
         end
@@ -186,6 +204,7 @@ RSpec.describe BlackPawn do
 
   describe '#move_resets_clock?' do
     let(:square) { 'E7' }
+
     it 'returns true' do
       expect(black_pawn.move_resets_clock?).to be(true)
     end
@@ -193,7 +212,8 @@ RSpec.describe BlackPawn do
 
   describe '#to_fen' do
     let(:square) { 'A7' }
-    it "it returns the string 'p'" do
+
+    it "returns the string 'p'" do
       expected_string = 'p'
       expect(black_pawn.to_fen).to eq(expected_string)
     end

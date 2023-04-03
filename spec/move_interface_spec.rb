@@ -5,8 +5,10 @@ RSpec.describe MoveInterface do
   let(:display) { instance_double(Display) }
   let(:active_color) { 'white' }
   let(:castle_manager) { 'castler' }
+
   describe '#self.for_input' do
     subject(:move_interface) { described_class }
+
     context 'when the given input has a size of 2' do
       let(:input) { 'E1' }
       let(:arguments) do
@@ -18,6 +20,7 @@ RSpec.describe MoveInterface do
           castle_manager: castle_manager
         }
       end
+
       it 'returns an instance of MoveListInterface' do
         expect(move_interface.for_input(**arguments)).to be_a(MoveListInterface)
       end
@@ -34,6 +37,7 @@ RSpec.describe MoveInterface do
           castle_manager: castle_manager
         }
       end
+
       it 'returns an instance of MoveInlineInterface' do
         expect(move_interface.for_input(**arguments)).to be_a(MoveInlineInterface)
       end
@@ -50,6 +54,7 @@ RSpec.describe MoveInterface do
           castle_manager: castle_manager
         }
       end
+
       it 'returns an instance of MoveInlineInterface' do
         expect(move_interface.for_input(**arguments)).to be_a(MoveInterface)
       end
@@ -66,6 +71,7 @@ RSpec.describe MoveInterface do
           castle_manager: castle_manager
         }
       end
+
       it 'returns an instance of MoveInlineInterface' do
         expect(move_interface.for_input(**arguments)).to be_a(MoveInterface)
       end
@@ -74,6 +80,7 @@ RSpec.describe MoveInterface do
 
   describe '#move_selection' do
     subject(:default_move_interface) { described_class.new(**arguments) }
+
     let(:arguments) do
       {
         board: board,
@@ -83,12 +90,13 @@ RSpec.describe MoveInterface do
         castle_manager: castle_manager
       }
     end
+
     before do
       allow(display).to receive(:input_error_message)
     end
 
     it 'returns nil' do
-      expect(default_move_interface.move_selection).to be(nil)
+      expect(default_move_interface.move_selection).to be_nil
     end
 
     it 'sends #input_error_message to display with :invalid_initial_input' do
@@ -99,6 +107,7 @@ RSpec.describe MoveInterface do
 
   describe '#valid_origin' do
     subject(:move_interface) { described_class.new(**arguments) }
+
     let(:arguments) do
       {
         board: board,
@@ -108,11 +117,13 @@ RSpec.describe MoveInterface do
         castle_manager: castle_manager
       }
     end
+
     context 'when the origin is valid' do
       let(:color) { 'white' }
       let(:e2_square) { instance_double(Square, piece_color: color, unoccupied?: false) }
       let(:piece) { instance_double(Piece, move_list: move_list) }
       let(:move_list) { %w[E3 E4] }
+
       before do
         allow(board).to receive(:access_square).with('E2').and_return(e2_square)
         allow(board).to receive(:self_check_filter).with(piece, move_list).and_return(move_list)
@@ -129,9 +140,11 @@ RSpec.describe MoveInterface do
     context 'when the origin is invalid' do
       context 'when the square does not exist in the game' do
         let(:origin) { 'F@' }
+
         before do
           allow(display).to receive(:input_error_message)
         end
+
         it 'returns falsey' do
           expect(move_interface.valid_origin?(origin)).to be_falsey
         end
@@ -145,11 +158,13 @@ RSpec.describe MoveInterface do
       context 'when the origin square is empty' do
         let(:origin) { 'E2' }
         let(:e2_square) { instance_double(Square) }
+
         before do
           allow(display).to receive(:input_error_message)
           allow(board).to receive(:access_square).with(origin).and_return(e2_square)
           allow(e2_square).to receive(:unoccupied?).and_return(true)
         end
+
         it 'returns falsey' do
           expect(move_interface.valid_origin?(origin)).to be_falsey
         end
@@ -164,11 +179,13 @@ RSpec.describe MoveInterface do
         let(:origin) { 'E2' }
         let(:opponent_color) { 'black' }
         let(:e2_square) { instance_double(Square, unoccupied?: false) }
+
         before do
           allow(display).to receive(:input_error_message)
           allow(board).to receive(:access_square).with(origin).and_return(e2_square)
           allow(e2_square).to receive(:piece_color).and_return(opponent_color)
         end
+
         it 'returns falsey' do
           expect(move_interface.valid_origin?(origin)).to be_falsey
         end
@@ -184,6 +201,7 @@ RSpec.describe MoveInterface do
         let(:e2_square) { instance_double(Square, unoccupied?: false, piece_color: 'white') }
         let(:piece) { instance_double(Piece) }
         let(:move_list) { [] }
+
         before do
           allow(display).to receive(:input_error_message)
           allow(board).to receive(:access_square).with(origin).and_return(e2_square)
@@ -205,6 +223,8 @@ RSpec.describe MoveInterface do
   end
 
   describe '#valid_target?' do
+    subject(:move_interface) { described_class.new(**interface_args) }
+
     let(:interface_args) do
       {
         board: board,
@@ -214,11 +234,12 @@ RSpec.describe MoveInterface do
         castle_manager: castle_manager
       }
     end
-    subject(:move_interface) { described_class.new(**interface_args) }
+
     context 'when the target is valid' do
       before do
         allow(display).to receive(:input_error_message)
       end
+
       it 'returns true' do
         target_list = %w[E2 E3]
         target = 'E2'
@@ -228,7 +249,7 @@ RSpec.describe MoveInterface do
       it 'does not send #input_error_message to display' do
         target_list = %w[E2 E3]
         target = 'E2'
-        expect(display).to_not receive(:input_error_message)
+        expect(display).not_to receive(:input_error_message)
         move_interface.valid_target?(target, target_list)
       end
     end
@@ -237,6 +258,7 @@ RSpec.describe MoveInterface do
       before do
         allow(display).to receive(:input_error_message)
       end
+
       it 'returns falsey' do
         target_list = %w[E2 E3]
         target = 'E4'

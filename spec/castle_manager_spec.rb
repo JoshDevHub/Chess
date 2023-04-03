@@ -4,10 +4,13 @@ RSpec.describe CastleManager do
   describe '#can_castle?' do
     context 'when the manager is initialized with default options' do
       subject(:castle_manager) { described_class.new }
+
       context 'when the color to check is white' do
         let(:color) { :white }
+
         context 'when the side to check is king side' do
           let(:side) { :king }
+
           it 'returns false' do
             expect(castle_manager.can_castle?(color, side)).to be(false)
           end
@@ -15,6 +18,7 @@ RSpec.describe CastleManager do
 
         context 'when the side to check is queen side' do
           let(:side) { :queen }
+
           it 'returns false' do
             expect(castle_manager.can_castle?(color, side)).to be(false)
           end
@@ -23,8 +27,10 @@ RSpec.describe CastleManager do
 
       context 'when the color to check is black' do
         let(:color) { 'black' }
+
         context 'when the side to check is king side' do
           let(:side) { 'king' }
+
           it 'returns false' do
             expect(castle_manager.can_castle?(color, side)).to be(false)
           end
@@ -32,6 +38,7 @@ RSpec.describe CastleManager do
 
         context 'when the side to check is queen side' do
           let(:side) { :queen }
+
           it 'returns false' do
             expect(castle_manager.can_castle?(color, side)).to be(false)
           end
@@ -41,6 +48,8 @@ RSpec.describe CastleManager do
 
     context 'when the manager is initialized with a hash' do
       context 'when the hash says all castling options are possible' do
+        subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
+
         let(:castle_opts) do
           {
             white_king_side: true,
@@ -49,11 +58,13 @@ RSpec.describe CastleManager do
             black_queen_side: true
           }
         end
-        subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
+
         context 'when the color to check is white' do
           let(:color) { :white }
+
           context 'when the side to check is king side' do
             let(:side) { :king }
+
             it 'returns true' do
               expect(castle_manager.can_castle?(color, side)).to be(true)
             end
@@ -61,6 +72,7 @@ RSpec.describe CastleManager do
 
           context 'when the side to check is queen side' do
             let(:side) { :queen }
+
             it 'returns true' do
               expect(castle_manager.can_castle?(color, side)).to be(true)
             end
@@ -69,8 +81,10 @@ RSpec.describe CastleManager do
 
         context 'when the color to check is black' do
           let(:color) { 'black' }
+
           context 'when the side to check is king side' do
             let(:side) { 'king' }
+
             it 'returns true' do
               expect(castle_manager.can_castle?(color, side)).to be(true)
             end
@@ -78,6 +92,7 @@ RSpec.describe CastleManager do
 
           context 'when the side to check is queen side' do
             let(:side) { :queen }
+
             it 'returns true' do
               expect(castle_manager.can_castle?(color, side)).to be(true)
             end
@@ -86,6 +101,8 @@ RSpec.describe CastleManager do
       end
 
       context 'when the hash indicates white can castle kingside and black can castle queenside' do
+        subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
+
         let(:castle_opts) do
           {
             white_king_side: true,
@@ -94,11 +111,13 @@ RSpec.describe CastleManager do
             black_queen_side: true
           }
         end
-        subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
+
         context 'when the color to check is white' do
           let(:color) { :white }
+
           context 'when the side to check is king side' do
             let(:side) { :king }
+
             it 'returns true' do
               expect(castle_manager.can_castle?(color, side)).to be(true)
             end
@@ -106,6 +125,7 @@ RSpec.describe CastleManager do
 
           context 'when the side to check is queen side' do
             let(:side) { :queen }
+
             it 'returns false' do
               expect(castle_manager.can_castle?(color, side)).to be(false)
             end
@@ -114,8 +134,10 @@ RSpec.describe CastleManager do
 
         context 'when the color to check is black' do
           let(:color) { 'black' }
+
           context 'when the side to check is king side' do
             let(:side) { 'king' }
+
             it 'returns false' do
               expect(castle_manager.can_castle?(color, side)).to be(false)
             end
@@ -123,6 +145,7 @@ RSpec.describe CastleManager do
 
           context 'when the side to check is queen side' do
             let(:side) { :queen }
+
             it 'returns true' do
               expect(castle_manager.can_castle?(color, side)).to be(true)
             end
@@ -134,6 +157,7 @@ RSpec.describe CastleManager do
 
   describe '#castle_rights_for_color?' do
     subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
+
     context 'when both colors can castle to at least one side' do
       let(:castle_opts) do
         {
@@ -143,6 +167,7 @@ RSpec.describe CastleManager do
           black_queen_side: true
         }
       end
+
       context 'when the given color is white' do
         it 'returns true' do
           expect(castle_manager.castle_rights_for_color?('white')).to be(true)
@@ -165,6 +190,7 @@ RSpec.describe CastleManager do
           black_queen_side: false
         }
       end
+
       context 'when the given color is white' do
         it 'returns true' do
           expect(castle_manager.castle_rights_for_color?('white')).to be(true)
@@ -187,6 +213,7 @@ RSpec.describe CastleManager do
           black_queen_side: false
         }
       end
+
       context 'when the given color is white' do
         it 'returns false' do
           expect(castle_manager.castle_rights_for_color?('white')).to be(false)
@@ -203,6 +230,8 @@ RSpec.describe CastleManager do
 
   describe '#remove_castle_option' do
     context 'when the chosen option is initially true' do
+      subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
+
       let(:castle_opts) do
         {
           white_king_side: true,
@@ -211,7 +240,6 @@ RSpec.describe CastleManager do
           black_queen_side: true
         }
       end
-      subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
 
       context 'when the given option is a white color and king side' do
         it 'changes the key :white_king_side to false' do
@@ -229,6 +257,8 @@ RSpec.describe CastleManager do
     end
 
     context 'when the chosen option is initially false' do
+      subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
+
       let(:castle_opts) do
         {
           white_king_side: false,
@@ -237,7 +267,6 @@ RSpec.describe CastleManager do
           black_queen_side: false
         }
       end
-      subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
 
       context 'when the given option is black color and queen side' do
         it 'does not change the key :black_queen_side' do
@@ -257,6 +286,8 @@ RSpec.describe CastleManager do
 
   describe '#remove_all_castles_for_color' do
     context 'when the color is initially able to castle' do
+      subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
+
       let(:castle_opts) do
         {
           white_king_side: true,
@@ -265,9 +296,10 @@ RSpec.describe CastleManager do
           black_queen_side: true
         }
       end
-      subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
+
       context 'when the color is white' do
         let(:color) { 'white' }
+
         it 'changes white_king_side in castle options to false' do
           key_to_check = :white_king_side
           expect { castle_manager.remove_all_castles_for_color(color) }
@@ -299,6 +331,7 @@ RSpec.describe CastleManager do
 
       context 'when the color is black' do
         let(:color) { 'black' }
+
         it 'changes black_king_side in castle options to false' do
           key_to_check = :black_king_side
           expect { castle_manager.remove_all_castles_for_color(color) }
@@ -331,6 +364,7 @@ RSpec.describe CastleManager do
 
     context 'when the color cannot castle and the other color can castle' do
       subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
+
       context 'when the color is white' do
         let(:castle_opts) do
           {
@@ -341,6 +375,7 @@ RSpec.describe CastleManager do
           }
         end
         let(:color) { 'white' }
+
         it 'does not change white_king_side in castle options from false' do
           key_to_check = :white_king_side
           expect { castle_manager.remove_all_castles_for_color(color) }
@@ -380,6 +415,7 @@ RSpec.describe CastleManager do
             black_queen_side: false
           }
         end
+
         it 'does not change black_king_side in castle options from false' do
           key_to_check = :black_king_side
           expect { castle_manager.remove_all_castles_for_color(color) }
@@ -412,6 +448,8 @@ RSpec.describe CastleManager do
   end
 
   describe '#handle_castling' do
+    subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
+
     let(:castle_opts) do
       {
         white_king_side: true,
@@ -420,10 +458,10 @@ RSpec.describe CastleManager do
         black_queen_side: false
       }
     end
-    subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
     let(:board) { instance_double(Board) }
     let(:piece) { instance_double(Piece) }
     let(:target) { 'C1' }
+
     context 'when the move being executed is a castling move' do
       before do
         allow(piece).to receive(:castle_move?).and_return(true)
@@ -466,7 +504,7 @@ RSpec.describe CastleManager do
       end
 
       it 'does not send #move_piece to the board' do
-        expect(board).to_not receive(:move_piece)
+        expect(board).not_to receive(:move_piece)
         castle_manager.handle_castling(piece, target, board)
       end
     end
@@ -474,6 +512,7 @@ RSpec.describe CastleManager do
 
   describe '#to_fen' do
     subject(:castle_manager) { described_class.new(castle_options: castle_opts) }
+
     context 'when all castling options are possible' do
       let(:castle_opts) do
         {
@@ -483,6 +522,7 @@ RSpec.describe CastleManager do
           black_queen_side: true
         }
       end
+
       it "returns the string 'KQkq'" do
         expected_string = 'KQkq'
         expect(castle_manager.to_fen).to eq(expected_string)
@@ -498,6 +538,7 @@ RSpec.describe CastleManager do
           black_queen_side: false
         }
       end
+
       it "returns the string 'KQ'" do
         expected_string = 'KQ'
         expect(castle_manager.to_fen).to eq(expected_string)
@@ -513,6 +554,7 @@ RSpec.describe CastleManager do
           black_queen_side: false
         }
       end
+
       it "returns the string 'Kk'" do
         expected_string = 'Kk'
         expect(castle_manager.to_fen).to eq(expected_string)
@@ -528,6 +570,7 @@ RSpec.describe CastleManager do
           black_queen_side: false
         }
       end
+
       it "returns the string '-'" do
         expected_string = '-'
         expect(castle_manager.to_fen).to eq(expected_string)

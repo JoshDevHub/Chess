@@ -1,16 +1,19 @@
 # frozen_string_literal: true
 
 RSpec.describe WhitePawnCapture do
+  subject(:diagonal_capture) { described_class.new(color: color, origin: origin, board: board) }
+
   let(:board) { instance_double(Board, access_square: square, en_passant_target: nil) }
   let(:enemy_color) { 'black' }
   let(:square) { instance_double(Square, piece_color: nil) }
   let(:color) { 'white' }
   let(:enemy_color) { 'black' }
   let(:enemy_square) { instance_double(Square, piece_color: enemy_color) }
-  subject(:diagonal_capture) { described_class.new(color: color, origin: origin, board: board) }
+
   context 'when a piece is available for capture' do
     context 'when the origin is F3 and an enemy piece is on G4' do
       let(:origin) { 'F3' }
+
       before do
         allow(board).to receive(:access_square).with('G4').and_return(enemy_square)
       end
@@ -22,6 +25,7 @@ RSpec.describe WhitePawnCapture do
 
     context 'when the origin is C5 and an enemy piece is on B6' do
       let(:origin) { 'C5' }
+
       before do
         allow(board).to receive(:access_square).with('B6').and_return(enemy_square)
       end
@@ -33,6 +37,7 @@ RSpec.describe WhitePawnCapture do
 
     context 'when the origin is E6 and D7 and F7 both have enemy pieces' do
       let(:origin) { 'E6' }
+
       before do
         allow(board).to receive(:access_square).with('D7').and_return(enemy_square)
         allow(board).to receive(:access_square).with('F7').and_return(enemy_square)
@@ -40,12 +45,13 @@ RSpec.describe WhitePawnCapture do
 
       it 'returns a list containing D7 and F7' do
         moves = %w[D7 F7]
-        expect(diagonal_capture.generate_moves).to contain_exactly(*moves)
+        expect(diagonal_capture.generate_moves).to match_array(moves)
       end
     end
 
     context 'when the origin is B5 and C6 is available for en passant capture' do
       let(:origin) { 'B5' }
+
       before do
         allow(board).to receive(:en_passant_target).and_return('C6')
       end

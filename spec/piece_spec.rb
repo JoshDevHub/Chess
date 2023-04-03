@@ -43,7 +43,7 @@ RSpec.describe Piece do
       it 'does not raise an error' do
         color = 'white'
         square = 'B1'
-        expect { described_class.new(color: color, position: square) }.to_not raise_error
+        expect { described_class.new(color: color, position: square) }.not_to raise_error
       end
     end
 
@@ -58,8 +58,10 @@ RSpec.describe Piece do
 
   describe '#opponent_color' do
     let(:square) { 'A1' }
+
     context 'when the piece is white' do
       subject(:white_piece) { described_class.new(color: 'white', position: square) }
+
       it "returns 'black'" do
         opponent = 'black'
         expect(white_piece.opponent_color).to eq(opponent)
@@ -68,6 +70,7 @@ RSpec.describe Piece do
 
     context 'when the piece is black' do
       subject(:black_piece) { described_class.new(color: 'black', position: square) }
+
       it "returns 'white'" do
         opponent = 'white'
         expect(black_piece.opponent_color).to eq(opponent)
@@ -77,14 +80,16 @@ RSpec.describe Piece do
 
   describe '#define_en_passant_square' do
     subject(:generic_piece) { described_class.new(color: 'white', position: 'F5') }
+
     it 'returns nil' do
       pending_move = 'F7'
-      expect(generic_piece.define_en_passant_square(pending_move)).to be(nil)
+      expect(generic_piece.define_en_passant_square(pending_move)).to be_nil
     end
   end
 
   describe '#capture_en_passant?' do
     subject(:generic_piece) { described_class.new(color: 'white', position: 'E4') }
+
     it 'returns false' do
       target_square = 'E5'
       expect(generic_piece.capture_en_passant?(target_square)).to be(false)
@@ -93,6 +98,7 @@ RSpec.describe Piece do
 
   describe '#can_promote?' do
     subject(:generic_piece) { described_class.new(color: 'white', position: 'E4') }
+
     it 'returns false' do
       expect(generic_piece.can_promote?).to be(false)
     end
@@ -100,6 +106,7 @@ RSpec.describe Piece do
 
   describe '#involved_in_castling?' do
     subject(:generic_piece) { described_class.new(color: 'black', position: 'A1') }
+
     it 'returns false' do
       expect(generic_piece.involved_in_castling?).to be(false)
     end
@@ -107,6 +114,7 @@ RSpec.describe Piece do
 
   describe '#castle_move?' do
     subject(:generic_piece) { described_class.new(color: 'black', position: 'A1') }
+
     it 'returns false' do
       placeholder_arg = 'A1'
       expect(generic_piece.castle_move?(placeholder_arg)).to be(false)
@@ -115,14 +123,16 @@ RSpec.describe Piece do
 
   describe '#disable_castle_rights' do
     subject(:generic_piece) { described_class.new(color: 'white', position: 'A1') }
+
     it 'returns nil' do
       dummy_castler = 'castle_manager'
-      expect(generic_piece.disable_castle_rights(dummy_castler)).to be(nil)
+      expect(generic_piece.disable_castle_rights(dummy_castler)).to be_nil
     end
   end
 
   describe '#move_resets_clock?' do
     subject(:generic_piece) { described_class.new(color: 'white', position: 'A1') }
+
     it 'returns false' do
       expect(generic_piece.move_resets_clock?).to be(false)
     end
@@ -130,8 +140,9 @@ RSpec.describe Piece do
 
   describe '#to_fen' do
     subject(:generic_piece) { described_class.new(color: 'white', position: 'A1') }
+
     it 'returns nil' do
-      expect(generic_piece.to_fen).to be(nil)
+      expect(generic_piece.to_fen).to be_nil
     end
   end
 end
