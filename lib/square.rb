@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'colorize_output'
-
 # class for representing the cells contained on a chess board
 class Square
   include Coordinate
@@ -22,7 +20,6 @@ class Square
   def to_s(_move_list = nil)
     string = piece.to_s
     string.fg_color(:black).bg_color(bg_color_name)
-    # bg_color(fg_black(string))
   end
 
   def to_string_with_moves(move_list)
@@ -31,10 +28,8 @@ class Square
     elsif unoccupied?
       string = " \u2022 "
       string.fg_color(:black).bg_color(bg_color_name)
-      # bg_color(fg_black(string))
     else
       string = piece.to_s
-      # bg_red(fg_black(string))
       string.fg_color(:black).bg_color(:red)
     end
   end

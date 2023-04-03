@@ -61,14 +61,16 @@ RSpec.describe Square do
   end
 
   describe '#to_s' do
+    let(:black_fg_code) { "\e[38;2;0;0;0m" }
+    let(:gray_bg_code) { "\e[48;2;204;204;204m" }
+    let(:reset_codes) { "\e[0m\e[0m" }
+
     context 'when the square should be gray' do
       context 'when the square is empty' do
         subject(:square) { described_class.new(name: 'B1') }
         it 'returns a string with three spaces and ANSI colors for black foreground with gray background' do
-          black_fg_code = "\e[0m\e[0m"
-          gray_bg_code = "\e[47m\e[30m"
           spaces = '   '
-          expected_output = "#{gray_bg_code}#{spaces}#{black_fg_code}"
+          expected_output = "#{gray_bg_code}#{black_fg_code}#{spaces}#{reset_codes}"
           expect(square.to_s).to eq(expected_output)
         end
       end
@@ -76,22 +78,21 @@ RSpec.describe Square do
       context 'when the square has a piece' do
         subject(:square) { described_class.new(name: 'B1', piece: piece) }
         it 'returns a string with the piece and ANSI colors for black foreground with gray background' do
-          black_fg_code = "\e[0m\e[0m"
-          gray_bg_code = "\e[47m\e[30m"
           piece_string = piece.to_s
-          expected_output = "#{gray_bg_code}#{piece_string}#{black_fg_code}"
+          expected_output = "#{gray_bg_code}#{black_fg_code}#{piece_string}#{reset_codes}"
           expect(square.to_s).to eq(expected_output)
         end
       end
     end
+
     context 'when the square should be purple' do
       context 'when the square is empty' do
         subject(:square) { described_class.new(name: 'A1') }
+
         it 'returns a string with three spaces and ANSI colors for black foreground with purple background' do
-          black_fg_code = "\e[0m\e[0m"
-          purple_bg_code = "\e[48;2;136;119;183m\e[30m"
+          purple_bg_code = "\e[48;2;136;119;183m"
           spaces = '   '
-          expected_output = "#{purple_bg_code}#{spaces}#{black_fg_code}"
+          expected_output = "#{purple_bg_code}#{black_fg_code}#{spaces}#{reset_codes}"
           expect(square.to_s).to eq(expected_output)
         end
       end
@@ -99,10 +100,9 @@ RSpec.describe Square do
       context 'when the square has a piece' do
         subject(:square) { described_class.new(name: 'A1', piece: piece) }
         it 'returns a string with three spaces and ANSI colors for black foreground with purple background' do
-          black_fg_code = "\e[0m\e[0m"
-          purple_bg_code = "\e[48;2;136;119;183m\e[30m"
+          purple_bg_code = "\e[48;2;136;119;183m"
           piece_string = piece.to_s
-          expected_output = "#{purple_bg_code}#{piece_string}#{black_fg_code}"
+          expected_output = "#{purple_bg_code}#{black_fg_code}#{piece_string}#{reset_codes}"
           expect(square.to_s).to eq(expected_output)
         end
       end
@@ -125,7 +125,7 @@ RSpec.describe Square do
           subject(:square) { described_class.new(name: 'A1') }
           let(:move_list) { ['A1'] }
           it 'returns a black bullet unicode surrounded by two spaces and a purple bg color' do
-            expected_output = "\e[48;2;136;119;183m\e[30m • \e[0m\e[0m"
+            expected_output = "\e[48;2;136;119;183m\e[38;2;0;0;0m • \e[0m\e[0m"
             expect(square.to_string_with_moves(move_list)).to eq(expected_output)
           end
         end
@@ -134,25 +134,10 @@ RSpec.describe Square do
           subject(:square) { described_class.new(name: 'A1') }
           let(:move_list) { ['A2'] }
           it 'returns a black bullet unicode surrounded by two spaces and a gray bg color' do
-            expected_output = "\e[48;2;136;119;183m\e[30m   \e[0m\e[0m"
+            expected_output = "\e[48;2;136;119;183m\e[38;2;0;0;0m   \e[0m\e[0m"
             expect(square.to_string_with_moves(move_list)).to eq(expected_output)
           end
         end
-      end
-    end
-
-    context 'when the square is occupied' do
-      subject(:square) { described_class.new(name: 'A1', piece: piece) }
-      let(:move_list) { ['A1'] }
-      it 'sends #to_s to piece' do
-        expect(piece).to receive(:to_s)
-        square.to_string_with_moves(move_list)
-      end
-
-      it 'sends #bg_red to self with the piece string' do
-        piece_string = "\e[30mpiece\e[0m"
-        expect(square).to receive(:bg_red).with(piece_string)
-        square.to_string_with_moves(move_list)
       end
     end
   end
